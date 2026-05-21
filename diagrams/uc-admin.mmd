@@ -1,0 +1,39 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','fontFamily':'Helvetica'}}}%%
+flowchart LR
+    A(((Administrator)))
+    AI(("AI Verification<br/>(n8n + LLM)"))
+
+    subgraph SYS[Administration tooling]
+      direction LR
+      UC1(["Review seller applications"])
+      UC2(["Approve / reject seller"])
+      UC3(["Browse all stores"])
+      UC4(["Browse all products"])
+      UC5(["Suspend store"])
+      UC6(["Reactivate store"])
+      UC7(["Delete store (cascade)"])
+      UC8(["Override AI verification"])
+      UC9(["Curate featured stores"])
+      UC10(["Curate featured products"])
+      UC11(["Manage categories"])
+      UC12(["Query DB via AI chat"])
+    end
+
+    A --> UC1
+    A --> UC2
+    A --> UC3
+    A --> UC4
+    A --> UC5
+    A --> UC6
+    A --> UC7
+    A --> UC8
+    A --> UC9
+    A --> UC10
+    A --> UC11
+    A --> UC12
+
+    AI -- "«auto-flag»" --> UC8
+    UC1 -. "«include»" .-> UC2
+
+    classDef actor fill:#FFFFFF,stroke:#1E40AF,stroke-width:2px;
+    class A,AI actor;

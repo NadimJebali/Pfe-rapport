@@ -1,0 +1,1550 @@
+% !TEX root = rapport.tex
+% ============================================================
+%  Cheebo — Final Year Project Report (PFE)
+%  TEK-UP  |  Web, Mobile and Multimedia Development
+%  Academic Year 2025-2026
+% ============================================================
+\documentclass[12pt, a4paper, oneside]{report}
+
+% ── Encoding & language ─────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% ── Fonts ───────────────────────────────────────────────────
+\usepackage{lmodern}
+
+% ── Layout ──────────────────────────────────────────────────
+\usepackage[
+  top=2.5cm, bottom=2.5cm,
+  left=3cm,  right=2.5cm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ── Graphics ────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{images/}}          % put all images in ./images/
+
+% ── Colors ──────────────────────────────────────────────────
+\usepackage[dvipsnames]{xcolor}
+\definecolor{cheeboblue}{RGB}{30, 64, 175}   % primary brand color
+\definecolor{cheebolightgray}{RGB}{245, 245, 245}
+\definecolor{sectiongray}{RGB}{80, 80, 80}
+
+% ── Chapter / section style ──────────────────────────────────
+\usepackage{titlesec}
+
+% Chapter heading — bold, colored, with a rule
+\titleformat{\chapter}[block]
+  {\normalfont\LARGE\bfseries\color{cheeboblue}}
+  {\chaptername~\thechapter}{1em}{}[{\titlerule[1pt]}]
+\titlespacing*{\chapter}{0pt}{50pt}{20pt}
+
+% Section
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{cheeboblue}}
+  {\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+
+% Subsection
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{sectiongray}}
+  {\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+
+% ── Headers / footers ────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Cheebo}}
+\fancyhead[R]{\small\textit{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{16pt}
+\setlength{\headsep}{28pt}
+% Shorter chapter mark — no "Chapter N." prefix, just the title
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ── TOC style ────────────────────────────────────────────────
+\usepackage{tocloft}
+\renewcommand{\cftchapfont}{\bfseries\color{cheeboblue}}
+\renewcommand{\cftsecfont}{\color{sectiongray}}
+\setlength{\cftbeforechapskip}{6pt}
+
+% ── Hyperlinks ───────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=cheeboblue,
+  urlcolor=cheeboblue,
+  citecolor=cheeboblue,
+  pdftitle={PFE Report — Cheebo},
+  pdfauthor={Nadim Jebali},
+]{hyperref}
+
+% ── Listings (code) ──────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{cheebolightgray},
+  frame=single,
+  breaklines=true,
+  tabsize=2,
+}
+
+% ── Tables ───────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+
+% Centred X column for tabularx
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+% ── Misc ─────────────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pifont}       % checkmarks etc.
+\usepackage{mdframed}     % info boxes
+
+% Placeholder box (used wherever a real image is not yet available)
+\newcommand{\imagePlaceholder}[2][8cm]{%
+  \begin{mdframed}[backgroundcolor=cheebolightgray,linecolor=gray!40]
+    \centering
+    \vspace{#1}
+    \textit{\color{gray}[IMAGE TO INSERT: #2]}
+    \vspace{8mm}
+  \end{mdframed}
+}
+
+% ── Opening environment for chapter intro paragraph ──────────
+\newenvironment{chapterintro}{%
+  \begin{mdframed}[backgroundcolor=cheebolightgray,linecolor=cheeboblue,linewidth=1pt]
+  \small\itshape
+}{%
+  \end{mdframed}
+}
+
+% ── Key takeaways box (end of chapter) ───────────────────────
+\newenvironment{keytakeaways}{%
+  \par\bigskip
+  \begin{mdframed}[
+    backgroundcolor=cheebolightgray,
+    linecolor=cheeboblue,
+    linewidth=3pt,
+    topline=false,
+    bottomline=false,
+    rightline=false,
+    innerleftmargin=14pt,
+    innerrightmargin=14pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+  ]
+  \noindent{\bfseries\color{cheeboblue}\large Key Takeaways}\par
+  \vspace{4pt}
+  \small
+}{%
+  \end{mdframed}
+}
+
+% ============================================================
+\begin{document}
+
+% ── Cover page ───────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{0.5cm}
+
+  % Header institutional block
+  \textbf{République Tunisienne}\\
+  \textit{Ministère de l’Enseignement Supérieur et de la Recherche Scientifique}\\[4pt]
+  \textbf{École Supérieure Privée d’ingénierie et de technologie}\\
+  {\Large\textbf{TEK-UP}}
+
+  \vspace{0.8cm}
+  \rule{\textwidth}{1pt}
+  \vspace{0.3cm}
+
+  {\large Rapport de Projet de Fin d’Études}\\[4pt]
+  \textit{Présenté en vue de l’obtention du}\\
+  \textbf{Diplôme National d’Ingénieur en Sciences Appliquées et Technologiques}\\
+  \textit{Spécialité : Web, Mobile and Multimedia Development}
+
+  \vspace{0.5cm}
+  \textit{Réalisé par}\\[4pt]
+  {\LARGE\textbf{Nadim JEBALI}}
+
+  \vspace{0.8cm}
+  % Logos: TEK-UP (left) and NeuralBey (right)
+  \begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[height=2.5cm]{TEK-UP logo.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[height=2.5cm]{NeutalBey logo.jpeg}
+    \end{minipage}
+  \end{figure}
+
+  \vspace{0.6cm}
+  {\LARGE\bfseries\color{cheeboblue}
+    Design and Development of an Intelligent\\
+    Multi-Vendor Marketplace: Cheebo
+  }
+
+  \vspace{1cm}
+  \begin{tabular}{rl}
+    \textbf{Professional Supervisor:} & Mr. Mohammed Aziz Chibani \\
+                                      & \textit{NeuralBey} \\[6pt]
+    \textbf{Academic Supervisor:}     & Ms. Sawssen Jalel \\
+                                      & \textit{Lecturer} \\
+  \end{tabular}
+
+  \vfill
+  \rule{\textwidth}{1pt}\\[4pt]
+  \textbf{Academic Year 2025 -- 2026}
+\end{titlepage}
+
+% ── Authorisation page ───────────────────────────────────────
+\newpage
+\thispagestyle{empty}
+\vspace*{4cm}
+\begin{center}
+  \large
+  I authorise the student to submit his internship report for a defence.\\[1.5cm]
+  \textbf{Professional Supervisor, Mr. Mohammed Aziz Chibani}\\[0.4cm]
+  \textit{Signature and stamp}\\[2cm]
+  I authorise the student to submit his internship report for a defence.\\[1.5cm]
+  \textbf{Academic Supervisor, Ms. Sawssen Jalel}\\[0.4cm]
+  \textit{Signature}
+\end{center}
+
+% ── Dedication ───────────────────────────────────────────────
+\newpage
+\thispagestyle{empty}
+\chapter*{Dedication}
+\addcontentsline{toc}{chapter}{Dedication}
+
+% Dedication
+
+\vspace*{2cm}
+\begin{center}
+  \itshape
+  To my parents, for their unwavering love, patience and encouragement during every step of this project.\\[1cm]
+  To my friends and colleagues at NeuralBey and TEK-UP who offered guidance, feedback and inspiration.
+\end{center}
+
+% ── Acknowledgements ─────────────────────────────────────────
+\newpage
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I would like to express my sincere gratitude to all those who contributed to the completion of this project.\\
+
+First, my deepest thanks to my professional supervisor, Mr. Mohammed Aziz Chibani (NeuralBey), for his continuous guidance, domain expertise, and support throughout the development and evaluation phases.\\
+
+I am also grateful to Ms. Sawssen Jalel for her academic supervision and valuable feedback which helped shape the report.\\
+
+Special thanks to my colleagues and friends for testing features, providing constructive critiques, and motivating me during challenging moments.\\
+
+Finally, I thank my family for their encouragement and patience during this work.
+
+% ── Abstract ─────────────────────────────────────────────────
+\newpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+% TODO: English abstract (150-200 words)
+
+\bigskip
+\noindent\textbf{Keywords:} marketplace, multi-vendor, NestJS, React, Prisma,
+  Artificial Intelligence, Docker, CI/CD, Terraform.
+
+\bigskip\bigskip
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
+% TODO: English abstract (150-200 words)
+
+% ── Lists ────────────────────────────────────────────────────
+\newpage
+\tableofcontents
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+% ── List of abbreviations ────────────────────────────────────
+\newpage
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+\begin{tabular}{ll}
+  \textbf{AI}     & Artificial Intelligence \\
+  \textbf{API}    & Application Programming Interface \\
+  \textbf{CD}     & Continuous Deployment \\
+  \textbf{CI}     & Continuous Integration \\
+  \textbf{DB}     & Database \\
+  \textbf{DNS}    & Domain Name System \\
+  \textbf{DTO}    & Data Transfer Object \\
+  \textbf{DWMM}   & Web, Mobile and Multimedia Development \\
+  \textbf{JWT}    & JSON Web Token \\
+  \textbf{ORM}    & Object-Relational Mapping \\
+  \textbf{PFE}    & Final Year Project \\
+  \textbf{REST}   & Representational State Transfer \\
+  \textbf{SPA}    & Single Page Application \\
+  \textbf{SSH}    & Secure Shell \\
+  \textbf{UML}    & Unified Modeling Language \\
+  \textbf{VPC}    & Virtual Private Cloud \\
+\end{tabular}
+
+% ============================================================
+%  GENERAL INTRODUCTION
+% ============================================================
+\newpage
+\chapter*{General Introduction}
+\addcontentsline{toc}{chapter}{General Introduction}
+\markboth{General Introduction}{}
+
+This introduction explains the context for the Cheebo project, why the system was created, who the intended users are, and how the work was organised from conception through delivery.
+
+Cheebo is a multi-vendor marketplace developed as a final year engineering project in partnership with TEK-UP and NeuralBey. The platform is designed to give Tunisian sellers a modern, secure online storefront while offering customers an intelligent shopping experience and administrators a reliable way to manage vendors, products, and verification workflows.
+
+The project combines academic goals and real-world needs: it must satisfy the PFE requirements for software engineering, while also providing a practical solution that addresses the host organisation’s expectations for a modern web application. The following chapters present the host organisation, the business context, the requirements analysis, the system architecture, implementation details, and the deployment strategy.
+
+% ============================================================
+%  CHAPTER 1
+% ============================================================
+\chapter{General Project Context}
+
+\begin{chapterintro}
+  This chapter sets the scene --- why this project exists, who it is for,
+  and how its development was organised. It introduces the host organisation,
+  the business motivation behind Cheebo, the competitive landscape in which
+  it operates, the proposed solution, and the working methodology adopted
+  throughout the internship.
+\end{chapterintro}
+
+\section{Presentation of the Host Organisation}
+
+\subsection{NeuralBey --- Company Overview}
+
+NeuralBey is a Tunisian technology company that delivers end-to-end
+engineering services across a broad spectrum of modern computing fields.
+The company positions itself as a partner that translates client visions
+into working systems, summarised by its own statement: \textit{``From web
+and mobile apps to AI systems, IoT, embedded engineering, and 3D
+solutions --- we build the technology that powers your vision.''}
+
+This breadth allows NeuralBey to handle a project from initial concept
+through deployment without external dependencies, and to combine
+disciplines that are usually siloed --- for example, integrating
+artificial intelligence into conventional web platforms, or interfacing
+embedded devices with cloud services. The company's portfolio reflects
+this versatility:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Web and mobile applications} for consumer products and
+        enterprise tooling;
+  \item \textbf{AI systems}, including model integration, automation
+        pipelines and intelligent assistants;
+  \item \textbf{IoT and embedded engineering}, where NeuralBey designs
+        firmware and connected devices;
+  \item \textbf{3D solutions} for product visualisation, AR/VR and
+        digital twins.
+\end{itemize}
+
+\subsection{Domain, Team and Mission}
+
+NeuralBey operates as a multidisciplinary studio. Each project is
+staffed by engineers selected from the relevant domain (frontend,
+backend, AI, hardware, 3D), and a professional supervisor accompanies
+the work from scoping through delivery. The team's working culture
+emphasises code review, iterative delivery and frequent stakeholder
+feedback --- practices that aligned naturally with the academic
+requirements of a final year project.
+
+The present project was carried out under the professional supervision
+of \textbf{Mr.\ Mohammed Aziz Chibani}, who provided architectural
+guidance, regular reviews, and technology recommendations throughout
+the internship. Academic oversight was provided in parallel by
+\textbf{Ms.\ Sawssen Jalel}, ensuring the work also satisfied the
+methodological and documentation standards of the engineering diploma.
+
+\section{Project Context}
+
+\subsection{Project Origin and Motivation}
+
+The Cheebo project originated from an internal need identified at
+NeuralBey: the Tunisian online retail landscape lacks a modern,
+multi-vendor platform that is both seller-friendly and equipped with
+the automation features expected of contemporary marketplaces.
+Existing local solutions are typically single-vendor stores or
+classified-ad sites, and they offer limited tooling for moderation,
+content quality and discovery.
+
+NeuralBey saw an opportunity for a product combining three
+differentiating capabilities:
+
+\begin{enumerate}[label=(\roman*),leftmargin=*,itemsep=2pt]
+  \item a true multi-vendor model with self-service onboarding for
+        sellers;
+  \item AI-assisted moderation of stores and products to reduce
+        manual review load;
+  \item a deployment story that demonstrates contemporary DevOps
+        practices end-to-end.
+\end{enumerate}
+
+The PFE topic was therefore scoped jointly with the professional
+supervisor, with the explicit goal of producing a system that could
+serve both as a portfolio piece for the company and as a foundation
+for further internal development beyond the internship.
+
+\subsection{Multi-Vendor Marketplace Concept}
+
+A \emph{multi-vendor marketplace} is a platform on which independent
+sellers operate their own stores within a shared environment governed
+by a central operator. It differs from two adjacent models:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item a \textbf{single-vendor store}, where the platform itself owns
+        the inventory and the brand;
+  \item a \textbf{classified-ad site}, where the platform only lists
+        offers and plays no role in transactions or quality control.
+\end{itemize}
+
+A marketplace must reconcile three concerns simultaneously:
+\textbf{seller autonomy} (each seller manages catalogue, branding and
+inventory), \textbf{buyer trust} (the platform guarantees a baseline
+of product authenticity and fulfilment) and \textbf{operator
+governance} (administrators onboard sellers, moderate content, suspend
+stores and curate featured selections). These three perspectives drive
+the architecture of Cheebo: every feature is designed to balance
+autonomy for sellers, trust for buyers, and control for administrators.
+The integration of AI verification is a direct response to the
+buyer-trust requirement at the scale a marketplace demands.
+
+\subsection{Target Users}
+
+Three actor categories were identified at the scoping stage:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Customer} --- an end-user who browses the catalogue,
+        places orders and tracks deliveries. Expects a fast,
+        mobile-friendly experience with reliable search and clear
+        product information.
+  \item \textbf{Seller} --- a small or medium merchant who creates a
+        store, manages a product catalogue and fulfils orders.
+        Expects low onboarding friction, clear analytics, and
+        protection against unfair competition from low-quality
+        listings.
+  \item \textbf{Administrator} --- the platform operator (NeuralBey
+        staff) who reviews seller applications, moderates flagged
+        content, curates featured stores, and intervenes when a store
+        violates the marketplace rules.
+\end{itemize}
+
+\section{Study of Existing Solutions}
+
+\subsection{Existing Tunisian E-Commerce Platforms}
+
+Three categories of competing platforms were studied:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Pan-African marketplaces (Jumia).} Jumia Tunisia is
+        the most visible regional marketplace. It supports multiple
+        vendors at scale and offers a polished customer experience,
+        but seller onboarding is heavyweight and the platform is not
+        tailored to small Tunisian merchants.
+  \item \textbf{Classified-ad sites (Tayara, Affariyet).} Tayara
+        dominates the local classified-ad market. It offers excellent
+        discovery for sellers, but performs no escrow, no order
+        management, no integrated payment and no quality moderation.
+  \item \textbf{Single-vendor stores (MyTek, Wiki, etc.).} These are
+        vertically integrated retailers that operate their own
+        catalogue. They cannot be used by independent sellers.
+\end{itemize}
+
+\subsection{Limitations of Current Solutions}
+
+From the study above, four gaps emerged:
+
+\begin{enumerate}[label=\textbf{L\arabic*.},leftmargin=*,itemsep=2pt]
+  \item \textbf{No AI-assisted moderation.} On existing platforms,
+        store and product verification are entirely manual --- slow,
+        inconsistent, and impractical at scale.
+  \item \textbf{Heavyweight seller onboarding.} Pan-regional players
+        require contractual paperwork unsuitable for small merchants.
+  \item \textbf{Limited operator tooling.} Classified-ad sites have
+        weak admin dashboards; single-vendor stores have none for
+        external sellers.
+  \item \textbf{Outdated technical foundations.} Several platforms
+        still rely on monolithic stacks without modern CI/CD or
+        infrastructure-as-code, making evolution costly.
+\end{enumerate}
+
+\subsection{Competitive Analysis}
+
+Table~\ref{tab:competitors} summarises the comparison along the four
+criteria that drove the design of Cheebo. A check mark (\ding{51})
+indicates the criterion is fully supported, a cross (\ding{55})
+indicates it is absent, and a tilde (\(\sim\)) indicates partial
+support.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparative analysis of competing platforms}
+  \begin{tabularx}{\textwidth}{lCCC}
+    \toprule
+    \textbf{Criterion}     & \textbf{Jumia} & \textbf{Tayara} & \textbf{Cheebo} \\
+    \midrule
+    Multi-vendor model     & \ding{51} & \(\sim\)  & \ding{51} \\
+    AI verification        & \ding{55} & \ding{55} & \ding{51} \\
+    Admin dashboard        & \(\sim\)  & \ding{55} & \ding{51} \\
+    CI/CD pipeline (open)  & \ding{55} & \ding{55} & \ding{51} \\
+    Lightweight onboarding & \ding{55} & \ding{51} & \ding{51} \\
+    \bottomrule
+  \end{tabularx}
+  \label{tab:competitors}
+\end{table}
+
+\noindent The \texttt{C} column type used above is defined locally as a
+centred variant of \texttt{X}; it is declared once in the preamble.
+
+\section{Proposed Solution}
+
+\subsection{Cheebo Overview}
+
+Cheebo is a multi-vendor marketplace designed around three pillars:
+a self-service seller experience, AI-assisted content verification,
+and a modern, fully containerised deployment. The platform is built
+as a single-page \textbf{React 19} application backed by a modular
+\textbf{NestJS} API, with \textbf{MariaDB} as the relational store
+and \textbf{n8n} acting as an orchestration layer for AI tasks.
+Authentication is handled by \textbf{Better-Auth} with email
+verification, and \textbf{Prisma} is used as the ORM. The full system
+is packaged with Docker Compose, provisioned on DigitalOcean via
+Terraform, and delivered through a GitHub Actions CI/CD pipeline.
+
+Sellers create a store in minutes, populate it with products and
+tags, and benefit from automatic AI verification that surfaces a
+trust badge to potential buyers. Administrators review borderline
+cases through a dedicated dashboard, suspend stores when needed, and
+override automated decisions. Customers browse a unified catalogue,
+place orders across multiple sellers in a single checkout, and
+interact with an in-app AI assistant for discovery and support.
+
+\subsection{Key Differentiators}
+
+Five differentiators set Cheebo apart from the platforms surveyed in
+the previous section:
+
+\begin{enumerate}[label=\textbf{D\arabic*.},leftmargin=*,itemsep=2pt]
+  \item \textbf{AI verification of stores and products} via an n8n
+        workflow that calls a hosted LLM and writes back an
+        \texttt{adminReviewed} flag plus a textual rationale.
+  \item \textbf{Lightweight seller onboarding} through a seller
+        application form reviewed by administrators, with a free tier
+        offering a single store at zero cost.
+  \item \textbf{Integrated administration tooling} (review, suspend,
+        curate, cascade-delete) implemented as first-class features
+        rather than database admin scripts.
+  \item \textbf{Conversational data access} via a database-aware
+        chatbot built on n8n, allowing administrators to query the
+        platform in natural language.
+  \item \textbf{Modern DevOps foundations} --- pnpm monorepo, Docker
+        Compose, Terraform on DigitalOcean, and GitHub Actions
+        CI/CD --- demonstrating production-grade engineering
+        practices end-to-end.
+\end{enumerate}
+
+\subsection{Project Scope}
+
+The scope was agreed with the professional supervisor and is split
+between in-scope and out-of-scope items so that the deliverables
+remain clear and bounded.
+
+\noindent\textbf{In scope:} account creation and email verification;
+seller application workflow with admin review; store and product
+CRUD with image upload; tag-based product recommendations with a
+top-seller fallback; order placement, items and history; admin
+moderation panels (store suspension, AI-verified badges,
+cascade-delete); AI verification and chat assistant via n8n;
+premium tier unlocking additional stores; and infrastructure-as-code
+deployment.
+
+\medskip
+\noindent\textbf{Out of scope} (deferred to future iterations):
+integrated payment processing (e.g.\ Konnect or Stripe); a native
+mobile application; advanced fraud detection; on-premise LLM
+hosting; multi-currency support; and a full-text search engine such
+as Elasticsearch or Typesense.
+
+\section{Work Methodology}
+
+\subsection{Agile / Scrum Methodology}
+
+The development followed a \textbf{Scrum-inspired Agile methodology},
+adapted to the constraints of a single-developer PFE. The student
+acted simultaneously as Product Owner --- translating the NeuralBey
+brief into a backlog of user stories --- and as the sole development
+team. Mr.\ Mohammed Aziz Chibani fulfilled the stakeholder role and
+combined the responsibilities normally split between Scrum Master and
+Product Owner: he approved the sprint backlog, conducted sprint
+reviews, and provided architectural and technological direction.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{scrum-framework.png}
+  \caption[Scrum methodological framework]{Scrum methodological framework
+    (source: Dr Ian Mitchell, Wikimedia Commons, CC0~/~CC~BY-SA~4.0).}
+  \label{fig:scrum}
+\end{figure}
+
+\subsection{Sprint Planning}
+
+Work was organised in iterations of \textbf{two weeks}. Each sprint
+opened with a planning session in which the backlog items selected
+from the previous review were broken into technical tasks, and closed
+with a review meeting at NeuralBey where the working increment was
+demonstrated to Mr.\ Chibani. The review fed back into a revised
+backlog for the following sprint. A retrospective followed every
+second review to consolidate process improvements --- for example,
+the adoption of pnpm for monorepo management, the migration from
+manual deployments to GitHub Actions, and the introduction of n8n
+for AI workflows.
+
+The full project ran across approximately ten sprints, grouped into
+three high-level milestones:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Foundations (sprints 1--3):} repository setup,
+        authentication with Better-Auth, base data model, and the
+        seller-application flow.
+  \item \textbf{Core marketplace (sprints 4--7):} stores, products,
+        orders, admin panels, and tag-based recommendations.
+  \item \textbf{Intelligence and delivery (sprints 8--10):} the AI
+        verification pipeline, the in-app AI chat assistant,
+        Dockerisation, Terraform provisioning, and the CI/CD
+        pipeline.
+\end{itemize}
+
+\subsection{Tools Used}
+
+The toolchain was kept deliberately minimal and standard.
+Table~\ref{tab:tools} lists the principal tools used through the
+project and their purpose.
+
+\begin{table}[H]
+  \centering
+  \caption{Project management and development tools}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Tool}   & \textbf{Purpose} \\
+    \midrule
+    GitHub   & Source control, code review, and CI/CD via GitHub Actions \\
+    Notion   & Backlog management, sprint board, and review notes \\
+    VSCode   & Primary IDE with TypeScript, Prisma and ESLint extensions \\
+    Docker   & Containerisation of the database, backend, frontend and n8n services \\
+    Terraform & Infrastructure-as-code provisioning on DigitalOcean \\
+    n8n      & Visual orchestration of AI verification and chat workflows \\
+    Postman  & Manual exercising of REST API endpoints during backend development \\
+    pnpm     & Workspace and dependency management across the monorepo \\
+    \bottomrule
+  \end{tabularx}
+  \label{tab:tools}
+\end{table}
+
+GitHub centralised both source control and the CI/CD pipeline,
+removing the need for a separate runner host. Notion served as a
+lightweight backlog and sprint board, capturing user stories,
+acceptance criteria and review notes. Docker isolated runtime
+dependencies and ensured parity between the development environment
+and the production droplet. The eventual production deployment was
+shaped through Terraform and Docker Compose, with all secrets
+managed as GitHub Actions environment variables.
+
+\begin{keytakeaways}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Cheebo originates from an internal NeuralBey brief: build a
+        modern, Tunisia-oriented multi-vendor marketplace with
+        AI-assisted moderation.
+  \item Three actors --- customer, seller, administrator --- drive
+        every architectural decision throughout the report.
+  \item Compared with Jumia and Tayara, Cheebo differentiates on
+        \emph{AI verification}, \emph{lightweight seller onboarding},
+        \emph{first-class admin tooling}, and \emph{modern DevOps}
+        (Docker, Terraform, GitHub Actions).
+  \item Development followed two-week Scrum sprints with NeuralBey
+        reviews, structured around three milestones: foundations,
+        core marketplace, and intelligence-and-delivery.
+\end{itemize}
+\end{keytakeaways}
+
+% ============================================================
+%  CHAPTER 2
+% ============================================================
+\chapter{Requirements Analysis and Specification}
+
+\begin{chapterintro}
+  This chapter identifies the three system actors, formalises the
+  functional and non-functional requirements of Cheebo, and illustrates
+  them with UML use-case and sequence diagrams. The requirements were
+  consolidated during the first three sprints in collaboration with the
+  professional supervisor and serve as the contract that the rest of
+  the report builds upon.
+\end{chapterintro}
+
+\section{Identification of Actors}
+
+The platform recognises three actor categories. They are distinct
+\textit{roles} stored on the \texttt{User} table rather than
+distinct user records --- a single account can be promoted from
+\textit{customer} to \textit{seller} once a seller application is
+approved, and an administrator account is created automatically on
+first boot.
+
+\subsection{Customer}
+
+The Customer is the default role assigned upon registration. A
+Customer can browse the catalogue, search products, view individual
+stores, manage a cart, place an order across multiple sellers in a
+single checkout, and review their personal order history. The
+Customer is also the entry point for the seller pipeline: any
+Customer can submit a seller application and, once approved, gain
+the Seller role on the same account. Anonymous (non-authenticated)
+visitors share the read-only abilities of the Customer but cannot
+maintain a cart or place an order.
+
+\subsection{Seller}
+
+The Seller is a Customer whose seller application has been approved
+by an administrator. A Seller can create and edit one store under
+the free tier (or several under the premium tier), populate that
+store with products, upload product images, attach product tags,
+view per-store analytics, and consult the order history specific to
+their store. Sellers also choose a visual template for their store
+from the templates exposed by the frontend. They cannot, however,
+review or moderate the work of other sellers.
+
+\subsection{Administrator}
+
+The Administrator is created automatically by the backend at first
+boot and is not exposed through the registration form. The
+Administrator reviews seller applications, browses every store and
+every product on the platform, suspends or deletes stores (with
+cascading deletion of dependent records), overrides automated AI
+verification decisions, curates featured stores and products on the
+landing page, manages categories and sub-categories, and consults
+the platform through a database-aware AI chat assistant.
+
+\section{Functional Requirements}
+
+The functional requirements are grouped into seven domains. Each
+domain corresponds to a NestJS module on the backend and to a
+matching set of pages on the React frontend; the mapping is made
+explicit in Chapter~3.
+
+\subsection{User Registration and Authentication}
+
+\begin{enumerate}[label=\textbf{FR-A\arabic*.},leftmargin=*,itemsep=2pt]
+  \item The system shall allow a visitor to create an account with
+        an email address and password.
+  \item The system shall send a verification email containing a
+        one-time link upon successful registration.
+  \item The system shall prevent unverified accounts from creating a
+        store or placing an order.
+  \item The system shall authenticate returning users via Better-Auth
+        sessions and issue an HTTP-only cookie.
+  \item The system shall allow the user to log out and invalidate
+        the corresponding session.
+  \item The system shall enforce role-based access control on every
+        non-public route through guards and the \texttt{@Roles()}
+        decorator.
+\end{enumerate}
+
+\subsection{Store Management}
+
+\begin{enumerate}[label=\textbf{FR-S\arabic*.},leftmargin=*,itemsep=2pt]
+  \item A Seller shall be able to create a store with a name,
+        description, logo and template.
+  \item A Seller shall be able to edit their store profile at any
+        time.
+  \item A free-tier Seller shall be limited to a single store.
+  \item A premium-tier Seller shall be able to operate multiple
+        stores from the same account.
+  \item Each store shall expose a public storefront URL identified
+        by a human-readable slug derived from the store name (e.g.\
+        \texttt{/stores/pawsome-pet-foods}), rather than by its
+        numeric primary key.
+  \item Slug uniqueness shall be enforced at the database level and
+        collisions resolved by an automatic numeric suffix
+        (\texttt{-2}, \texttt{-3}, \ldots). The slug shall be
+        regenerated when the store name changes.
+  \item The store status (active, pending, suspended) shall be
+        persisted in a \texttt{StoreStatusLog} audit trail.
+  \item The Seller shall be able to customise the storefront across
+        six independent sections --- \textit{Theme}, \textit{Header},
+        \textit{Banner}, \textit{Sidebar}, \textit{Product grid} and
+        \textit{Footer} --- through a dedicated split-screen editor
+        with a live preview pane.
+  \item Four pre-built presets shall be available as starting points
+        for customisation: \textit{Default} and \textit{Minimal} are
+        available to all sellers, while \textit{Modern} and
+        \textit{Classic} are restricted to premium accounts. Applying
+        a preset overwrites the current draft with the preset's
+        section defaults.
+  \item The Seller shall be able to upload a custom banner image,
+        stored under \texttt{/uploads/stores/} and referenced from
+        the customisation JSON.
+  \item The customisation editor shall support undo/redo on every
+        section change and shall warn the seller before discarding
+        unsaved changes.
+  \item Customisation features shall be tiered. Free accounts may
+        use a curated subset --- a six-colour palette for the primary
+        colour, two fonts (\textit{Inter} and the system default),
+        the \textit{soft} corner radius, checkbox-style filters,
+        square product images, and section visibility toggles.
+        Premium accounts unlock the full set: free-form hex colours,
+        all four fonts, all radii, banner image upload with heading
+        and overlay controls, sidebar inner panel and text colours,
+        non-checkbox filter styles, product grid background,
+        non-square aspect ratios, and footer social links. When a
+        premium subscription expires, the seller's existing
+        customisation values are preserved at the database level and
+        remain visible to visitors; the seller is only prevented from
+        \emph{modifying} those premium fields going forward.
+\end{enumerate}
+
+\subsection{Product Management}
+
+\begin{enumerate}[label=\textbf{FR-P\arabic*.},leftmargin=*,itemsep=2pt]
+  \item A Seller shall be able to create, edit and delete products
+        belonging to their own store(s).
+  \item Each product shall accept one or more images of supported
+        MIME types, with a configurable maximum file size.
+  \item Each product shall support an arbitrary number of tags used
+        by the recommendation engine.
+  \item Each product shall carry an \texttt{AIReviewed} flag
+        controlled by the AI verification pipeline and overridable
+        by an Administrator.
+  \item Products shall be browsable by category and sub-category.
+\end{enumerate}
+
+\subsection{Order System}
+
+\begin{enumerate}[label=\textbf{FR-O\arabic*.},leftmargin=*,itemsep=2pt]
+  \item A Customer shall be able to add and remove items in a cart
+        persisted on the client side.
+  \item Checkout shall create a single \texttt{Order} entity even
+        when the cart spans multiple stores, with one
+        \texttt{OrderItem} per product line.
+  \item Order placement shall trigger a confirmation email through
+        Nodemailer.
+  \item Each Customer shall be able to consult their personal order
+        history.
+  \item Each Seller shall be able to consult the orders that include
+        at least one product from their store.
+\end{enumerate}
+
+\subsection{Admin Dashboard}
+
+\begin{enumerate}[label=\textbf{FR-D\arabic*.},leftmargin=*,itemsep=2pt]
+  \item The Administrator shall access a dashboard listing pending
+        seller applications, recent activity and platform-wide
+        statistics.
+  \item The Administrator shall be able to approve or reject seller
+        applications, granting the Seller role on approval.
+  \item The Administrator shall be able to suspend, reactivate or
+        delete any store, with cascading deletion of its products
+        and orders.
+  \item The Administrator shall be able to override the
+        \texttt{adminReviewed} verdict of any product or store.
+\end{enumerate}
+
+\subsection{AI Verification}
+
+\begin{enumerate}[label=\textbf{FR-V\arabic*.},leftmargin=*,itemsep=2pt]
+  \item Upon creation, every store and product shall be sent to an
+        n8n workflow (\texttt{cheebo-ai-verify}) that calls a hosted
+        large-language model.
+  \item The workflow shall return a decision (\textit{approve},
+        \textit{flag}, \textit{reject}) together with a textual
+        rationale, written back to the entity through a callback
+        endpoint.
+  \item Auto-approved entities shall display an \emph{AI-verified}
+        badge to customers.
+  \item Flagged entities shall be listed in the moderation queue
+        for administrative review.
+\end{enumerate}
+
+\subsection{Featured Content Curation}
+
+\begin{enumerate}[label=\textbf{FR-C\arabic*.},leftmargin=*,itemsep=2pt]
+  \item The Administrator shall be able to mark any store or product
+        as \textit{featured}.
+  \item Featured entities shall be promoted on the landing page.
+  \item In the absence of featured products for a given tag, the
+        recommendation engine shall fall back to top-selling
+        products of that tag.
+\end{enumerate}
+
+\section{Non-Functional Requirements}
+
+The non-functional requirements, summarised in
+Table~\ref{tab:nfr}, were prioritised by the professional supervisor
+during the requirements review and define the qualities the
+deliverable must exhibit beyond pure functionality.
+
+\begin{table}[H]
+  \centering
+  \caption{Non-functional requirements}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Criterion}  & \textbf{Description} \\
+    \midrule
+    Performance      & The catalogue and store pages must render in under one second on a desktop connection of 10\,Mbit/s; API endpoints under the median use case must respond in under 300\,ms. \\
+    Security         & All passwords are hashed by Better-Auth; sessions are stored in HTTP-only, \texttt{SameSite=Lax} cookies; uploads are MIME- and size-validated; every protected route is gated by an \texttt{AuthGuard} and the \texttt{@Roles()} decorator. \\
+    Scalability      & The backend is stateless and horizontally scalable behind a load balancer; uploads are written to a Docker volume that can be migrated to object storage with no code change. \\
+    Availability     & The production stack runs under Docker Compose with restart policies; CI/CD deployment is zero-downtime through rolling container replacement. \\
+    Usability        & The frontend follows the accessible component patterns of Radix UI, is fully responsive, and complies with the WCAG 2.1 AA contrast guidelines for primary text. Public URLs are slug-based and human-readable, improving share-ability and search-engine indexing. \\
+    Maintainability  & The codebase is split into clearly-bounded NestJS modules, the schema is versioned through Prisma migrations, and the infrastructure is reproducible through Terraform. Storefront theming is driven entirely by CSS variables on a single scoped wrapper, so a per-store re-skin requires no component-level changes. \\
+    Observability    & Application logs are emitted to \texttt{stdout} and aggregated by Docker; the chat assistant offers a queryable view of the database for operational diagnostics. \\
+    Internationalisation & The interface is currently English-only; copy is centralised to enable future translation without code changes. \\
+    \bottomrule
+  \end{tabularx}
+  \label{tab:nfr}
+\end{table}
+
+\section{Use Case Diagrams}
+
+The use cases below were derived directly from the functional
+requirements in the previous section. They are presented from the
+most abstract (global) to the most granular (per actor), so that the
+reader can zoom from the platform-level overview into each role's
+specific interactions.
+
+\subsection{Global Use Case Diagram}
+
+Figure~\ref{fig:uc-global} groups the principal use cases of Cheebo
+around the three actors. Two dotted dependencies illustrate the
+cross-actor flows on which the rest of the chapter relies: a seller
+application \emph{triggers} an administrative review
+(\texttt{<<triggers>>}), and product creation is automatically
+\emph{verified by AI} (\texttt{<<verified by AI>>}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uc-global.png}
+  \caption{Global use case diagram}
+  \label{fig:uc-global}
+\end{figure}
+
+\subsection{Detailed Use Cases — Customer}
+
+The Customer view in Figure~\ref{fig:uc-customer} expands the
+shopping path from registration to order placement. Registration
+\texttt{<<includes>>} email verification, and checkout
+\texttt{<<includes>>} both order placement and an authenticated
+session.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{uc-customer.png}
+  \caption{Customer use cases}
+  \label{fig:uc-customer}
+\end{figure}
+
+\subsection{Detailed Use Cases — Seller}
+
+Figure~\ref{fig:uc-seller} shows that store creation depends on a
+prior approved seller application, and that opening additional
+stores depends on having activated the premium tier --- the two
+gating conditions that govern the seller funnel.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{uc-seller.png}
+  \caption{Seller use cases}
+  \label{fig:uc-seller}
+\end{figure}
+
+\subsection{Detailed Use Cases — Administrator}
+
+Figure~\ref{fig:uc-admin} highlights the AI verification subsystem
+as a secondary actor that injects \textit{auto-flag} events into
+the administration queue. The Administrator remains the final
+authority on every override, suspension and deletion.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{uc-admin.png}
+  \caption{Administrator use cases}
+  \label{fig:uc-admin}
+\end{figure}
+
+\section{Sequence Diagrams}
+
+Three flows are particularly load-bearing for the architecture of
+the system: authentication, order placement, and AI-driven product
+verification. Each is described below with a UML sequence diagram
+generated from PlantUML sources stored under
+\texttt{diagrams/}~in the project repository.
+
+\subsection{Registration, Email Verification and Login}
+
+Figure~\ref{fig:seq-auth} traces the authentication flow.
+Registration creates a \texttt{User} row with
+\texttt{emailVerified=false} and triggers a Nodemailer message
+containing a one-time token; the user activates the account by
+clicking the link, which flips the flag and allows them to log in.
+Both Better-Auth and the NestJS layer participate, with sessions
+materialised as HTTP-only cookies returned by the API.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{seq-auth.png}
+  \caption{Sequence: registration, email verification and login}
+  \label{fig:seq-auth}
+\end{figure}
+
+\subsection{Order Placement}
+
+Figure~\ref{fig:seq-order} describes the checkout path. The cart is
+held client-side in a Zustand store and posted to the API as a
+single payload. The \texttt{AuthGuard} validates the session before
+the Order module persists the \texttt{Order} row and delegates the
+creation of line items to the OrderItems module; a confirmation
+email is sent before the response returns to the SPA, which then
+clears the cart store and redirects to the success page.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{seq-order.png}
+  \caption{Sequence: order placement}
+  \label{fig:seq-order}
+\end{figure}
+
+\subsection{Product Verification (AI + Administrator)}
+
+Figure~\ref{fig:seq-verify} shows the dual-track verification
+process. Every product creation is forwarded to the
+\texttt{cheebo-ai-verify} webhook on n8n, which prompts a hosted
+LLM (Gemini or Groq) to apply the marketplace rules. The decision
+flows back to the backend through a callback endpoint and updates
+the \texttt{adminReviewed} column. The \texttt{alt} block at the
+bottom of the diagram captures the two outcomes: automatic
+approval (badge shown to the customer) and flagging (entry in the
+moderation queue, manual override by the Administrator).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{seq-verify.png}
+  \caption{Sequence: product verification (AI and administrator)}
+  \label{fig:seq-verify}
+\end{figure}
+
+\begin{keytakeaways}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Three actors --- Customer, Seller, Administrator --- are
+        modelled as roles on a single \texttt{User} table; an
+        account can be promoted across roles without re-registering.
+  \item Functional requirements are grouped into seven domains
+        (authentication, store, product, order, admin dashboard,
+        AI verification, featured curation), each mapped one-to-one
+        with a backend NestJS module.
+  \item The non-functional contract privileges \emph{security},
+        \emph{performance} and \emph{maintainability} as
+        first-order qualities, with concrete targets stated in
+        Table~\ref{tab:nfr}.
+  \item Three sequence diagrams illustrate the load-bearing flows:
+        Better-Auth registration/login, multi-store order placement,
+        and AI-then-administrator product verification.
+\end{itemize}
+\end{keytakeaways}
+
+% ============================================================
+%  CHAPTER 3
+% ============================================================
+\chapter{Design and Architecture}
+
+\begin{chapterintro}
+  This chapter presents the global and detailed system architecture, database
+  design, API design, and the N8N automation workflow designs.
+\end{chapterintro}
+
+\section{Global Architecture}
+
+\subsection{3-Tier Architecture Overview}
+% TODO: Frontend $\rightarrow$ Backend $\rightarrow$ Database
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{3-tier architecture diagram (Frontend / Backend / DB)}
+  \caption{Global system architecture}
+  \label{fig:arch-global}
+\end{figure}
+
+\subsection{N8N as an Automation Layer}
+% TODO
+
+\section{Detailed Technical Architecture}
+
+\subsection{NestJS Modular Architecture}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{NestJS module diagram (Auth, Store, Product, Order, AI…)}
+  \caption{NestJS modular architecture}
+  \label{fig:arch-nest}
+\end{figure}
+
+\subsection{React SPA Architecture}
+% TODO
+
+\subsection{Docker Compose Services Diagram}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{Docker Compose services diagram (frontend, backend, db, n8n)}
+  \caption{Docker Compose services}
+  \label{fig:docker-services}
+\end{figure}
+
+\section{Database Design}
+
+\subsection{Entity-Relationship Diagram}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[10cm]{Full ER diagram (User, Store, Product, Order, SellerApplication…)}
+  \caption{Entity-Relationship diagram}
+  \label{fig:er}
+\end{figure}
+
+\subsection{Prisma Schema Overview}
+% TODO
+
+\subsection{Explanation of Key Relationships}
+% TODO
+
+\section{API Design}
+
+\subsection{REST API Design Principles}
+% TODO
+
+\subsection{Endpoint Structure}
+
+\begin{table}[H]
+  \centering
+  \caption{Main REST API endpoints}
+  \begin{tabularx}{\textwidth}{llX}
+    \toprule
+    \textbf{Method} & \textbf{Route} & \textbf{Description} \\
+    \midrule
+    POST  & /auth/sign-up        & Register a new user \\
+    POST  & /auth/sign-in        & Log in \\
+    GET   & /store               & List stores \\
+    POST  & /store               & Create a store \\
+    GET   & /product             & List products \\
+    POST  & /product             & Create a product \\
+    GET   & /order/my            & Get my orders \\
+    POST  & /seller-application  & Submit a seller application \\
+    \bottomrule
+  \end{tabularx}
+  \label{tab:api}
+\end{table}
+
+\subsection{Authentication Flow (BetterAuth)}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[6cm]{Sequence diagram — BetterAuth flow (JWT + session)}
+  \caption{BetterAuth authentication flow}
+  \label{fig:auth-flow}
+\end{figure}
+
+\section{N8N Workflow Design}
+
+\subsection{AI Verification Workflow}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — product/store AI verification}
+  \caption{N8N workflow — AI verification}
+  \label{fig:n8n-verify}
+\end{figure}
+
+\subsection{Database Chat Assistant Workflow}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — database chat assistant}
+  \caption{N8N workflow — Database chat assistant}
+  \label{fig:n8n-chat}
+\end{figure}
+
+\section{Class Diagrams}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[10cm]{UML class diagram — main domain entities}
+  \caption{Class diagram}
+  \label{fig:class-diagram}
+\end{figure}
+
+% ============================================================
+%  CHAPTER 4
+% ============================================================
+\chapter{Development and Implementation}
+
+\begin{chapterintro}
+  This chapter details the development environment, backend and frontend
+  implementation decisions, and the AI integration via N8N.
+\end{chapterintro}
+
+\section{Development Environment}
+
+\subsection{Hardware and Software}
+% TODO
+
+\subsection{VSCode and Extensions}
+% TODO
+
+\subsection{pnpm Monorepo Structure}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[6cm]{Monorepo directory tree (backend/, frontend/, terraform/)}
+  \caption{Cheebo monorepo structure}
+  \label{fig:monorepo}
+\end{figure}
+
+\section{Backend (NestJS)}
+
+\subsection{Project Structure}
+% TODO
+
+\subsection{Key Modules}
+% TODO: auth, stores, products, orders, AI
+
+\subsection{Authentication Guards and Role-Based Access Control}
+% TODO: AuthGuard, @Roles(), @CurrentUser()
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[5cm]{Code snippet — AuthGuard + @Roles() decorator}
+  \caption{Role-based access control implementation}
+  \label{fig:rbac}
+\end{figure}
+
+\subsection{File Upload System (Multer)}
+% TODO
+
+\subsection{Email System (Nodemailer)}
+% TODO
+
+\section{Frontend (React + Vite)}
+
+\subsection{Project Structure}
+% TODO
+
+\subsection{Routing and Layouts}
+% TODO
+
+\subsection{State Management (TanStack Query + Zustand)}
+% TODO
+
+\subsection{Admin Dashboard Panels}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Admin dashboard}
+  \caption{Admin dashboard}
+  \label{fig:admin-dashboard}
+\end{figure}
+
+\subsection{Store and Product Management Interface}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Store / product management (seller view)}
+  \caption{Store and product management interface}
+  \label{fig:seller-dashboard}
+\end{figure}
+
+\section{AI Integration with N8N}
+
+\subsection{AI Product/Store Verification Pipeline}
+% TODO
+
+\subsection{Database Chat Assistant}
+% TODO
+
+\subsection{Google Gemini / Groq Integration}
+% TODO
+
+\subsection{N8N Workflow Implementation}
+% TODO
+
+\section{Interface Screenshots}
+
+\subsection{Landing Page}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Cheebo landing page}
+  \caption{Landing page}
+  \label{fig:landing}
+\end{figure}
+
+\subsection{Store Dashboard}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Seller store dashboard}
+  \caption{Store dashboard}
+  \label{fig:store-dashboard}
+\end{figure}
+
+\subsection{AI Verification Panel}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — AI verification panel (admin)}
+  \caption{AI verification panel}
+  \label{fig:ai-panel}
+\end{figure}
+
+\subsection{Analytics Page}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Analytics page}
+  \caption{Analytics page}
+  \label{fig:analytics}
+\end{figure}
+
+% ============================================================
+%  CHAPTER 5
+% ============================================================
+\chapter{Infrastructure and Deployment}
+
+\begin{chapterintro}
+  This chapter covers Docker containerisation, infrastructure as code with
+  Terraform, the GitHub Actions CI/CD pipeline, DNS management, and the
+  production environment.
+\end{chapterintro}
+
+\section{Containerisation with Docker}
+
+\subsection{Dockerfiles (Frontend and Backend)}
+% TODO
+
+\subsection{Docker Compose Configuration}
+% TODO
+
+\subsection{Multi-Service Networking}
+% TODO
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{Docker Compose bridge network diagram}
+  \caption{Docker Compose network architecture}
+  \label{fig:docker-network}
+\end{figure}
+
+\section{Infrastructure as Code with Terraform}
+
+\subsection{DigitalOcean Provider}
+% TODO
+
+\subsection{VPC, Droplet and Firewall Resources}
+% TODO
+
+\subsection{DNS Management with DigitalOcean}
+
+Rather than managing DNS records at the domain registrar (name.com) through a
+separate API, the project delegates DNS entirely to DigitalOcean using the same
+Terraform provider that manages the droplet.  Two resources are declared in
+\texttt{main.tf}:
+
+\begin{itemize}
+  \item \texttt{digitalocean\_domain} --- creates the DNS zone for
+        \texttt{nadimjebali.engineer} on DigitalOcean's authoritative nameservers
+        and automatically adds the apex (\texttt{@}) A record pointing to the
+        droplet's IPv4 address.
+  \item \texttt{digitalocean\_record} --- adds a second A record for the
+        \texttt{www} subdomain, also pointing to the droplet.
+\end{itemize}
+
+Both records reference \texttt{digitalocean\_droplet.cheebo.ipv4\_address}
+directly.  This means that if the droplet is ever replaced (e.g.\ after a
+destructive Terraform change), Terraform updates both DNS records in the same
+\texttt{apply} run that creates the new droplet, with no manual intervention
+required.
+
+The domain's nameservers are delegated to DigitalOcean
+(\texttt{ns1--ns3.digitalocean.com}) from the name.com registrar panel, which
+is a one-time configuration step.  After that, A-record updates propagate in
+under five minutes thanks to a 300-second TTL.
+
+\begin{keytakeaways}
+  \item DNS is version-controlled alongside infrastructure --- the domain
+        always points to the current droplet IP with no manual update step.
+  \item TTL 300\,s means a full redeploy (destroy old droplet, create new one,
+        update DNS) converges in under ten minutes end-to-end.
+\end{keytakeaways}
+
+\subsection{Remote State Management with DigitalOcean Spaces}
+% TODO
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[6cm]{Terraform code snippet — main.tf}
+  \caption{Terraform resources}
+  \label{fig:terraform}
+\end{figure}
+
+\section{CI/CD Pipeline with GitHub Actions}
+
+\subsection{Workflow Overview}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{CI/CD pipeline diagram (build $\rightarrow$ push $\rightarrow$ deploy)}
+  \caption{GitHub Actions CI/CD pipeline}
+  \label{fig:cicd}
+\end{figure}
+
+\subsection{Build Stage (Docker Build and Push to Docker Hub)}
+% TODO
+
+\subsection{Deployment Stage (SSH and Docker Compose)}
+% TODO
+
+\subsection{Environment Secrets Management}
+% TODO
+
+\section{Production Environment}
+
+\subsection{DigitalOcean Droplet Specifications}
+
+The production workload runs on a single DigitalOcean droplet provisioned by
+Terraform with the following specifications:
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  \textbf{Property} & \textbf{Value} \\
+  \midrule
+  Region      & Frankfurt (fra1) \\
+  Size        & s-2vcpu-2gb (2 vCPUs, 2 GB RAM) \\
+  Image       & Ubuntu 24.04 LTS \\
+  VPC         & cheebo-vpc (192.168.1.0/24) \\
+  Public URL  & \texttt{http://nadimjebali.engineer} \\
+  DNS         & Managed by DigitalOcean (Terraform) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+The application is accessed exclusively through the domain name
+\texttt{nadim\-jabali.engineer}.  The raw droplet IP is reserved for SSH
+access by the CI/CD pipeline and is never exposed to end users.  CORS on
+the backend is configured with the domain as the single trusted origin, so
+any attempt to reach the API directly from the IP is rejected by the
+browser's same-origin policy.
+
+\subsection{Production Service Architecture}
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[7cm]{Production environment diagram (Droplet + services)}
+  \caption{Production architecture}
+  \label{fig:production}
+\end{figure}
+
+\subsection{N8N Deployment Alongside the Application}
+% TODO
+
+% ============================================================
+%  GENERAL CONCLUSION
+% ============================================================
+\chapter*{General Conclusion}
+\addcontentsline{toc}{chapter}{General Conclusion}
+\markboth{General Conclusion}{}
+
+\section*{Summary of Achievements}
+% TODO
+
+\section*{Implemented Features vs Initially Planned Features}
+% TODO
+
+\section*{Challenges Encountered and Solutions Provided}
+% TODO
+
+\section*{Current Implementation Limitations}
+% TODO
+
+\section*{Future Improvements}
+% TODO: Konnect payment, mobile app, LM Studio local AI, recommendation engine, advanced analytics
+
+% ============================================================
+%  BIBLIOGRAPHY
+% ============================================================
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography and Webography}
+\chapter*{Bibliography and Webography}
+
+\begin{itemize}
+  \item NestJS Official Documentation --- \url{https://docs.nestjs.com}
+  \item React Official Documentation --- \url{https://react.dev}
+  \item Prisma ORM Documentation --- \url{https://www.prisma.io/docs}
+  \item TanStack Query Documentation --- \url{https://tanstack.com/query}
+  \item Docker Documentation --- \url{https://docs.docker.com}
+  \item Terraform Documentation --- \url{https://developer.hashicorp.com/terraform}
+  \item N8N Documentation --- \url{https://docs.n8n.io}
+  \item GitHub Actions Documentation --- \url{https://docs.github.com/en/actions}
+  \item DigitalOcean Developer Docs --- \url{https://docs.digitalocean.com}
+\end{itemize}
+
+% ============================================================
+%  APPENDICES
+% ============================================================
+\appendix
+
+\chapter{Complete Prisma Schema}
+
+\begin{lstlisting}[caption={Prisma schema --- excerpt}]
+% TODO: paste the contents of backend/prisma/schema/ here
+\end{lstlisting}
+
+\chapter{API Endpoints Reference}
+
+% TODO: full table of all endpoints
+
+\chapter{N8N Workflow JSON Exports}
+
+\begin{lstlisting}[language=,caption={N8N workflow --- AI verification (JSON)}]
+% TODO: paste the JSON exported from N8N
+\end{lstlisting}
+
+\chapter{Docker Compose File}
+
+\begin{lstlisting}[caption={docker-compose.yml}]
+% TODO: paste the contents of docker-compose.yml
+\end{lstlisting}
+
+\chapter{GitHub Actions Workflow}
+
+\begin{lstlisting}[caption={.github/workflows/deploy.yml}]
+% TODO: paste the CI/CD workflow content
+\end{lstlisting}
+
+\end{document}

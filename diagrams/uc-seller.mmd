@@ -1,0 +1,44 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','fontFamily':'Helvetica'}}}%%
+flowchart LR
+    S(((Seller)))
+
+    subgraph SYS[Seller-facing features]
+      direction LR
+      UC1(["Submit seller application"])
+      UC2(["Create store"])
+      UC3(["Edit store profile"])
+      UC4(["Customize storefront"])
+      UC4a(["Apply preset"])
+      UC4b(["Upload banner image"])
+      UC4c(["Save customization"])
+      UC5(["Add product"])
+      UC6(["Upload product images"])
+      UC7(["Tag product"])
+      UC8(["Edit / delete product"])
+      UC9(["View order list"])
+      UC10(["View store analytics"])
+      UC11(["Upgrade to premium tier"])
+      UC12(["Open additional store"])
+    end
+
+    S --> UC1
+    S --> UC2
+    S --> UC3
+    S --> UC4
+    S --> UC5
+    S --> UC8
+    S --> UC9
+    S --> UC10
+    S --> UC11
+    S --> UC12
+
+    UC2  -. "«requires approval»" .-> UC1
+    UC4  -. "«include»"            .-> UC4a
+    UC4  -. "«include»"            .-> UC4b
+    UC4  -. "«include»"            .-> UC4c
+    UC5  -. "«include»"            .-> UC6
+    UC5  -. "«include»"            .-> UC7
+    UC12 -. "«requires»"           .-> UC11
+
+    classDef actor fill:#FFFFFF,stroke:#1E40AF,stroke-width:2px;
+    class S actor;

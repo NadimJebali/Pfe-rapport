@@ -1,0 +1,39 @@
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Scrum methodological framework}}{18}{figure.caption.8}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Global use case diagram}}{28}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Customer use cases}}{29}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Seller use cases}}{30}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Administrator use cases}}{31}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Sequence: registration, email verification and login}}{32}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Sequence: order placement}}{33}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Sequence: product verification (AI and administrator)}}{33}{figure.caption.17}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Global system architecture}}{35}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces NestJS modular architecture}}{36}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Docker Compose services}}{37}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity-Relationship diagram}}{38}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces BetterAuth authentication flow}}{39}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow — AI verification}}{40}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow — Database chat assistant}}{40}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Class diagram}}{41}{figure.caption.26}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{42}{figure.caption.27}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{43}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{44}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{45}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{46}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Store dashboard}}{47}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces AI verification panel}}{48}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Analytics page}}{49}{figure.caption.34}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{50}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{52}{figure.caption.36}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{52}{figure.caption.37}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{54}{figure.caption.38}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

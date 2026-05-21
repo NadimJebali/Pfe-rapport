@@ -1,0 +1,122 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Dedication}{2}{chapter*.2}%
+\contentsline {chapter}{Acknowledgements}{3}{chapter*.3}%
+\contentsline {chapter}{Abstract}{4}{chapter*.4}%
+\contentsline {chapter}{List of Abbreviations}{11}{chapter*.5}%
+\contentsline {chapter}{General Introduction}{12}{chapter*.6}%
+\contentsline {chapter}{\numberline {1}General Project Context}{13}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Presentation of the Host Organisation}{13}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}NeuralBey --- Company Overview}{13}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Domain, Team and Mission}{13}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Project Context}{14}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Project Origin and Motivation}{14}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Multi-Vendor Marketplace Concept}{14}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Target Users}{15}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Study of Existing Solutions}{15}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Existing Tunisian E-Commerce Platforms}{15}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Limitations of Current Solutions}{15}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Competitive Analysis}{16}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Proposed Solution}{16}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Cheebo Overview}{16}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Key Differentiators}{17}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Project Scope}{17}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Work Methodology}{18}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Agile / Scrum Methodology}{18}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Sprint Planning}{18}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Tools Used}{19}{subsection.1.5.3}%
+\contentsline {chapter}{\numberline {2}Requirements Analysis and Specification}{21}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Identification of Actors}{21}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Customer}{21}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Seller}{21}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Administrator}{22}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Functional Requirements}{22}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}User Registration and Authentication}{22}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Store Management}{22}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Product Management}{23}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Order System}{24}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Admin Dashboard}{24}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}AI Verification}{24}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.7}Featured Content Curation}{25}{subsection.2.2.7}%
+\contentsline {section}{\numberline {2.3}Non-Functional Requirements}{25}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Use Case Diagrams}{26}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Global Use Case Diagram}{27}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Detailed Use Cases — Customer}{28}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Detailed Use Cases — Seller}{30}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Detailed Use Cases — Administrator}{30}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Sequence Diagrams}{31}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Registration, Email Verification and Login}{32}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Order Placement}{32}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Product Verification (AI + Administrator)}{33}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3}Design and Architecture}{35}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Global Architecture}{35}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}3-Tier Architecture Overview}{35}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}N8N as an Automation Layer}{35}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Detailed Technical Architecture}{35}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}NestJS Modular Architecture}{36}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}React SPA Architecture}{36}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Docker Compose Services Diagram}{37}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Database Design}{37}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Entity-Relationship Diagram}{38}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Prisma Schema Overview}{38}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Explanation of Key Relationships}{38}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}API Design}{38}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}REST API Design Principles}{38}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Endpoint Structure}{39}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Authentication Flow (BetterAuth)}{39}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}N8N Workflow Design}{39}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}AI Verification Workflow}{40}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Database Chat Assistant Workflow}{40}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}Class Diagrams}{41}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Development and Implementation}{42}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Development Environment}{42}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Hardware and Software}{42}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}VSCode and Extensions}{42}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}pnpm Monorepo Structure}{42}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Backend (NestJS)}{42}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Project Structure}{42}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Key Modules}{42}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Authentication Guards and Role-Based Access Control}{43}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}File Upload System (Multer)}{43}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Email System (Nodemailer)}{43}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Frontend (React + Vite)}{43}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Project Structure}{43}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Routing and Layouts}{43}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}State Management (TanStack Query + Zustand)}{43}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Admin Dashboard Panels}{44}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Store and Product Management Interface}{45}{subsection.4.3.5}%
+\contentsline {section}{\numberline {4.4}AI Integration with N8N}{45}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}AI Product/Store Verification Pipeline}{45}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Database Chat Assistant}{45}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Google Gemini / Groq Integration}{45}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}N8N Workflow Implementation}{45}{subsection.4.4.4}%
+\contentsline {section}{\numberline {4.5}Interface Screenshots}{45}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Landing Page}{46}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Store Dashboard}{47}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}AI Verification Panel}{48}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}Analytics Page}{49}{subsection.4.5.4}%
+\contentsline {chapter}{\numberline {5}Infrastructure and Deployment}{50}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Containerisation with Docker}{50}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Dockerfiles (Frontend and Backend)}{50}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Docker Compose Configuration}{50}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Multi-Service Networking}{50}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Infrastructure as Code with Terraform}{50}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}DigitalOcean Provider}{50}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}VPC, Droplet and Firewall Resources}{50}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}DNS Management with DigitalOcean}{51}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Remote State Management with DigitalOcean Spaces}{52}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{52}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{52}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{52}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{53}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Environment Secrets Management}{53}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Production Environment}{53}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}DigitalOcean Droplet Specifications}{53}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Production Service Architecture}{54}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}N8N Deployment Alongside the Application}{54}{subsection.5.4.3}%
+\contentsline {chapter}{General Conclusion}{55}{chapter*.39}%
+\contentsline {chapter}{Bibliography and Webography}{56}{chapter*.39}%
+\contentsline {chapter}{\numberline {A}Complete Prisma Schema}{57}{appendix.A}%
+\contentsline {chapter}{\numberline {B}API Endpoints Reference}{58}{appendix.B}%
+\contentsline {chapter}{\numberline {C}N8N Workflow JSON Exports}{59}{appendix.C}%
+\contentsline {chapter}{\numberline {D}Docker Compose File}{60}{appendix.D}%
+\contentsline {chapter}{\numberline {E}GitHub Actions Workflow}{61}{appendix.E}%

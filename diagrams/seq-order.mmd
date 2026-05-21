@@ -1,0 +1,27 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','actorBkg':'#FFFFFF','actorBorder':'#1E40AF','actorTextColor':'#111111','signalColor':'#1E40AF','signalTextColor':'#111111','noteBkgColor':'#F5F5F5','noteTextColor':'#111111','fontFamily':'Helvetica'}}}%%
+sequenceDiagram
+    actor C as Customer
+    participant FE as React SPA
+    participant Z as Cart Store (Zustand)
+    participant BE as NestJS API
+    participant OM as Order Module
+    participant OIM as OrderItems Module
+    participant DB as MariaDB
+    participant MAIL as Nodemailer
+
+    C->>FE: Click "Checkout"
+    FE->>Z: getCartItems()
+    Z-->>FE: items[]
+    FE->>BE: POST /order { items, shippingInfo }
+    BE->>BE: AuthGuard.canActivate(req)
+    BE->>OM: createOrder(userId, items)
+    OM->>DB: INSERT Order
+    OM->>OIM: createMany(orderId, items)
+    OIM->>DB: INSERT OrderItems
+    OM->>DB: SELECT for confirmation
+    OM-->>BE: Order { id, total, items }
+    BE->>MAIL: sendOrderConfirmation(user, order)
+    MAIL-->>C: Confirmation email
+    BE-->>FE: 201 + order payload
+    FE->>Z: clearCart()
+    FE-->>C: Redirect /order-success

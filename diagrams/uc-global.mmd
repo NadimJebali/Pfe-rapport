@@ -1,0 +1,48 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','fontFamily':'Helvetica'}}}%%
+flowchart LR
+    %% Actors
+    C(((Customer)))
+    S(((Seller)))
+    A(((Administrator)))
+
+    %% Use cases (stadium shape ≈ UML ovals)
+    subgraph SYS[Cheebo Marketplace]
+      direction LR
+      UC_AUTH(["Register / Log in"])
+      UC_BROWSE(["Browse catalogue"])
+      UC_ORDER(["Place an order"])
+      UC_CHAT(["Chat with AI assistant"])
+      UC_APPLY(["Apply to become a seller"])
+      UC_STORE(["Manage store"])
+      UC_PROD(["Manage products"])
+      UC_AN(["View seller analytics"])
+      UC_UPG(["Upgrade to premium tier"])
+      UC_REV(["Review seller applications"])
+      UC_MOD(["Moderate stores & products"])
+      UC_SUSP(["Suspend / delete store"])
+      UC_FEAT(["Curate featured content"])
+    end
+
+    C --> UC_AUTH
+    C --> UC_BROWSE
+    C --> UC_ORDER
+    C --> UC_CHAT
+    C --> UC_APPLY
+
+    S --> UC_AUTH
+    S --> UC_STORE
+    S --> UC_PROD
+    S --> UC_AN
+    S --> UC_UPG
+
+    A --> UC_AUTH
+    A --> UC_REV
+    A --> UC_MOD
+    A --> UC_SUSP
+    A --> UC_FEAT
+
+    UC_APPLY -. "«triggers»" .-> UC_REV
+    UC_PROD  -. "«verified by AI»" .-> UC_MOD
+
+    classDef actor fill:#FFFFFF,stroke:#1E40AF,stroke-width:2px;
+    class C,S,A actor;

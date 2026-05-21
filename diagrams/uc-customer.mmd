@@ -1,0 +1,41 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','fontFamily':'Helvetica'}}}%%
+flowchart LR
+    C(((Customer)))
+
+    subgraph SYS[Customer-facing features]
+      direction LR
+      UC1(["Register"])
+      UC2(["Verify email"])
+      UC3(["Log in"])
+      UC4(["Browse categories"])
+      UC5(["Search products"])
+      UC6(["View store page"])
+      UC7(["View product details"])
+      UC8(["Add product to cart"])
+      UC9(["Remove from cart"])
+      UC10(["Checkout"])
+      UC11(["Place an order"])
+      UC12(["View order history"])
+      UC13(["Chat with AI assistant"])
+      UC14(["Submit seller application"])
+    end
+
+    C --> UC1
+    C --> UC3
+    C --> UC4
+    C --> UC5
+    C --> UC6
+    C --> UC7
+    C --> UC8
+    C --> UC9
+    C --> UC10
+    C --> UC12
+    C --> UC13
+    C --> UC14
+
+    UC1  -. "«include»" .-> UC2
+    UC10 -. "«include»" .-> UC11
+    UC10 -. "«include»" .-> UC3
+
+    classDef actor fill:#FFFFFF,stroke:#1E40AF,stroke-width:2px;
+    class C actor;

@@ -1,0 +1,35 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','actorBkg':'#FFFFFF','actorBorder':'#1E40AF','actorTextColor':'#111111','signalColor':'#1E40AF','signalTextColor':'#111111','noteBkgColor':'#F5F5F5','noteTextColor':'#111111','fontFamily':'Helvetica'}}}%%
+sequenceDiagram
+    actor S as Seller
+    participant FE as React SPA
+    participant BE as NestJS API
+    participant PM as Product Module
+    participant DB as MariaDB
+    participant N8N as n8n Webhook (cheebo-ai-verify)
+    participant LLM as LLM (Gemini / Groq)
+    actor A as Administrator
+
+    S->>FE: Create product
+    FE->>BE: POST /product
+    BE->>PM: create(dto)
+    PM->>DB: INSERT Product (adminReviewed=null)
+    PM-->>BE: Product
+    BE->>N8N: POST cheebo-ai-verify { productId, name, description, images }
+
+    N8N->>LLM: Evaluate against marketplace rules
+    LLM-->>N8N: { decision, rationale }
+    N8N->>BE: PATCH /product/:id/ai-review { decision, rationale }
+    BE->>PM: applyAIDecision(productId, decision)
+    PM->>DB: UPDATE Product SET adminReviewed = decision
+
+    alt Auto-approved
+      BE-->>S: (badge visible on next refresh)
+    else Flagged / borderline
+      BE-->>A: Visible in admin moderation queue
+      A->>FE: Open moderation panel
+      FE->>BE: GET /product/pending
+      A->>FE: Approve / reject
+      FE->>BE: PATCH /product/:id/ai-review
+      BE->>PM: applyAdminOverride()
+      PM->>DB: UPDATE Product
+    end
