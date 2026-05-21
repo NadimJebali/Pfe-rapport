@@ -1,0 +1,67 @@
+@startuml
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #16A34A
+  FontColor #1E293B
+  FontStyle bold
+}
+skinparam usecase {
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+skinparam rectangle {
+  BackgroundColor #F0FDF4
+  BorderColor #16A34A
+  BorderThickness 2
+  FontColor #16A34A
+  FontStyle bold
+}
+
+left to right direction
+
+actor Seller #FFFFFF
+
+rectangle "Seller-facing Features" {
+  (Submit seller application) as UC1  #DCFCE7
+  (Create store)              as UC2  #DCFCE7
+  (Edit store profile)        as UC3  #DCFCE7
+  (Customise storefront)      as UC4  #DCFCE7
+  (Apply preset)              as UC4a #BBF7D0
+  (Upload banner image)       as UC4b #BBF7D0
+  (Save customisation)        as UC4c #BBF7D0
+  (Add product)               as UC5  #DCFCE7
+  (Upload product images)     as UC6  #BBF7D0
+  (Tag product)               as UC7  #BBF7D0
+  (Edit / delete product)     as UC8  #DCFCE7
+  (View order list)           as UC9  #DCFCE7
+  (View store analytics)      as UC10 #DCFCE7
+  (Upgrade to premium tier)   as UC11 #DCFCE7
+  (Open additional store)     as UC12 #DCFCE7
+}
+
+Seller --> UC1
+Seller --> UC2
+Seller --> UC3
+Seller --> UC4
+Seller --> UC5
+Seller --> UC8
+Seller --> UC9
+Seller --> UC10
+Seller --> UC11
+Seller --> UC12
+
+UC2  .> UC1  : <<requires approval>>
+UC4  .> UC4a : <<include>>
+UC4  .> UC4b : <<include>>
+UC4  .> UC4c : <<include>>
+UC5  .> UC6  : <<include>>
+UC5  .> UC7  : <<include>>
+UC12 .> UC11 : <<requires>>
+
+@enduml

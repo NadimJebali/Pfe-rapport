@@ -1,0 +1,62 @@
+@startuml
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #BE185D
+  FontColor #1E293B
+  FontStyle bold
+}
+skinparam usecase {
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+skinparam rectangle {
+  BackgroundColor #FFF0F6
+  BorderColor #BE185D
+  BorderThickness 2
+  FontColor #BE185D
+  FontStyle bold
+}
+
+left to right direction
+
+actor Administrator #FFFFFF
+actor "AI Verification\n(n8n + LLM)" as AI #EDE9FE
+
+rectangle "Administration Tooling" {
+  (Review seller applications) as UC1  #FCE7F3
+  (Approve / reject seller)    as UC2  #FBCFE8
+  (Browse all stores)          as UC3  #FCE7F3
+  (Browse all products)        as UC4  #FCE7F3
+  (Suspend store)              as UC5  #FCE7F3
+  (Reactivate store)           as UC6  #FCE7F3
+  (Delete store)               as UC7  #FCE7F3
+  (Override AI verification)   as UC8  #FCE7F3
+  (Curate featured stores)     as UC9  #FCE7F3
+  (Curate featured products)   as UC10 #FCE7F3
+  (Manage categories)          as UC11 #FCE7F3
+  (Query DB via AI chat)       as UC12 #FCE7F3
+}
+
+Administrator --> UC1
+Administrator --> UC3
+Administrator --> UC4
+Administrator --> UC5
+Administrator --> UC6
+Administrator --> UC7
+Administrator --> UC8
+Administrator --> UC9
+Administrator --> UC10
+Administrator --> UC11
+Administrator --> UC12
+
+AI --> UC8 : <<auto-flag>>
+
+UC1 .> UC2 : <<include>>
+
+@enduml

@@ -1,9 +1,9 @@
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#1E40AF','primaryTextColor':'#111111','lineColor':'#1E40AF','fontFamily':'Helvetica'}}}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#FEF3C7','primaryBorderColor':'#D97706','primaryTextColor':'#1E293B','lineColor':'#475569','fontFamily':'Helvetica','fontSize':'13px'}}}%%
 flowchart LR
-    C(((Customer)))
+    C((("Customer")))
 
-    subgraph SYS[Customer-facing features]
-      direction LR
+    subgraph SYS["Customer-facing Features"]
+      direction TB
       UC1(["Register"])
       UC2(["Verify email"])
       UC3(["Log in"])
@@ -37,5 +37,10 @@ flowchart LR
     UC10 -. "«include»" .-> UC11
     UC10 -. "«include»" .-> UC3
 
-    classDef actor fill:#FFFFFF,stroke:#1E40AF,stroke-width:2px;
-    class C actor;
+    classDef actor fill:#FFFFFF,stroke:#D97706,stroke-width:2.5px,color:#1E293B
+    classDef uc    fill:#FEF3C7,stroke:#D97706,stroke-width:2px,color:#1E293B
+    classDef sub   fill:#FDE68A,stroke:#B45309,stroke-width:2px,color:#1E293B
+
+    class C actor
+    class UC1,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC12,UC13,UC14 uc
+    class UC2,UC11 sub

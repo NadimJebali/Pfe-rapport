@@ -98,9 +98,33 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{longtable}
+\usepackage{makecell}
 
 % Centred X column for tabularx
 \newcolumntype{C}{>{\centering\arraybackslash}X}
+
+% MoSCoW priority colors
+\definecolor{moscowMust}{RGB}{255, 182, 182}
+\definecolor{moscowShould}{RGB}{255, 220, 150}
+\definecolor{moscowCould}{RGB}{180, 210, 255}
+\definecolor{moscowWont}{RGB}{220, 220, 220}
+\definecolor{complexLow}{RGB}{180, 230, 180}
+\definecolor{complexMed}{RGB}{255, 240, 150}
+\definecolor{complexHigh}{RGB}{255, 200, 150}
+\definecolor{complexVHigh}{RGB}{255, 170, 170}
+% Feature group colors
+\definecolor{featAuth}{RGB}{219, 234, 254}
+\definecolor{featStore}{RGB}{220, 252, 231}
+\definecolor{featProduct}{RGB}{204, 251, 241}
+\definecolor{featOrder}{RGB}{254, 243, 199}
+\definecolor{featAdmin}{RGB}{252, 231, 243}
+\definecolor{featAI}{RGB}{237, 233, 254}
+\definecolor{featPremium}{RGB}{254, 249, 195}
+\definecolor{featCICD}{RGB}{224, 242, 254}
+\definecolor{tableHeader}{RGB}{55, 65, 81}
+
+\usepackage{colortbl}
 
 % ── Misc ─────────────────────────────────────────────────────
 \usepackage{enumitem}
@@ -158,22 +182,22 @@
   \vspace*{0.5cm}
 
   % Header institutional block
-  \textbf{République Tunisienne}\\
-  \textit{Ministère de l’Enseignement Supérieur et de la Recherche Scientifique}\\[4pt]
-  \textbf{École Supérieure Privée d’ingénierie et de technologie}\\
+  \textbf{Tunisian Republic}\\
+  \textit{Ministry of Higher Education and Scientific Research}\\[4pt]
+  \textbf{Private Higher School of Engineering and Technology}\\
   {\Large\textbf{TEK-UP}}
 
   \vspace{0.8cm}
   \rule{\textwidth}{1pt}
   \vspace{0.3cm}
 
-  {\large Rapport de Projet de Fin d’Études}\\[4pt]
-  \textit{Présenté en vue de l’obtention du}\\
-  \textbf{Diplôme National d’Ingénieur en Sciences Appliquées et Technologiques}\\
-  \textit{Spécialité : Web, Mobile and Multimedia Development}
+  {\large Final Year Project Report}\\[4pt]
+  \textit{Submitted in partial fulfilment of the requirements for the}\\
+  \textbf{National Engineering Degree in Applied and Technological Sciences}\\
+  \textit{Speciality: Web, Mobile and Multimedia Development}
 
   \vspace{0.5cm}
-  \textit{Réalisé par}\\[4pt]
+  \textit{Prepared by}\\[4pt]
   {\LARGE\textbf{Nadim JEBALI}}
 
   \vspace{0.8cm}
@@ -588,16 +612,83 @@ as Elasticsearch or Typesense.
 
 \section{Work Methodology}
 
-\subsection{Agile / Scrum Methodology}
+\subsection{Classical vs Agile Approaches}
 
-The development followed a \textbf{Scrum-inspired Agile methodology},
-adapted to the constraints of a single-developer PFE. The student
-acted simultaneously as Product Owner --- translating the NeuralBey
-brief into a backlog of user stories --- and as the sole development
-team. Mr.\ Mohammed Aziz Chibani fulfilled the stakeholder role and
-combined the responsibilities normally split between Scrum Master and
-Product Owner: he approved the sprint backlog, conducted sprint
-reviews, and provided architectural and technological direction.
+Every software project requires a methodological framework to organise
+work, manage priorities, and guarantee the delivery of a quality
+product. Two major families of methods have historically competed: the
+\textbf{classical} (predictive) approach and the \textbf{agile}
+(adaptive) approach. Their fundamental difference lies in how they
+handle change and value delivery.
+
+\medskip
+\noindent\textbf{Classical approach --- Waterfall.}
+The Waterfall method divides the project into strictly sequential
+phases: requirements, design, development, testing, and delivery.
+Each phase must be fully validated before the next begins. This model
+suits projects whose requirements are stable and known in advance, but
+it shows its limits as soon as the context evolves:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Requirements are frozen at launch; any late change is costly.
+  \item The client sees a working product only at the very end of the project.
+  \item Defects and risks are detected in the test phase, too late to
+        address without significant impact.
+  \item Documentation tends to be voluminous and quickly out of sync
+        with the actual code.
+\end{itemize}
+
+\medskip
+\noindent\textbf{Agile approach --- Core principles.}
+Agility was born from the \textit{Agile Manifesto} (2001), which
+champions collaboration, adaptability, and the continuous delivery of
+value. Rather than planning the entire project upfront, work is
+organised into \textbf{short cycles called sprints} (one to four
+weeks), each producing a functional and tested increment. This
+approach offers several concrete advantages:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Requirements are refined continuously from client and
+        stakeholder feedback.
+  \item Value is delivered from the first sprints; the product is
+        usable well before the end of the project.
+  \item Risks are identified and addressed early.
+  \item Daily communication fosters responsiveness and team alignment.
+\end{itemize}
+
+\subsection{Why Scrum?}
+
+Among the agile methodologies available --- Scrum, Kanban, XP,
+SAFe --- \textbf{Scrum} was chosen to manage this project for the
+following reasons:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Flexibility:} the requirements of Cheebo evolved
+        throughout the internship; Scrum allows supervisor feedback to
+        be integrated at each sprint.
+  \item \textbf{Visibility:} a prioritised backlog and bounded sprints
+        provide a clear view of progress at any point.
+  \item \textbf{Regular rhythm:} two-week sprints impose a structuring
+        cadence well-suited to the internship calendar.
+  \item \textbf{Frequent deliveries:} each sprint produces a
+        functional increment, facilitating demonstrations and
+        validations with the professional supervisor.
+  \item \textbf{Industry adoption:} Scrum is the most widely practised
+        agile framework, and its use in a PFE context prepares the
+        student for professional practice.
+\end{itemize}
+
+\subsection{The Scrum Framework}
+
+Scrum is an agile project management framework that helps teams
+organise and supervise their work through values, principles, and
+practices. It encourages teams to learn from experience, self-organise
+while working on a problem, and reflect on their successes and
+failures to continuously improve.
+
+Figure~\ref{fig:scrum} illustrates the Scrum process: successive
+sprints feed functional increments into the product, validated at
+each iteration by the Product Owner.
 
 \begin{figure}[H]
   \centering
@@ -607,21 +698,67 @@ reviews, and provided architectural and technological direction.
   \label{fig:scrum}
 \end{figure}
 
-\subsection{Sprint Planning}
+\subsection{Scrum Roles}
 
-Work was organised in iterations of \textbf{two weeks}. Each sprint
-opened with a planning session in which the backlog items selected
-from the previous review were broken into technical tasks, and closed
-with a review meeting at NeuralBey where the working increment was
-demonstrated to Mr.\ Chibani. The review fed back into a revised
-backlog for the following sprint. A retrospective followed every
-second review to consolidate process improvements --- for example,
-the adoption of pnpm for monorepo management, the migration from
-manual deployments to GitHub Actions, and the introduction of n8n
-for AI workflows.
+Scrum defines three complementary roles:
 
-The full project ran across approximately ten sprints, grouped into
-three high-level milestones:
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Product Owner:} represents the stakeholders and defines
+        the product vision. He prioritises the Product Backlog items
+        and validates each delivered increment. In this project, this
+        role was fulfilled by \textbf{Mr.\ Mohammed Aziz Chibani}
+        (NeuralBey), who approved the sprint backlog and conducted
+        sprint reviews.
+  \item \textbf{Scrum Master:} guarantees the application of the Scrum
+        framework, facilitates team work, and removes obstacles. Given
+        the single-developer nature of this PFE, this role was also
+        assumed by Mr.\ Chibani, who provided architectural guidance
+        and methodology coaching.
+  \item \textbf{Development Team:} responsible for the technical
+        realisation of features and the delivery of a potentially
+        deployable increment at the end of each sprint. Composed in
+        this project of the student, \textbf{Nadim Jebali}.
+\end{itemize}
+
+\subsection{Scrum Events}
+
+The Scrum framework organises work around five key events:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Sprint:} a fixed-duration iteration (two weeks in this
+        project) during which the team produces a product increment.
+  \item \textbf{Sprint Planning:} an opening meeting in which the team
+        selects and plans the backlog items to realise during the
+        sprint.
+  \item \textbf{Daily Scrum:} a brief daily synchronisation of 15
+        minutes to coordinate work and surface blockers.
+  \item \textbf{Sprint Review:} a demonstration of the increment to
+        stakeholders at the end of the sprint to collect feedback and
+        validate progress.
+  \item \textbf{Sprint Retrospective:} a process improvement meeting
+        at the end of each sprint. Key improvements that emerged from
+        retrospectives in this project include the adoption of
+        \texttt{pnpm} for monorepo management, the migration from
+        manual deployments to GitHub Actions, and the introduction of
+        n8n for AI workflows.
+\end{itemize}
+
+\subsection{Scrum Artefacts}
+
+Three artefacts ensure transparency of the work:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Product Backlog:} a prioritised list of all expected
+        product functionalities, maintained as user stories with
+        MoSCoW priorities and complexity estimates (see
+        Chapter~\ref{chap:requirements}).
+  \item \textbf{Sprint Backlog:} a sub-set of the Product Backlog
+        selected for a given sprint, broken down into technical tasks.
+  \item \textbf{Increment:} a potentially deliverable version of the
+        product obtained at the end of each sprint. The full project
+        ran across approximately ten sprints, grouped into three
+        milestones:
+\end{itemize}
 
 \begin{itemize}[leftmargin=*,itemsep=4pt]
   \item \textbf{Foundations (sprints 1--3):} repository setup,
@@ -637,38 +774,83 @@ three high-level milestones:
 
 \subsection{Tools Used}
 
-The toolchain was kept deliberately minimal and standard.
-Table~\ref{tab:tools} lists the principal tools used through the
-project and their purpose.
+The following tools were used throughout the project, covering source
+control, development, containerisation, infrastructure provisioning,
+workflow automation, and API testing.
 
-\begin{table}[H]
-  \centering
-  \caption{Project management and development tools}
-  \begin{tabularx}{\textwidth}{lX}
-    \toprule
-    \textbf{Tool}   & \textbf{Purpose} \\
-    \midrule
-    GitHub   & Source control, code review, and CI/CD via GitHub Actions \\
-    Notion   & Backlog management, sprint board, and review notes \\
-    VSCode   & Primary IDE with TypeScript, Prisma and ESLint extensions \\
-    Docker   & Containerisation of the database, backend, frontend and n8n services \\
-    Terraform & Infrastructure-as-code provisioning on DigitalOcean \\
-    n8n      & Visual orchestration of AI verification and chat workflows \\
-    Postman  & Manual exercising of REST API endpoints during backend development \\
-    pnpm     & Workspace and dependency management across the monorepo \\
-    \bottomrule
-  \end{tabularx}
-  \label{tab:tools}
-\end{table}
+% ── Tool card helper ─────────────────────────────────────────────────────────
+% \toolcard{logo-file}{Tool Name}{Description}{Source URL}
+\newcommand{\toolcard}[4]{%
+  \begin{minipage}[t]{0.46\textwidth}
+    \vspace{4pt}
+    \begin{flushleft}
+      \includegraphics[width=1.2cm,height=1.2cm,keepaspectratio]{images/#1}%
+      \hspace{8pt}%
+      \begin{minipage}[b]{0.78\linewidth}
+        \textbf{\large #2}\\[2pt]
+        {\small\url{#4}}
+      \end{minipage}
+    \end{flushleft}
+    \vspace{4pt}
+    \small #3
+    \vspace{8pt}
+    \hrule height 0.4pt
+    \vspace{6pt}
+  \end{minipage}%
+}
 
-GitHub centralised both source control and the CI/CD pipeline,
-removing the need for a separate runner host. Notion served as a
-lightweight backlog and sprint board, capturing user stories,
-acceptance criteria and review notes. Docker isolated runtime
-dependencies and ensured parity between the development environment
-and the production droplet. The eventual production deployment was
-shaped through Terraform and Docker Compose, with all secrets
-managed as GitHub Actions environment variables.
+\noindent
+\toolcard{github.png}{GitHub}
+  {A web-based platform for version control and collaborative software development
+   built on Git. It was used for source control, code review via pull requests, and
+   continuous integration and deployment through GitHub Actions workflows.}
+  {github.com}
+\hfill
+\toolcard{notion.png}{Notion}
+  {An all-in-one productivity workspace combining notes, databases, and kanban boards.
+   It served as the project's backlog management tool, sprint board, and a living record
+   of user stories and acceptance criteria.}
+  {notion.so}
+
+\noindent
+\toolcard{vscode.png}{Visual Studio Code}
+  {A lightweight but powerful source-code editor developed by Microsoft. It was the
+   primary IDE throughout the project, extended with plugins for TypeScript, Prisma
+   schema editing, ESLint linting, and Git integration.}
+  {code.visualstudio.com}
+\hfill
+\toolcard{docker.png}{Docker}
+  {An open platform for developing, shipping, and running applications inside isolated
+   containers. It was used to containerise all services — PostgreSQL, the NestJS backend,
+   the React frontend, and the n8n workflow engine — ensuring parity between development
+   and production environments.}
+  {docker.com}
+
+\noindent
+\toolcard{terraform.png}{Terraform}
+  {An open-source infrastructure-as-code tool by HashiCorp that allows cloud resources
+   to be defined in declarative configuration files. It was used to provision and manage
+   the DigitalOcean droplet, DNS records, and firewall rules in a reproducible way.}
+  {terraform.io}
+\hfill
+\toolcard{n8n.png}{n8n}
+  {A fair-code workflow automation platform with a visual node-based editor. It was
+   used to orchestrate the AI-assisted product and store verification pipeline as well
+   as the in-app AI chat assistant, connecting the backend to large language model APIs.}
+  {n8n.io}
+
+\noindent
+\toolcard{postman.png}{Postman}
+  {A collaborative API development platform for designing, testing, and documenting
+   HTTP endpoints. It was used during backend development to manually exercise and
+   validate every REST endpoint before integration with the frontend.}
+  {postman.com}
+\hfill
+\toolcard{pnpm.png}{pnpm}
+  {A fast, disk-efficient package manager for Node.js that uses hard links and a
+   content-addressable store. It managed all JavaScript dependencies across the
+   monorepo workspace, ensuring consistent installs in both development and CI.}
+  {pnpm.io}
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -687,10 +869,27 @@ managed as GitHub Actions environment variables.
 \end{itemize}
 \end{keytakeaways}
 
+\section*{Chapter Conclusion}
+\addcontentsline{toc}{section}{Chapter Conclusion}
+
+This chapter established the foundations of the Cheebo project. It
+introduced NeuralBey, the host organisation, and explained the
+business motivation behind building a modern Tunisian multi-vendor
+marketplace. A study of existing platforms revealed four gaps ---
+absent AI moderation, heavyweight onboarding, weak admin tooling, and
+outdated technical foundations --- that Cheebo directly addresses.
+The proposed solution, its key differentiators, and its bounded scope
+were presented. Finally, the Scrum agile methodology was described
+in detail, including its roles, events, and artefacts, and the
+three-milestone sprint plan that organised the ten-week development
+was outlined. The following chapter formalises the requirements
+derived from this context.
+
 % ============================================================
 %  CHAPTER 2
 % ============================================================
 \chapter{Requirements Analysis and Specification}
+\label{chap:requirements}
 
 \begin{chapterintro}
   This chapter identifies the three system actors, formalises the
@@ -1050,6 +1249,221 @@ moderation queue, manual override by the Administrator).
   \label{fig:seq-verify}
 \end{figure}
 
+\section{Modelling Language}
+
+This project adopts the \textbf{Unified Modelling Language (UML)} to
+formalise both the static structure and the dynamic behaviour of the
+system. UML provides a standardised set of diagrams that represent
+software systems in a language-independent and tool-independent way.
+Three diagram types are used throughout this report:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Use Case diagrams} --- describe the interactions
+        between actors (Customer, Seller, Administrator) and the
+        system, identifying the boundaries of the platform's
+        functionality.
+  \item \textbf{Sequence diagrams} --- model the temporal exchanges
+        of messages between system components for the three
+        load-bearing flows: authentication, order placement, and
+        AI-driven product verification.
+  \item \textbf{Class diagrams} --- represent the main domain entities,
+        their attributes, and their associations, providing the
+        structural blueprint from which the Prisma schema is derived.
+\end{itemize}
+
+All diagrams are authored in Mermaid (\texttt{.mmd} files) and
+rendered to PNG via the Mermaid CLI (\texttt{mmdc}), keeping
+diagrams version-controlled alongside source code.
+
+\section{Project Backlog}
+
+\subsection{Scrum Team}
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Product Owner:} Mr.\ Mohammed Aziz Chibani (NeuralBey)
+  \item \textbf{Scrum Master:} Mr.\ Mohammed Aziz Chibani (NeuralBey)
+  \item \textbf{Development Team:} Nadim Jebali
+\end{itemize}
+
+\subsection{MoSCoW Priority Legend}
+
+Each user story carries a \textbf{MoSCoW} priority and a
+\textbf{complexity} estimate, defined in Table~\ref{tab:moscow}.
+
+\begin{table}[H]
+  \centering
+  \caption{MoSCoW priority and complexity legend}
+  \label{tab:moscow}
+  \begin{tabularx}{\textwidth}{lllX}
+    \toprule
+    \multicolumn{4}{c}{\textbf{MoSCoW Priority}} \\
+    \midrule
+    \cellcolor{moscowMust}\textbf{Must}     & \textit{Must have}   & & Essential feature, required for the MVP. \\
+    \cellcolor{moscowShould}\textbf{Should} & \textit{Should have} & & Important but not blocking. \\
+    \cellcolor{moscowCould}\textbf{Could}   & \textit{Could have}  & & Desirable, included if time permits. \\
+    \cellcolor{moscowWont}\textbf{Won't}    & \textit{Won't have}  & & Out of scope for this version. \\
+    \midrule
+    \multicolumn{4}{c}{\textbf{Complexity}} \\
+    \midrule
+    \cellcolor{complexLow}\textbf{1}   & Simple      & & Straightforward implementation, minimal effort. \\
+    \cellcolor{complexMed}\textbf{2}   & Moderate    & & Average complexity, moderate effort. \\
+    \cellcolor{complexHigh}\textbf{3}  & Complex     & & Significant effort, elaborate logic. \\
+    \cellcolor{complexVHigh}\textbf{5} & Very complex & & High effort, advanced technical challenge. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Product Backlog}
+
+Table~\ref{tab:backlog} presents the product backlog structured as
+user stories following the template: \textit{``As a \textless{}role\textgreater{},
+I want \textless{}action\textgreater{} so that \textless{}benefit\textgreater{}''.}
+The columns \textbf{P} and \textbf{Cx} indicate respectively the
+MoSCoW priority and the estimated complexity.
+
+\setlength{\extrarowheight}{3pt}
+\begin{longtable}{|>{\centering\arraybackslash\small}p{2.2cm}|>{\centering\arraybackslash\small}p{0.9cm}|>{\small}p{7.6cm}|>{\centering\arraybackslash\small}p{1.4cm}|>{\centering\arraybackslash\small}p{0.7cm}|}
+  \hline
+  \rowcolor{tableHeader}
+  \textcolor{white}{\textbf{Feature}} &
+  \textcolor{white}{\textbf{ID}} &
+  \textcolor{white}{\textbf{User Story}} &
+  \textcolor{white}{\textbf{Priority}} &
+  \textcolor{white}{\textbf{Cx}} \\
+  \hline
+  \endfirsthead
+  \hline
+  \rowcolor{tableHeader}
+  \textcolor{white}{\textbf{Feature}} &
+  \textcolor{white}{\textbf{ID}} &
+  \textcolor{white}{\textbf{User Story}} &
+  \textcolor{white}{\textbf{Priority}} &
+  \textcolor{white}{\textbf{Cx}} \\
+  \hline
+  \endhead
+  \hline\multicolumn{5}{r|}{\small\textit{Continued on next page}}\\
+  \endfoot
+  \hline
+  \endlastfoot
+
+  % ── F1 Authentication ─────────────────────────────────────
+  \cellcolor{featAuth}\makecell[c]{\textbf{F1}\\\small Authentication}
+  & US01 & As a visitor, I want to create an account with my email address so that I can access the platform.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featAuth}~
+  & US02 & As a visitor, I want to receive a verification email so that I can activate my account securely.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featAuth}~
+  & US03 & As a user, I want to sign in with my credentials so that I can access my personalised dashboard.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featAuth}~
+  & US04 & As a user, I want to sign out so that I can protect my account on a shared device.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+
+  % ── F2 Store Management ───────────────────────────────────
+  \cellcolor{featStore}\makecell[c]{\textbf{F2}\\\small Store\\Management}
+  & US05 & As a seller, I want to create a store with a name, description and logo so that customers can find and recognise my brand.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featStore}~
+  & US06 & As a seller, I want my store URL to use a human-readable slug so that it is easy to share.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featStore}~
+  & US07 & As a seller, I want to customise my storefront across six sections through a split-screen editor so that my store reflects my brand.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexVHigh}\textbf{5} \\\hline
+  \cellcolor{featStore}~
+  & US08 & As a seller, I want to apply a preset to my store so that I can get a professional look quickly.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featStore}~
+  & US09 & As a premium seller, I want to operate multiple stores so that I can segment my product offerings.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexMed}\textbf{2} \\\hline
+
+  % ── F3 Product Management ─────────────────────────────────
+  \cellcolor{featProduct}\makecell[c]{\textbf{F3}\\\small Product\\Management}
+  & US10 & As a seller, I want to create, edit and delete products so that I can keep my catalogue up to date.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featProduct}~
+  & US11 & As a seller, I want to upload multiple product images so that customers can see my products clearly.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featProduct}~
+  & US12 & As a seller, I want to assign tags to my products so that the recommendation engine can surface them.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featProduct}~
+  & US13 & As a customer, I want to browse products by category so that I can discover relevant items.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+
+  % ── F4 Order System ───────────────────────────────────────
+  \cellcolor{featOrder}\makecell[c]{\textbf{F4}\\\small Order\\System}
+  & US14 & As a customer, I want to add products to a cart so that I can purchase multiple items at once.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featOrder}~
+  & US15 & As a customer, I want to check out across multiple stores in a single order so that I do not need separate transactions.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featOrder}~
+  & US16 & As a customer, I want to receive a confirmation email after placing an order so that I have a record of my purchase.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featOrder}~
+  & US17 & As a seller, I want to view orders containing my products so that I can prepare and fulfil them.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+
+  % ── F5 Administration ─────────────────────────────────────
+  \cellcolor{featAdmin}\makecell[c]{\textbf{F5}\\\small Administration}
+  & US18 & As an admin, I want to review seller applications so that I can approve legitimate merchants.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featAdmin}~
+  & US19 & As an admin, I want to suspend or delete any store so that I can enforce marketplace rules.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featAdmin}~
+  & US20 & As an admin, I want to curate featured stores and products so that the landing page promotes quality content.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featAdmin}~
+  & US21 & As an admin, I want to manage categories and sub-categories so that the catalogue stays organised.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+
+  % ── F6 AI Verification ────────────────────────────────────
+  \cellcolor{featAI}\makecell[c]{\textbf{F6}\\\small AI\\Verification}
+  & US22 & As the system, I want to automatically verify every new store and product via an LLM so that low-quality content is flagged without manual effort.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featAI}~
+  & US23 & As an admin, I want to override any AI verdict so that I remain the final authority on moderation decisions.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featAI}~
+  & US24 & As a customer, I want to see an AI-verified badge on trusted products so that I can shop with confidence.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexLow}\textbf{1} \\\hline
+
+  % ── F7 Premium Tier ───────────────────────────────────────
+  \cellcolor{featPremium}\makecell[c]{\textbf{F7}\\\small Premium\\Tier}
+  & US25 & As a seller, I want to subscribe to a premium plan so that I can unlock advanced storefront features.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featPremium}~
+  & US26 & As a premium seller, I want access to all customisation controls so that I can fully personalise my store appearance.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featPremium}~
+  & US27 & As the system, I want to preserve a seller's existing premium customisation after subscription expiry so that their store continues to look as designed.
+  & \cellcolor{moscowCould}\textbf{Could} & \cellcolor{complexMed}\textbf{2} \\\hline
+
+  % ── F8 CI/CD & Deployment ─────────────────────────────────
+  \cellcolor{featCICD}\makecell[c]{\textbf{F8}\\\small CI/CD \&\\Deployment}
+  & US28 & As a developer, I want every service to run in a Docker container so that the environment is identical across development and production.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featCICD}~
+  & US29 & As a developer, I want the backend and frontend images to be automatically built and pushed to Docker Hub on every push to main so that deployments are always up to date.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
+  \cellcolor{featCICD}~
+  & US30 & As a developer, I want the production droplet to be provisioned automatically via Terraform so that the infrastructure is reproducible and version-controlled.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featCICD}~
+  & US31 & As a developer, I want the application to be deployed to DigitalOcean via SSH on every push to main so that updates reach production without manual intervention.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexHigh}\textbf{3} \\\hline
+  \cellcolor{featCICD}~
+  & US32 & As a developer, I want all secrets and environment variables to be managed through GitHub Actions secrets so that no credentials are stored in the repository.
+  & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
+  \cellcolor{featCICD}~
+  & US33 & As a developer, I want the domain DNS A records to be updated automatically to the new droplet IP via the DigitalOcean Terraform provider so that the application is always reachable at \texttt{nadimjebali.engineer}.
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexMed}\textbf{2} \\
+
+\end{longtable}
+\label{tab:backlog}
+
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item Three actors --- Customer, Seller, Administrator --- are
@@ -1063,11 +1477,27 @@ moderation queue, manual override by the Administrator).
         \emph{performance} and \emph{maintainability} as
         first-order qualities, with concrete targets stated in
         Table~\ref{tab:nfr}.
-  \item Three sequence diagrams illustrate the load-bearing flows:
-        Better-Auth registration/login, multi-store order placement,
-        and AI-then-administrator product verification.
+  \item The Product Backlog comprises 33 user stories across 8
+        features, prioritised with MoSCoW and estimated for
+        complexity.
 \end{itemize}
 \end{keytakeaways}
+
+\section*{Chapter Conclusion}
+\addcontentsline{toc}{section}{Chapter Conclusion}
+
+This chapter formalised the requirements of the Cheebo platform.
+The three system actors were identified and their responsibilities
+delimited. Functional requirements were grouped into eight domains
+--- authentication, store management, product management, orders,
+administration, AI verification, premium tier, and CI/CD deployment ---
+and expressed
+both as structured requirement statements and as a user-story
+Product Backlog with MoSCoW priorities and complexity estimates.
+Non-functional constraints were captured in a consolidated table.
+UML use-case and sequence diagrams illustrated the system boundaries
+and the three load-bearing flows. The following chapter builds on
+these specifications to present the system design and architecture.
 
 % ============================================================
 %  CHAPTER 3
@@ -1082,7 +1512,12 @@ moderation queue, manual override by the Administrator).
 \section{Global Architecture}
 
 \subsection{3-Tier Architecture Overview}
-% TODO: Frontend $\rightarrow$ Backend $\rightarrow$ Database
+
+Cheebo follows a classic three-tier architecture separating
+presentation, business logic, and data concerns. Figure~\ref{fig:arch-global}
+illustrates how the React SPA (frontend), the NestJS API (backend),
+and the MariaDB database interact, with n8n sitting alongside the
+backend as an automation layer.
 
 \begin{figure}[H]
   \centering
@@ -1098,6 +1533,12 @@ moderation queue, manual override by the Administrator).
 
 \subsection{NestJS Modular Architecture}
 
+The backend is structured as a set of feature modules, each
+encapsulating its own controller, service, and DTOs.
+Figure~\ref{fig:arch-nest} shows the principal modules ---
+Auth, Store, Product, Order, Category, and AI --- and their
+dependency relationships.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[7cm]{NestJS module diagram (Auth, Store, Product, Order, AI…)}
@@ -1110,6 +1551,12 @@ moderation queue, manual override by the Administrator).
 
 \subsection{Docker Compose Services Diagram}
 
+The full application stack is defined in a single
+\texttt{docker-compose.yml} file. Figure~\ref{fig:docker-services}
+shows the four services --- frontend (Nginx), backend (NestJS),
+database (MariaDB), and n8n --- together with their exposed ports
+and shared volumes.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[7cm]{Docker Compose services diagram (frontend, backend, db, n8n)}
@@ -1120,6 +1567,12 @@ moderation queue, manual override by the Administrator).
 \section{Database Design}
 
 \subsection{Entity-Relationship Diagram}
+
+Figure~\ref{fig:er} presents the full entity-relationship diagram of
+the Cheebo database. The central \texttt{User} entity branches into
+\texttt{Store}, \texttt{SellerApplication}, and \texttt{Order},
+while \texttt{Product} links to \texttt{Store}, \texttt{Category},
+and the AI verification status fields.
 
 \begin{figure}[H]
   \centering
@@ -1163,6 +1616,12 @@ moderation queue, manual override by the Administrator).
 
 \subsection{Authentication Flow (BetterAuth)}
 
+Authentication is handled entirely by the Better-Auth library.
+Figure~\ref{fig:auth-flow} details the session creation flow: after
+successful credential validation, Better-Auth issues an HTTP-only
+session cookie that is verified on every subsequent protected request
+via the \texttt{AuthGuard}.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[6cm]{Sequence diagram — BetterAuth flow (JWT + session)}
@@ -1174,23 +1633,41 @@ moderation queue, manual override by the Administrator).
 
 \subsection{AI Verification Workflow}
 
+Figure~\ref{fig:n8n-verify} shows the n8n workflow responsible for
+automatic store and product verification. Upon creation of a new
+entity, the backend fires a webhook to n8n, which calls the hosted
+LLM (Gemini or Groq), evaluates the content against the marketplace
+rules, and posts the verdict back to the \texttt{/callback} endpoint.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — product/store AI verification}
-  \caption{N8N workflow — AI verification}
+  \caption{N8N workflow --- AI verification}
   \label{fig:n8n-verify}
 \end{figure}
 
 \subsection{Database Chat Assistant Workflow}
 
+Figure~\ref{fig:n8n-chat} illustrates the database chat assistant
+workflow. Administrator messages are forwarded to n8n, which uses an
+LLM to translate the natural-language query into SQL, executes it
+against the MariaDB instance, and returns a formatted response.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — database chat assistant}
-  \caption{N8N workflow — Database chat assistant}
+  \caption{N8N workflow --- Database chat assistant}
   \label{fig:n8n-chat}
 \end{figure}
 
-\section{Class Diagrams}
+\section{Class Diagram}
+
+Figure~\ref{fig:class-diagram} presents the UML class diagram of
+the main domain entities. It highlights the inheritance hierarchy
+between \texttt{User}, \texttt{Seller}, and \texttt{Administrator},
+the composition relationship between \texttt{Store} and
+\texttt{Product}, and the aggregation between \texttt{Order} and
+\texttt{OrderItem}.
 
 \begin{figure}[H]
   \centering
@@ -1219,6 +1696,12 @@ moderation queue, manual override by the Administrator).
 
 \subsection{pnpm Monorepo Structure}
 
+The project is organised as a \texttt{pnpm} workspace monorepo with
+three top-level packages. Figure~\ref{fig:monorepo} shows the
+directory tree: \texttt{backend/} contains the NestJS API,
+\texttt{frontend/} the React SPA, and \texttt{terraform/} the
+infrastructure-as-code definitions.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[6cm]{Monorepo directory tree (backend/, frontend/, terraform/)}
@@ -1235,7 +1718,12 @@ moderation queue, manual override by the Administrator).
 % TODO: auth, stores, products, orders, AI
 
 \subsection{Authentication Guards and Role-Based Access Control}
-% TODO: AuthGuard, @Roles(), @CurrentUser()
+
+Every protected route is secured through a combination of
+\texttt{AuthGuard} and the \texttt{@Roles()} decorator.
+Figure~\ref{fig:rbac} shows a representative controller method
+annotated with both guards, illustrating how the framework enforces
+role-based access at the route level before the handler executes.
 
 \begin{figure}[H]
   \centering
@@ -1263,6 +1751,11 @@ moderation queue, manual override by the Administrator).
 
 \subsection{Admin Dashboard Panels}
 
+Figure~\ref{fig:admin-dashboard} shows the administrator dashboard,
+which centralises seller application reviews, store moderation, user
+management, and featured content curation in a single tabbed
+interface.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[8cm]{Screenshot — Admin dashboard}
@@ -1271,6 +1764,11 @@ moderation queue, manual override by the Administrator).
 \end{figure}
 
 \subsection{Store and Product Management Interface}
+
+Figure~\ref{fig:seller-dashboard} presents the seller-facing store
+and product management panels, from which a seller can create and
+edit their store, manage their product catalogue, upload images,
+and monitor incoming orders.
 
 \begin{figure}[H]
   \centering
@@ -1297,6 +1795,11 @@ moderation queue, manual override by the Administrator).
 
 \subsection{Landing Page}
 
+Figure~\ref{fig:landing} shows the Cheebo public landing page, which
+surfaces featured stores, featured products, and the tag-based
+recommendation section. The navigation bar provides direct access to
+the catalogue, login, and cart.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[8cm]{Screenshot — Cheebo landing page}
@@ -1305,6 +1808,10 @@ moderation queue, manual override by the Administrator).
 \end{figure}
 
 \subsection{Store Dashboard}
+
+Figure~\ref{fig:store-dashboard} presents the seller store dashboard,
+from which a seller can monitor live store metrics, access the
+customisation editor, and review recent order activity.
 
 \begin{figure}[H]
   \centering
@@ -1315,6 +1822,11 @@ moderation queue, manual override by the Administrator).
 
 \subsection{AI Verification Panel}
 
+Figure~\ref{fig:ai-panel} illustrates the AI verification panel
+available to administrators. Each entry displays the entity name,
+the AI verdict, the LLM rationale, and override controls allowing
+the administrator to confirm or reverse the automated decision.
+
 \begin{figure}[H]
   \centering
   \imagePlaceholder[8cm]{Screenshot — AI verification panel (admin)}
@@ -1323,6 +1835,10 @@ moderation queue, manual override by the Administrator).
 \end{figure}
 
 \subsection{Analytics Page}
+
+Figure~\ref{fig:analytics} shows the per-store analytics page
+available to sellers, displaying revenue trends, top-selling
+products, order volumes, and visitor statistics.
 
 \begin{figure}[H]
   \centering
@@ -1351,7 +1867,13 @@ moderation queue, manual override by the Administrator).
 % TODO
 
 \subsection{Multi-Service Networking}
-% TODO
+
+All services communicate over a private Docker bridge network,
+meaning the backend, database, and n8n are never directly exposed
+to the public internet. Only the frontend container publishes
+port 80. Figure~\ref{fig:docker-network} shows the network topology
+and how Nginx on the frontend container proxies all API paths to the
+backend service over the internal network.
 
 \begin{figure}[H]
   \centering
@@ -1403,11 +1925,17 @@ under five minutes thanks to a 300-second TTL.
 \end{keytakeaways}
 
 \subsection{Remote State Management with DigitalOcean Spaces}
-% TODO
+
+Terraform state is stored remotely in a DigitalOcean Spaces bucket
+configured as an S3-compatible backend. This ensures that every
+CI/CD run reads from and writes to a single shared state file,
+preventing conflicts if the workflow is triggered concurrently.
+Figure~\ref{fig:terraform} shows the key resource declarations in
+\texttt{main.tf}, including the VPC, the droplet, and the DNS records.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[6cm]{Terraform code snippet — main.tf}
+  \imagePlaceholder[6cm]{Terraform code snippet --- main.tf}
   \caption{Terraform resources}
   \label{fig:terraform}
 \end{figure}
@@ -1415,6 +1943,13 @@ under five minutes thanks to a 300-second TTL.
 \section{CI/CD Pipeline with GitHub Actions}
 
 \subsection{Workflow Overview}
+
+The CI/CD pipeline is defined as a single GitHub Actions workflow
+file that runs on every push to the \texttt{main} branch.
+Figure~\ref{fig:cicd} presents the three parallel jobs ---
+\textit{provision} (Terraform), \textit{build-backend}, and
+\textit{build-frontend} --- followed by the \textit{deploy} job
+that SSH-deploys the composed stack once all three complete.
 
 \begin{figure}[H]
   \centering
@@ -1462,6 +1997,12 @@ any attempt to reach the API directly from the IP is rejected by the
 browser's same-origin policy.
 
 \subsection{Production Service Architecture}
+
+Figure~\ref{fig:production} depicts the production environment as
+deployed on the DigitalOcean droplet. All four Docker Compose
+services run on the same host inside a private bridge network;
+only the frontend Nginx container is reachable from the public
+internet via the domain \texttt{nadimjebali.engineer}.
 
 \begin{figure}[H]
   \centering

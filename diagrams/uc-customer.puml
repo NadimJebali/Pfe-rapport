@@ -1,0 +1,64 @@
+@startuml
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #D97706
+  FontColor #1E293B
+  FontStyle bold
+}
+skinparam usecase {
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+skinparam rectangle {
+  BackgroundColor #FFFBEB
+  BorderColor #D97706
+  BorderThickness 2
+  FontColor #D97706
+  FontStyle bold
+}
+
+left to right direction
+
+actor Customer #FFFFFF
+
+rectangle "Customer-facing Features" {
+  (Register)                  as UC1  #FEF3C7
+  (Verify email)              as UC2  #FDE68A
+  (Log in)                    as UC3  #FEF3C7
+  (Browse categories)         as UC4  #FEF3C7
+  (Search products)           as UC5  #FEF3C7
+  (View store page)           as UC6  #FEF3C7
+  (View product details)      as UC7  #FEF3C7
+  (Add product to cart)       as UC8  #FEF3C7
+  (Remove from cart)          as UC9  #FEF3C7
+  (Checkout)                  as UC10 #FEF3C7
+  (Place an order)            as UC11 #FDE68A
+  (View order history)        as UC12 #FEF3C7
+  (Chat with AI assistant)    as UC13 #FEF3C7
+  (Submit seller application) as UC14 #FEF3C7
+}
+
+Customer --> UC1
+Customer --> UC3
+Customer --> UC4
+Customer --> UC5
+Customer --> UC6
+Customer --> UC7
+Customer --> UC8
+Customer --> UC9
+Customer --> UC10
+Customer --> UC12
+Customer --> UC13
+Customer --> UC14
+
+UC1  .> UC2  : <<include>>
+UC10 .> UC11 : <<include>>
+UC10 .> UC3  : <<include>>
+
+@enduml
