@@ -598,8 +598,7 @@ remain clear and bounded.
 seller application workflow with admin review; store and product
 CRUD with image upload; tag-based product recommendations with a
 top-seller fallback; order placement, items and history; admin
-moderation panels (store suspension, AI-verified badges,
-cascade-delete); AI verification and chat assistant via n8n;
+moderation panels (store suspension, cascade-delete); AI verification and chat assistant via n8n;
 premium tier unlocking additional stores; and infrastructure-as-code
 deployment.
 
@@ -991,8 +990,9 @@ explicit in Chapter~3.
   \item The Seller shall be able to customise the storefront across
         six independent sections --- \textit{Theme}, \textit{Header},
         \textit{Banner}, \textit{Sidebar}, \textit{Product grid} and
-        \textit{Footer} --- through a dedicated split-screen editor
-        with a live preview pane.
+        \textit{Footer} --- through a WYSIWYG visual editor built with
+        Craft.js, where clicking any section on the live canvas
+        immediately opens its settings panel.
   \item Four pre-built presets shall be available as starting points
         for customisation: \textit{Default} and \textit{Minimal} are
         available to all sellers, while \textit{Modern} and
@@ -1368,7 +1368,7 @@ MoSCoW priority and the estimated complexity.
   & US06 & As a seller, I want my store URL to use a human-readable slug so that it is easy to share.
   & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexMed}\textbf{2} \\\hline
   \cellcolor{featStore}~
-  & US07 & As a seller, I want to customise my storefront across six sections through a split-screen editor so that my store reflects my brand.
+  & US07 & As a seller, I want to customise my storefront across six sections through a WYSIWYG visual editor so that I can see changes immediately and style my store to reflect my brand.
   & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexVHigh}\textbf{5} \\\hline
   \cellcolor{featStore}~
   & US08 & As a seller, I want to apply a preset to my store so that I can get a professional look quickly.
@@ -1428,7 +1428,7 @@ MoSCoW priority and the estimated complexity.
   & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
   \cellcolor{featAI}~
   & US24 & As a customer, I want to see an AI-verified badge on trusted products so that I can shop with confidence.
-  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexLow}\textbf{1} \\\hline
+  & \cellcolor{moscowWont}\textbf{Won't} & \cellcolor{complexLow}\textbf{1} \\\hline
 
   % ── F7 Premium Tier ───────────────────────────────────────
   \cellcolor{featPremium}\makecell[c]{\textbf{F7}\\\small Premium\\Tier}
