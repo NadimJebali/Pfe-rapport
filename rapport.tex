@@ -566,7 +566,7 @@ interact with an in-app AI assistant for discovery and support.
 
 \subsection{Key Differentiators}
 
-Five differentiators set Cheebo apart from the platforms surveyed in
+Seven differentiators set Cheebo apart from the platforms surveyed in
 the previous section:
 
 \begin{enumerate}[label=\textbf{D\arabic*.},leftmargin=*,itemsep=2pt]
@@ -582,6 +582,14 @@ the previous section:
   \item \textbf{Conversational data access} via a database-aware
         chatbot built on n8n, allowing administrators to query the
         platform in natural language.
+  \item \textbf{AI-assisted storefront redesign} --- sellers can
+        regenerate their entire store visual identity from a
+        natural-language prompt, powered by an n8n workflow and the
+        Groq \texttt{llama-3.3-70b-versatile} model.
+  \item \textbf{Store-wide sale promotions} that propagate a
+        percentage discount automatically across all product cards,
+        store listings, and search results, and apply the discounted
+        price at checkout without any per-product editing.
   \item \textbf{Modern DevOps foundations} --- pnpm monorepo, Docker
         Compose, Terraform on DigitalOcean, and GitHub Actions
         CI/CD --- demonstrating production-grade engineering
@@ -946,7 +954,7 @@ the platform through a database-aware AI chat assistant.
 
 \section{Functional Requirements}
 
-The functional requirements are grouped into seven domains. Each
+The functional requirements are grouped into eight domains. Each
 domain corresponds to a NestJS module on the backend and to a
 matching set of pages on the React frontend; the mapping is made
 explicit in Chapter~3.
@@ -1096,8 +1104,6 @@ explicit in Chapter~3.
         \textit{flag}, \textit{reject}) together with a textual
         rationale, written back to the entity through a callback
         endpoint.
-  \item Auto-approved entities shall display an \emph{AI-verified}
-        badge to customers.
   \item Flagged entities shall be listed in the moderation queue
         for administrative review.
 \end{enumerate}
@@ -1502,7 +1508,7 @@ MoSCoW priority and the estimated complexity.
         \emph{performance} and \emph{maintainability} as
         first-order qualities, with concrete targets stated in
         Table~\ref{tab:nfr}.
-  \item The Product Backlog comprises 33 user stories across 8
+  \item The Product Backlog comprises 35 user stories across 8
         features, prioritised with MoSCoW and estimated for
         complexity.
 \end{itemize}
@@ -1515,7 +1521,8 @@ This chapter formalised the requirements of the Cheebo platform.
 The three system actors were identified and their responsibilities
 delimited. Functional requirements were grouped into eight domains
 --- authentication, store management, product management, orders,
-administration, AI verification, premium tier, and CI/CD deployment ---
+administration, AI verification, store sales and promotions, and
+featured content curation ---
 and expressed
 both as structured requirement statements and as a user-story
 Product Backlog with MoSCoW priorities and complexity estimates.
@@ -1639,7 +1646,7 @@ and the AI verification status fields.
   \label{tab:api}
 \end{table}
 
-\subsection{Authentication Flow (BetterAuth)}
+\subsection{Authentication Flow (Better-Auth)}
 
 Authentication is handled entirely by the Better-Auth library.
 Figure~\ref{fig:auth-flow} details the session creation flow: after
@@ -1649,8 +1656,8 @@ via the \texttt{AuthGuard}.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[6cm]{Sequence diagram — BetterAuth flow (JWT + session)}
-  \caption{BetterAuth authentication flow}
+  \imagePlaceholder[6cm]{Sequence diagram — Better-Auth flow (JWT + session)}
+  \caption{Better-Auth authentication flow}
   \label{fig:auth-flow}
 \end{figure}
 
