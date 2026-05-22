@@ -17,6 +17,8 @@ flowchart LR
       UC10(["Curate featured products"])
       UC11(["Manage categories"])
       UC12(["Query DB via AI chat"])
+      UC13(["Browse all orders"])
+      UC14(["Manage users"])
     end
 
     A --> UC1
@@ -30,6 +32,8 @@ flowchart LR
     A --> UC10
     A --> UC11
     A --> UC12
+    A --> UC13
+    A --> UC14
 
     AI -- "«auto-flag»" --> UC8
     UC1 -. "«include»" .-> UC2
@@ -40,6 +44,6 @@ flowchart LR
     classDef aibox fill:#EDE9FE,stroke:#7C3AED,stroke-width:2px,color:#1E293B
 
     class A actor
-    class UC1,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12 uc
+    class UC1,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC11,UC12,UC13,UC14 uc
     class UC2 sub
     class AI aibox

@@ -355,6 +355,15 @@ INPUT ./images/seq-verify.png
 INPUT ./images/seq-verify.png
 INPUT ./images/seq-verify.png
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx10.tfm
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./diagrams/seq-ai-redesign.png
 INPUT rapport.aux
 INPUT ./rapport.out
 INPUT ./rapport.out

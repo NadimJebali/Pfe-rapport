@@ -1,0 +1,29 @@
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#F5F5F5','primaryBorderColor':'#7C3AED','primaryTextColor':'#111111','lineColor':'#7C3AED','actorBkg':'#FFFFFF','actorBorder':'#7C3AED','actorTextColor':'#111111','signalColor':'#7C3AED','signalTextColor':'#111111','noteBkgColor':'#EDE9FE','noteTextColor':'#111111','fontFamily':'Helvetica'}}}%%
+sequenceDiagram
+    actor S as Seller
+    participant FE as React SPA
+    participant BE as NestJS API
+    participant SM as Store Module
+    participant N8N as n8n Webhook (cheebo-store-redesign)
+    participant LLM as Groq (llama-3.3-70b)
+
+    S->>FE: Click "AI Redesign" in editor toolbar
+    FE-->>S: Open redesign dialog (prompt input)
+    S->>FE: Enter prompt + confirm
+    FE->>BE: POST /store/:id/ai-redesign { prompt, storeName, storeDescription }
+    BE->>BE: AuthGuard + SellerGuard
+    BE->>N8N: POST /webhook/cheebo-store-redesign { prompt, storeName, storeDescription, storeId }
+
+    Note over N8N,LLM: Build Prompt node constructs system instructions<br/>enforcing StoreCustomization JSON schema
+    N8N->>LLM: Chat completion request
+    LLM-->>N8N: Raw JSON response (StoreCustomization)
+
+    Note over N8N: Parse & Sanitise node:<br/>validates hex colours, enforces layout constraints
+    N8N-->>BE: 200 { StoreCustomization }
+
+    BE->>SM: updateCustomization(storeId, sanitisedDesign)
+    SM->>SM: merge with defaults, persist to DB
+    SM-->>BE: updated StoreCustomization
+    BE-->>FE: 200 { StoreCustomization }
+    FE->>FE: hydrateCustomization() + apply to Craft editor
+    FE-->>S: Canvas updates with new AI-generated design

@@ -990,9 +990,10 @@ explicit in Chapter~3.
   \item The store status (active, pending, suspended) shall be
         persisted in a \texttt{StoreStatusLog} audit trail.
   \item The Seller shall be able to customise the storefront across
-        six independent sections --- \textit{Theme}, \textit{Header},
-        \textit{Banner}, \textit{Sidebar}, \textit{Product grid} and
-        \textit{Footer} --- through a WYSIWYG visual editor built with
+        seven independent sections --- \textit{Theme},
+        \textit{Announcement Bar}, \textit{Banner}, \textit{Header},
+        \textit{Product Grid}, \textit{Sidebar} and \textit{Footer}
+        --- through a WYSIWYG visual editor built with
         Craft.js, where clicking any section on the live canvas
         immediately opens its settings panel.
   \item Four pre-built presets shall be available as starting points
@@ -1021,6 +1022,22 @@ explicit in Chapter~3.
         customisation values are preserved at the database level and
         remain visible to visitors; the seller is only prevented from
         \emph{modifying} those premium fields going forward.
+  \item A Seller shall be able to activate a store-wide sale by
+        enabling a percentage discount (1--99\,\%), an optional custom
+        label (e.g.\ \textit{"Summer Sale"}), and an optional expiry
+        date. While the sale is active, every product in the store
+        shall display its discounted price alongside a red sale badge
+        on product cards, the store card, and search results. The
+        discounted price shall also be used as the unit price when the
+        product is added to an order.
+  \item A Seller shall be able to trigger an AI-assisted full
+        storefront redesign by submitting a short natural-language
+        prompt. The system shall forward the request to an n8n
+        workflow powered by the Groq \texttt{llama-3.3-70b-versatile}
+        model, which generates a complete \texttt{StoreCustomization}
+        object covering all seven sections. The result shall be applied
+        to the live Craft.js editor immediately, allowing the seller
+        to review or further refine the design before saving.
 \end{enumerate}
 
 \subsection{Product Management}
@@ -1668,6 +1685,34 @@ against the MariaDB instance, and returns a formatted response.
   \label{fig:n8n-chat}
 \end{figure}
 
+\subsection{AI Storefront Redesign Workflow}
+
+The third n8n workflow handles AI-assisted storefront redesign.
+Unlike the verification workflow, which is triggered automatically on
+entity creation, this workflow is initiated explicitly by the seller
+from the Craft.js editor. The seller provides a short prompt describing
+the desired aesthetic; the backend forwards it to the
+\textbf{cheebo-store-redesign} webhook along with the store name and
+description as context.
+
+The workflow is composed of three nodes: a \textbf{Build Prompt} Code
+node that assembles the system instructions and enforces the
+\texttt{StoreCustomization} JSON schema; an \textbf{AI Agent} node
+connected to the Groq \texttt{llama-3.3-70b-versatile} model that
+produces the design; and a \textbf{Parse \& Sanitise} Code node that
+validates hex colour values, clamps numeric fields, and applies safe
+defaults for any missing properties. The sanitised object is returned
+synchronously to the backend, which persists it and streams it back to
+the editor. Figure~\ref{fig:seq-ai-redesign-design} shows the
+interaction sequence at the design level.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{diagrams/seq-ai-redesign.png}
+  \caption{AI storefront redesign --- interaction sequence}
+  \label{fig:seq-ai-redesign-design}
+\end{figure}
+
 \section{Class Diagram}
 
 Figure~\ref{fig:class-diagram} presents the UML class diagram of
@@ -1792,6 +1837,56 @@ and monitor incoming orders.
 
 \subsection{Database Chat Assistant}
 % TODO
+
+\subsection{N8N Workflow --- AI Storefront Redesign}
+
+The AI Storefront Redesign workflow allows a seller to regenerate their
+entire store visual identity by providing a short natural-language prompt
+from inside the Craft.js editor. The sequence is illustrated in
+Figure~\ref{fig:seq-ai-redesign}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{diagrams/seq-ai-redesign.png}
+  \caption{Sequence diagram --- AI storefront redesign workflow}
+  \label{fig:seq-ai-redesign}
+\end{figure}
+
+The seller clicks the \textit{AI Redesign} button in the editor toolbar,
+which opens a dialog prompting for a short description of the desired
+aesthetic (e.g.\ \textit{"dark luxury jewellery brand with gold accents"}).
+The React frontend calls \texttt{POST /store/:id/ai-redesign}, passing the
+prompt alongside the store name and description for context.
+
+On the backend, the NestJS Store Module forwards the request to the
+\textbf{cheebo-store-redesign} n8n webhook.
+The workflow consists of three nodes:
+
+\begin{enumerate}
+  \item \textbf{Build Prompt} --- a Code node that constructs a
+        system-level instruction enforcing a strict JSON schema matching
+        the \texttt{StoreCustomization} type. The schema covers every
+        configurable section: theme colours and fonts, announcement bar,
+        banner, header, product grid, sidebar, and footer.
+
+  \item \textbf{AI Agent} --- an AI Agent node connected to the Groq
+        \texttt{llama-3.3-70b-versatile} model. The agent receives the
+        assembled system prompt and the seller's free-text request, then
+        returns a JSON object conforming to the \texttt{StoreCustomization}
+        schema.
+
+  \item \textbf{Parse \& Sanitise} --- a Code node that parses the raw
+        LLM output, validates all hex colour values with a regex, clamps
+        numeric fields to valid ranges, and falls back to safe defaults for
+        any field that is missing or malformed.
+\end{enumerate}
+
+The sanitised \texttt{StoreCustomization} object is returned to the NestJS
+backend, which merges it with the store defaults and persists it through
+the existing \texttt{updateCustomization} path. The frontend then calls
+\texttt{hydrateCustomization()} on the response and applies the result
+directly to the Craft.js editor, giving the seller an immediate live
+preview of the AI-generated design without a page reload.
 
 \subsection{Google Gemini / Groq Integration}
 % TODO

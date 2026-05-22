@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1779422184.59477 "/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex" "rapport.pdf" "rapport" 1779422186.92186 0
+["pdflatex"] 1779423813.49815 "/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex" "rapport.pdf" "rapport" 1779423816.06107 0
   "/etc/texmf/web2c/texmf.cnf" 1778890407.78952 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex" 1779422013.91604 90002 d0559057d95fcd2e056f80ccfde03cde ""
+  "/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex" 1779423743.3485 94797 9b0719ab08288c546f82a5b1375fdb63 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -138,6 +138,7 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1769369718 41603 27f93b3067076450172040dcd57ca8b3 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1779209046 5541477 3118940318599480888143717dd32d64 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1779209152 3640504 518663036cddac089ef91e683d87e538 ""
+  "diagrams/seq-ai-redesign.png" 1779422833.07713 78283 8b88662a18e7053a5f16435695652578 ""
   "images/NeutalBey logo.jpeg" 1779202701.281 8463 752de796e27e1d5722bc4763f035da25 ""
   "images/TEK-UP logo.png" 1779202638.8811 5027 911b3e15967b1cb4e996551937b7304a ""
   "images/docker.png" 1779399332.00454 6681 f1d7999586d2718c79ba595ae0d699ca ""
@@ -156,12 +157,12 @@
   "images/uc-global.png" 1779391451.06361 136006 be364d284a8589e3bcaf9cdd3bc6a990 ""
   "images/uc-seller.png" 1779392225.82765 46579 e6bfee20f6326de9de77cfd59c66cea5 ""
   "images/vscode.png" 1779399331.79754 5720 76f8413e1a0081c96961f21ba65f6ee9 ""
-  "rapport.aux" 1779422186.83903 26879 7aafc5983ff02571acfef8d4b2912bc8 "pdflatex"
-  "rapport.lof" 1779422186.84269 3269 260d504139b8dafa98716e1fecb12f16 "pdflatex"
-  "rapport.lot" 1779422186.84269 678 1d13cc2fd668564136f63ab79a0200d6 "pdflatex"
-  "rapport.out" 1779422186.84103 24182 ddf49c6ac4219b769a67f3898ede7993 "pdflatex"
-  "rapport.tex" 1779422013.91604 90002 d0559057d95fcd2e056f80ccfde03cde ""
-  "rapport.toc" 1779422186.84269 11875 d38c56a731e1b08db111ca2edd20c5b3 "pdflatex"
+  "rapport.aux" 1779423815.98277 27754 417b6d8cc38f38dae4d5cf22c5a22f9d "pdflatex"
+  "rapport.lof" 1779423815.98631 3532 47f2d499591a5e430023bb9a8d0d20d4 "pdflatex"
+  "rapport.lot" 1779423815.98631 678 1d13cc2fd668564136f63ab79a0200d6 "pdflatex"
+  "rapport.out" 1779423815.98539 24675 abfc99b194e8a38fc2a1addf6730302a "pdflatex"
+  "rapport.tex" 1779423743.3485 94797 9b0719ab08288c546f82a5b1375fdb63 ""
+  "rapport.toc" 1779423815.98631 12087 3e014be7f76dd95159d7442487de48fb "pdflatex"
   (generated)
   "rapport.aux"
   "rapport.lof"

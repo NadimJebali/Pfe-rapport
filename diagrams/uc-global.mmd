@@ -15,6 +15,7 @@ flowchart LR
       UC_PROD(["Manage products"])
       UC_AN(["View seller analytics"])
       UC_UPG(["Upgrade to premium tier"])
+      UC_SALE(["Run store promotion"])
       UC_REV(["Review seller applications"])
       UC_MOD(["Moderate stores & products"])
       UC_SUSP(["Suspend / delete store"])
@@ -36,6 +37,7 @@ flowchart LR
     S --> UC_PROD
     S --> UC_AN
     S --> UC_UPG
+    S --> UC_SALE
 
     A --> UC_AUTH
     A --> UC_REV
@@ -57,6 +59,6 @@ flowchart LR
     class C,S,A actor
     class UC_AUTH shared
     class UC_BROWSE,UC_ORDER,UC_CHAT,UC_APPLY customer
-    class UC_STORE,UC_PROD,UC_AN,UC_UPG seller
+    class UC_STORE,UC_PROD,UC_AN,UC_UPG,UC_SALE seller
     class UC_REV,UC_MOD,UC_SUSP,UC_FEAT admin
     class AI_V aicase

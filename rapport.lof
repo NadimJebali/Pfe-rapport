@@ -17,21 +17,23 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces BetterAuth authentication flow}}{46}{figure.caption.23}%
 \contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow --- AI verification}}{47}{figure.caption.24}%
 \contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow --- Database chat assistant}}{48}{figure.caption.25}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Class diagram}}{49}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces AI storefront redesign --- interaction sequence}}{49}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Class diagram}}{50}{figure.caption.27}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{50}{figure.caption.27}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{51}{figure.caption.28}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{52}{figure.caption.29}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{53}{figure.caption.30}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{54}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Store dashboard}}{55}{figure.caption.32}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces AI verification panel}}{56}{figure.caption.33}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Analytics page}}{57}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{51}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{52}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{53}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{54}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Sequence diagram --- AI storefront redesign workflow}}{55}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Landing page}}{56}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Store dashboard}}{57}{figure.caption.34}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces AI verification panel}}{58}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Analytics page}}{59}{figure.caption.36}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{58}{figure.caption.35}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{60}{figure.caption.36}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{60}{figure.caption.37}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{62}{figure.caption.38}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{60}{figure.caption.37}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{62}{figure.caption.38}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{62}{figure.caption.39}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{64}{figure.caption.40}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
