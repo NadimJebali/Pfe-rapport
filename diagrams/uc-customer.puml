@@ -1,4 +1,4 @@
-@startuml
+@startuml uc-customer
 !pragma layout smetana
 
 skinparam defaultFontName Helvetica
@@ -40,8 +40,7 @@ rectangle "Customer-facing Features" {
   (Checkout)                  as UC10 #FEF3C7
   (Place an order)            as UC11 #FDE68A
   (View order history)        as UC12 #FEF3C7
-  (Chat with AI assistant)    as UC13 #FEF3C7
-  (Submit seller application) as UC14 #FEF3C7
+  (Submit seller application) as UC13 #FEF3C7
 }
 
 Customer --> UC1
@@ -55,7 +54,6 @@ Customer --> UC9
 Customer --> UC10
 Customer --> UC12
 Customer --> UC13
-Customer --> UC14
 
 UC1  .> UC2  : <<include>>
 UC10 .> UC11 : <<include>>

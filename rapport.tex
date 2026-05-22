@@ -25,7 +25,7 @@
 % ── Graphics ────────────────────────────────────────────────
 \usepackage{graphicx}
 \usepackage{float}
-\graphicspath{{images/}}          % put all images in ./images/
+\graphicspath{{diagrams/}{images/}}   % search diagrams/ first, then images/
 
 % ── Colors ──────────────────────────────────────────────────
 \usepackage[dvipsnames]{xcolor}
@@ -132,6 +132,7 @@
 \usepackage{subcaption}
 \usepackage{pifont}       % checkmarks etc.
 \usepackage{mdframed}     % info boxes
+\usepackage{pdflscape}    % single landscape pages for wide diagrams
 
 % Placeholder box (used wherever a real image is not yet available)
 \newcommand{\imagePlaceholder}[2][8cm]{%
@@ -560,9 +561,10 @@ Sellers create a store in minutes, populate it with products and
 tags, and benefit from automatic AI verification that surfaces a
 trust badge to potential buyers. Administrators review borderline
 cases through a dedicated dashboard, suspend stores when needed, and
-override automated decisions. Customers browse a unified catalogue,
-place orders across multiple sellers in a single checkout, and
-interact with an in-app AI assistant for discovery and support.
+override automated decisions, and query the database through an
+in-app AI chat assistant for operational insights. Customers browse
+a unified catalogue and place orders across multiple sellers in a
+single checkout.
 
 \subsection{Key Differentiators}
 
@@ -571,8 +573,9 @@ the previous section:
 
 \begin{enumerate}[label=\textbf{D\arabic*.},leftmargin=*,itemsep=2pt]
   \item \textbf{AI verification of stores and products} via an n8n
-        workflow that calls a hosted LLM and writes back an
-        \texttt{adminReviewed} flag plus a textual rationale.
+        workflow that calls a hosted LLM and writes back the
+        \texttt{aiReviewed} flag plus a textual \texttt{aiReviewNote}
+        rationale.
   \item \textbf{Lightweight seller onboarding} through a seller
         application form reviewed by administrators, with a free tier
         offering a single store at zero cost.
@@ -830,7 +833,7 @@ workflow automation, and API testing.
 \hfill
 \toolcard{docker.png}{Docker}
   {An open platform for developing, shipping, and running applications inside isolated
-   containers. It was used to containerise all services — PostgreSQL, the NestJS backend,
+   containers. It was used to containerise all services — MariaDB, the NestJS backend,
    the React frontend, and the n8n workflow engine — ensuring parity between development
    and production environments.}
   {docker.com}
@@ -954,7 +957,7 @@ the platform through a database-aware AI chat assistant.
 
 \section{Functional Requirements}
 
-The functional requirements are grouped into eight domains. Each
+The functional requirements are grouped into seven domains. Each
 domain corresponds to a NestJS module on the backend and to a
 matching set of pages on the React frontend; the mapping is made
 explicit in Chapter~3.
@@ -1057,9 +1060,10 @@ explicit in Chapter~3.
         MIME types, with a configurable maximum file size.
   \item Each product shall support an arbitrary number of tags used
         by the recommendation engine.
-  \item Each product shall carry an \texttt{AIReviewed} flag
-        controlled by the AI verification pipeline and overridable
-        by an Administrator.
+  \item Each product shall carry two review flags: \texttt{aiReviewed},
+        set automatically by the AI verification pipeline, and
+        \texttt{adminReviewed}, set when an Administrator manually
+        overrides the AI verdict.
   \item Products shall be browsable by category and sub-category.
 \end{enumerate}
 
@@ -1163,12 +1167,14 @@ application \emph{triggers} an administrative review
 (\texttt{<<triggers>>}), and product creation is automatically
 \emph{verified by AI} (\texttt{<<verified by AI>>}).
 
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{uc-global.png}
-  \caption{Global use case diagram}
+  \includegraphics[width=0.95\linewidth,keepaspectratio]{uc-global.png}
+  \caption{Global use case diagram (detailed)}
   \label{fig:uc-global}
 \end{figure}
+\end{landscape}
 
 \subsection{Detailed Use Cases — Customer}
 
@@ -1180,7 +1186,7 @@ session.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uc-customer.png}
+  \includegraphics[height=0.78\textheight,keepaspectratio]{uc-customer.png}
   \caption{Customer use cases}
   \label{fig:uc-customer}
 \end{figure}
@@ -1194,7 +1200,7 @@ gating conditions that govern the seller funnel.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uc-seller.png}
+  \includegraphics[height=0.78\textheight,keepaspectratio]{uc-seller.png}
   \caption{Seller use cases}
   \label{fig:uc-seller}
 \end{figure}
@@ -1208,7 +1214,7 @@ authority on every override, suspension and deletion.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uc-admin.png}
+  \includegraphics[height=0.78\textheight,keepaspectratio]{uc-admin.png}
   \caption{Administrator use cases}
   \label{fig:uc-admin}
 \end{figure}
@@ -1519,10 +1525,9 @@ MoSCoW priority and the estimated complexity.
 
 This chapter formalised the requirements of the Cheebo platform.
 The three system actors were identified and their responsibilities
-delimited. Functional requirements were grouped into eight domains
+delimited. Functional requirements were grouped into seven domains
 --- authentication, store management, product management, orders,
-administration, AI verification, store sales and promotions, and
-featured content curation ---
+administration, AI verification, and featured content curation ---
 and expressed
 both as structured requirement statements and as a user-story
 Product Backlog with MoSCoW priorities and complexity estimates.
@@ -1903,7 +1908,11 @@ preview of the AI-generated design without a page reload.
 
 \section{Interface Screenshots}
 
-\subsection{Landing Page}
+This section presents screenshots of the deployed platform, grouped by
+the three user roles (customer, seller, administrator) and a final
+group covering the AI assistant.
+
+\subsection{Customer Experience}
 
 Figure~\ref{fig:landing} shows the Cheebo public landing page, which
 surfaces featured stores, featured products, and the tag-based
@@ -1912,12 +1921,68 @@ the catalogue, login, and cart.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[8cm]{Screenshot — Cheebo landing page}
+  \imagePlaceholder[8cm]{Screenshot — Cheebo landing page (hero, featured stores, recommended products)}
   \caption{Landing page}
   \label{fig:landing}
 \end{figure}
 
-\subsection{Store Dashboard}
+Figure~\ref{fig:stores-listing} shows the global stores listing page,
+with the search bar, store cards, and the active-sale badges
+displayed on stores currently running a promotion.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Stores listing page with sale badges on cards}
+  \caption{Stores listing page}
+  \label{fig:stores-listing}
+\end{figure}
+
+Figure~\ref{fig:product-browse} shows the category-filtered products
+browse page, with sidebar filters (category, sub-category, price
+range, sort) and the product grid displaying discounted prices on
+products belonging to stores that have activated a sale.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Category browse with filters and product grid}
+  \caption{Product browse page}
+  \label{fig:product-browse}
+\end{figure}
+
+Figure~\ref{fig:product-detail} shows the product detail page,
+with the image carousel, description, tags, stock indicator,
+sale price (when applicable), and the \textit{Add to cart} action.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Product detail page with sale price and add-to-cart}
+  \caption{Product detail page}
+  \label{fig:product-detail}
+\end{figure}
+
+Figure~\ref{fig:search} shows the global \texttt{Ctrl+K} search
+dialog (\texttt{cmdk}), which surfaces both products and stores in
+real time as the customer types.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[6cm]{Screenshot — Ctrl+K command palette showing product and store results}
+  \caption{Global search dialog}
+  \label{fig:search}
+\end{figure}
+
+Figure~\ref{fig:checkout} shows the checkout page with the
+multi-store cart summary, shipping form, per-store subtotal lines,
+and the order total reflecting active sale discounts.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Checkout page with multi-store cart and shipping form}
+  \caption{Checkout page}
+  \label{fig:checkout}
+\end{figure}
+
+\subsection{Seller Dashboard}
 
 Figure~\ref{fig:store-dashboard} presents the seller store dashboard,
 from which a seller can monitor live store metrics, access the
@@ -1925,12 +1990,90 @@ customisation editor, and review recent order activity.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[8cm]{Screenshot — Seller store dashboard}
+  \imagePlaceholder[8cm]{Screenshot — Seller store dashboard with metrics and quick actions}
   \caption{Store dashboard}
   \label{fig:store-dashboard}
 \end{figure}
 
-\subsection{AI Verification Panel}
+Figure~\ref{fig:craft-editor} shows the Craft.js WYSIWYG storefront
+editor, with the sections panel on the left, the live canvas in the
+centre, and the settings panel on the right. Selecting any section
+on the canvas opens its inspector.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Craft.js storefront editor (3-column layout)}
+  \caption{WYSIWYG storefront editor}
+  \label{fig:craft-editor}
+\end{figure}
+
+Figure~\ref{fig:ai-redesign} shows the AI Redesign dialog, in which
+a seller submits a natural-language prompt to regenerate the
+storefront design end-to-end.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[6cm]{Screenshot — AI Redesign dialog with prompt input}
+  \caption{AI Redesign dialog}
+  \label{fig:ai-redesign}
+\end{figure}
+
+Figure~\ref{fig:sale-panel} shows the Sale configuration panel,
+where a seller toggles the store-wide sale, sets the discount
+percentage, custom label, and optional expiry date.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Sale panel with percentage, label and expiry controls}
+  \caption{Store-wide sale configuration panel}
+  \label{fig:sale-panel}
+\end{figure}
+
+Figure~\ref{fig:product-mgmt} shows the seller's product management
+panel with the list view, create/edit form, image upload, and
+tag selector.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Seller product management (list + create/edit form)}
+  \caption{Product management}
+  \label{fig:product-mgmt}
+\end{figure}
+
+Figure~\ref{fig:analytics} shows the per-store analytics page
+available to sellers, displaying revenue trends, top-selling
+products, order volumes, and visitor statistics.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Seller analytics page (revenue chart, top products)}
+  \caption{Analytics page}
+  \label{fig:analytics}
+\end{figure}
+
+\subsection{Administrator Tools}
+
+Figure~\ref{fig:admin-overview} shows the admin dashboard landing
+page, with platform-wide metrics, the navigation to every admin
+panel, and the recent activity feed.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Admin dashboard overview with metrics and navigation}
+  \caption{Admin dashboard overview}
+  \label{fig:admin-overview}
+\end{figure}
+
+Figure~\ref{fig:seller-apps} shows the seller applications review
+panel, where the admin reviews each application's profile, store
+proposal, and approves or rejects with a moderation note.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Seller applications review panel}
+  \caption{Seller applications panel}
+  \label{fig:seller-apps}
+\end{figure}
 
 Figure~\ref{fig:ai-panel} illustrates the AI verification panel
 available to administrators. Each entry displays the entity name,
@@ -1939,22 +2082,68 @@ the administrator to confirm or reverse the automated decision.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[8cm]{Screenshot — AI verification panel (admin)}
+  \imagePlaceholder[8cm]{Screenshot — AI verification panel with verdict, rationale, override controls}
   \caption{AI verification panel}
   \label{fig:ai-panel}
 \end{figure}
 
-\subsection{Analytics Page}
-
-Figure~\ref{fig:analytics} shows the per-store analytics page
-available to sellers, displaying revenue trends, top-selling
-products, order volumes, and visitor statistics.
+Figure~\ref{fig:users-panel} shows the users management panel,
+where the admin views every registered user, filters by role, and
+changes role assignments.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[8cm]{Screenshot — Analytics page}
-  \caption{Analytics page}
-  \label{fig:analytics}
+  \imagePlaceholder[8cm]{Screenshot — Users management panel (list + role assignment)}
+  \caption{Users panel}
+  \label{fig:users-panel}
+\end{figure}
+
+Figure~\ref{fig:stores-mod} shows the stores moderation panel,
+where the admin can suspend, reactivate, or cascade-delete a store
+with an attached reason logged to \texttt{StoreStatusLog}.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Stores moderation panel (suspend / reactivate / delete actions)}
+  \caption{Stores moderation panel}
+  \label{fig:stores-mod}
+\end{figure}
+
+Figure~\ref{fig:categories-panel} shows the categories and
+sub-categories management panel, with create, rename, reorder, and
+delete actions.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Categories and sub-categories management panel}
+  \caption{Categories panel}
+  \label{fig:categories-panel}
+\end{figure}
+
+Figure~\ref{fig:home-curate} shows the home-page curation panel,
+where the admin selects the featured stores and products that appear
+on the landing page hero.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Home-page curation panel (featured stores and products)}
+  \caption{Featured content curation panel}
+  \label{fig:home-curate}
+\end{figure}
+
+\subsection{AI Assistant}
+
+Figure~\ref{fig:ai-chat} shows the floating AI Chat assistant
+(\texttt{AiChatFab}), a docked button on the administrator dashboard
+that opens a conversational panel where the administrator can query
+the database in natural language (orders, users, products, stores,
+verification queues) for operational insights.
+
+\begin{figure}[H]
+  \centering
+  \imagePlaceholder[8cm]{Screenshot — Floating AI chat assistant (FAB + open panel)}
+  \caption{AI chat assistant}
+  \label{fig:ai-chat}
 \end{figure}
 
 % ============================================================

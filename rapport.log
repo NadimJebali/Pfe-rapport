@@ -1,10 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  22 MAY 2026 05:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  22 MAY 2026 21:35
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex"
-(/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex
+**rapport.tex
+(./rapport.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
@@ -24,31 +23,45 @@ File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
-) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
-) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-) (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2026/01/18 v26.1 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
+)
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2026/01/18 v26.1 The multilingual framework for LuaLaTeX, pdfLaT
+eX and XeLaTeX
 \babel@savecnt=\count284
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2078.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2080.
-LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2082.
-LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input line 2083.
-LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) on input line 2084.
-LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) on input line 2086.
-LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2111.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
+ne 2078.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
+ne 2080.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
+e 2082.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
+e 2083.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
+on input line 2084.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
+on input line 2086.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
+on input line 2111.
 \U@D=\dimen149
 \l@unhyphenated=\language90
- (/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
 \bbl@dirlevel=\count285
- (/usr/share/texlive/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing font and identification data for english
 (babel)             from babel-en.ini. Reported on input line 4330.
- (/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
@@ -56,7 +69,8 @@ Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
 (babel)             (\language68). Reported on input line 105.
 Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
 (babel)             (\language68). Reported on input line 108.
-)) (/usr/share/texmf/tex/latex/lm/lmodern.sty
+))
+(/usr/share/texmf/tex/latex/lm/lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -90,14 +104,18 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
-) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
 \Gm@cnth=\count286
@@ -112,37 +130,47 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \Gm@layouthoffset=\dimen156
 \Gm@layoutvoffset=\dimen157
 \Gm@dimlist=\toks20
-) (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2022/12/04 v6.7b set line spacing
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen158
 \Gin@req@width=\dimen159
-) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count289
 \float@exts=\toks21
 \float@box=\box53
 \@float@everytoks=\toks22
 \@floatcapt=\box54
-) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1365.
@@ -152,9 +180,11 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/dvipsnam.def
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
-) (/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \ttl@box=\box55
 \beforetitleunit=\skip51
@@ -165,8 +195,10 @@ Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \titlewidth=\dimen162
 \titlewidthlast=\dimen163
 \titlewidthfirst=\dimen164
-) (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
 \f@nch@headwidth=\skip53
 \f@nch@offset@elh=\skip54
 \f@nch@offset@erh=\skip55
@@ -182,7 +214,8 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthC=\skip65
 \f@nch@widthR=\skip66
 \@temptokenb=\toks24
-) (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
 \cftparskip=\skip67
@@ -221,54 +254,73 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforetabskip=\skip98
 \cfttabindent=\skip99
 \cfttabnumwidth=\skip100
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
- (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count292
-) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count293
-) (/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
 )
 \@linkdim=\dimen165
 \Hy@linkcounter=\count294
 \Hy@pagecounter=\count295
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count296
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -282,16 +334,20 @@ Package hyperref Info: Backreferencing OFF on input line 4215.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4462.
 \c@Hy@tempcnt=\count297
- (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4801.
 \XeTeXLinkMargin=\dimen166
- (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
 \Fld@menulength=\count298
 \Field@Width=\dimen167
@@ -308,19 +364,24 @@ Package hyperref Info: PDF/A mode OFF on input line 6108.
 \c@Hfootnote=\count301
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
 \Fld@listcount=\count302
 \c@bookmark@seq@number=\count303
- (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
 )
 \Hy@SectionHShift=\skip101
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count304
 \lst@gtempboxa=\box56
 \lst@token=\toks25
@@ -333,14 +394,17 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \lst@newlines=\count308
 \lst@lineno=\count309
 \lst@maxwidth=\dimen172
- (/usr/share/texlive/texmf-dist/tex/latex/listings/lstpatch.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstpatch.sty
 File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
 \c@lstnumber=\count310
 \lst@skipnumbers=\count311
 \lst@framebox=\box57
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2025/11/14 1.11b listings configuration
 ))
 Package: listings 2025/11/14 1.11b (Carsten Heinz)
@@ -370,9 +434,11 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count314
 \@lastruleclass=\count315
 \@thisrulewidth=\dimen185
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
- (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen186
 \ar@mcellbox=\box58
@@ -389,13 +455,15 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \TX@delta=\dimen192
 \TX@cols=\count316
 \TX@ftn=\toks27
-) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip104
 \multirow@cntb=\count317
 \multirow@dima=\skip105
 \bigstrutjot=\dimen193
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
 \LTleft=\skip106
 \LTright=\skip107
@@ -413,17 +481,20 @@ Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
 \c@LT@tables=\count321
 \c@LT@chunks=\count322
 \LT@p@ftn=\toks28
-) (/usr/share/texlive/texmf-dist/tex/latex/makecell/makecell.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/makecell/makecell.sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen195
 \c@nlinenum=\count323
 \TeXr@lab=\toks29
-) (/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
 \everycr=\toks30
 \minrowclearance=\skip110
 \rownum=\count324
-) (/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
 \labelindent=\skip111
 \enit@outerparindent=\dimen196
@@ -431,9 +502,11 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@inbox=\box65
 \enit@count@id=\count325
 \enitdp@description=\count326
-) (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
- (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@tempdima=\dimen197
 \captionmargin=\dimen198
@@ -451,39 +524,54 @@ Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
- (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
-)) (/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
 \c@subfigure=\count329
 Package caption Info: New subtype `subtable' on input line 238.
 \c@subtable=\count330
-) (/usr/share/texlive/texmf-dist/tex/latex/psnfss/pifont.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/pifont.sty
 Package: pifont 2020/03/25 PSNFSS-v9.3 Pi font support (SPQR) 
 LaTeX Font Info:    Trying to load font information for U+pzd on input line 63.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/upzd.fd
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/upzd.fd
 File: upzd.fd 2001/06/04 font definitions for U/pzd.
 )
 LaTeX Font Info:    Trying to load font information for U+psy on input line 64.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/upsy.fd
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/upsy.fd
 File: upsy.fd 2001/06/04 font definitions for U/psy.
-)) (/usr/share/texlive/texmf-dist/tex/latex/mdframed/mdframed.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
- (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2026-01-19 L3 programming layer (loader) 
- (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count331
 ))
 Package: xparse 2025-10-09 L3 Experimental document command parser
-) (/usr/share/texlive/texmf-dist/tex/latex/zref/zref-abspage.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/zref/zref-abspage.sty
 Package: zref-abspage 2025-06-08 v2.36 Module abspage for zref (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/zref/zref-base.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/zref/zref-base.sty
 Package: zref-base 2025-06-08 v2.36 Module base for zref (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 Package zref Info: New property list: main on input line 767.
@@ -492,7 +580,8 @@ Package zref Info: New property: page on input line 769.
 )
 \c@abspage=\count332
 Package zref Info: New property: abspage on input line 67.
-) (/usr/share/texlive/texmf-dist/tex/latex/needspace/needspace.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/needspace/needspace.sty
 Package: needspace 2025/03/13 v1.3e reserve vertical space
 )
 \mdf@templength=\skip112
@@ -536,7 +625,8 @@ Package: needspace 2025/03/13 v1.3e reserve vertical space
 \mdf@subsubtitlebelowskip@length=\skip149
 \mdf@subsubtitleinneraboveskip@length=\skip150
 \mdf@subsubtitleinnerbelowskip@length=\skip151
- (/usr/share/texlive/texmf-dist/tex/latex/mdframed/md-frame-0.mdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/mdframed/md-frame-0.mdf
 File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 )
 \mdf@frametitlebox=\box66
@@ -583,30 +673,44 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \c@mdf@zref@counter=\count338
 Package zref Info: New property: mdf@pagevalue on input line 895.
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 177.
- (/usr/share/texmf/tex/latex/lm/t1lmr.fd
+(/usr/share/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2025-06-23 v0.14 Display of landscape pages in PDF
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2025-06-23 v0.14 Display of landscape pages in PD
+F (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 17
+8.
+
+(/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./rapport.aux)
 \openout1 = `rapport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 177.
-LaTeX Font Info:    ... okay on input line 177.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -657,12 +761,16 @@ LaTeX Font Info:    ... okay on input line 177.
 \everyMPtoPDFconversion=\toks33
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
-Package hyperref Info: Link coloring ON on input line 177.
- (./rapport.out) (./rapport.out)
+Package hyperref Info: Link coloring ON on input line 178.
+
+(./rapport.out) (./rapport.out)
 \@outlinefile=\write3
 \openout3 = `rapport.out'.
 
@@ -672,61 +780,70 @@ Package caption Info: End \AtBeginDocument code.
 <images/TEK-UP logo.png, id=540, 228.855pt x 221.82875pt>
 File: images/TEK-UP logo.png Graphic file (type png)
 <use images/TEK-UP logo.png>
-Package pdftex.def Info: images/TEK-UP logo.png  used on input line 209.
+Package pdftex.def Info: images/TEK-UP logo.png  used on input line 210.
 (pdftex.def)             Requested size: 73.38176pt x 71.13188pt.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 210.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
+11.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 210.
- (/usr/share/texmf/tex/latex/lm/omllmm.fd
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
+11.
+
+(/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 210.
- (/usr/share/texmf/tex/latex/lm/omslmsy.fd
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+211.
+
+(/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 210.
- (/usr/share/texmf/tex/latex/lm/omxlmex.fd
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+211.
+
+(/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 210.
+(Font)              <12> on input line 211.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 210.
+(Font)              <8> on input line 211.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 210.
+(Font)              <6> on input line 211.
 <images/NeutalBey logo.jpeg, id=541, 401.5pt x 401.5pt>
 File: images/NeutalBey logo.jpeg Graphic file (type jpg)
 <use images/NeutalBey logo.jpeg>
-Package pdftex.def Info: images/NeutalBey logo.jpeg  used on input line 213.
+Package pdftex.def Info: images/NeutalBey logo.jpeg  used on input line 214.
 (pdftex.def)             Requested size: 71.12737pt x 71.13188pt.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc} <./images/TEK-UP logo.png> <./images/NeutalBey logo.jpeg>]
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/
+dvips/lm/lm-ec.enc} <./images/TEK-UP logo.png> <./images/NeutalBey logo.jpeg>]
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.251 \newpage
+l.252 \newpage
                [1] [2
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 270--271
+Underfull \hbox (badness 10000) in paragraph at lines 271--272
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--273
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 274--275
+Underfull \hbox (badness 10000) in paragraph at lines 275--276
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--277
+Underfull \hbox (badness 10000) in paragraph at lines 277--278
 
  []
 
@@ -738,388 +855,498 @@ Underfull \hbox (badness 10000) in paragraph at lines 276--277
 \tf@toc=\write4
 \openout4 = `rapport.toc'.
 
- [8] (./rapport.lof)
+ [8] (./rapport.lof [9])
 \tf@lof=\write5
 \openout5 = `rapport.lof'.
 
- [9] (./rapport.lot)
+ [10] (./rapport.lot)
 \tf@lot=\write6
 \openout6 = `rapport.lot'.
 
- [10] [11
+ [11] [12
 
-] [12
+] [13
 
 ]
 Chapter 1.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 376.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
+77.
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [13
+) [14
 
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] [14] [15]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 541.
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] [15] [16]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
+42.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [16{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
-Overfull \hbox (4.26363pt too wide) in paragraph at lines 593--597
-\T1/lmr/m/n/12 raform on Dig-i-talO-cean, and GitHub Ac-tions CI/CD --- demon-strat-ing production-
+) [17{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
+Overfull \hbox (4.26363pt too wide) in paragraph at lines 596--600
+\T1/lmr/m/n/12 raform on Dig-i-talO-cean, and GitHub Ac-tions CI/CD --- demon-s
+trat-ing production-
  []
 
-[17] [18]
-<images/scrum-framework.png, id=852, 1193.45876pt x 664.4825pt>
+[18] [19]
+<images/scrum-framework.png, id=888, 1193.45876pt x 664.4825pt>
 File: images/scrum-framework.png Graphic file (type png)
 <use images/scrum-framework.png>
-Package pdftex.def Info: images/scrum-framework.png  used on input line 704.
+Package pdftex.def Info: images/scrum-framework.png  used on input line 707.
 (pdftex.def)             Requested size: 374.86775pt x 208.71487pt.
- [19] [20 <./images/scrum-framework.png>]
-<images/github.png, id=862, 562.1pt x 562.1pt>
+ [20] [21 <./images/scrum-framework.png>]
+<images/github.png, id=898, 562.1pt x 562.1pt>
 File: images/github.png Graphic file (type png)
 <use images/github.png>
-Package pdftex.def Info: images/github.png  used on input line 816.
+Package pdftex.def Info: images/github.png  used on input line 819.
 (pdftex.def)             Requested size: 34.13623pt x 34.13623pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 816.
+(Font)              <10.95> on input line 819.
 
-Underfull \hbox (badness 1616) in paragraph at lines 816--816
+Underfull \hbox (badness 1616) in paragraph at lines 819--819
 \T1/lmr/m/n/10.95 and col-lab-o-ra-tive soft-ware de-vel-op-ment
  []
 
-<images/notion.png, id=864, 513.92pt x 513.92pt>
+<images/notion.png, id=900, 513.92pt x 513.92pt>
 File: images/notion.png Graphic file (type png)
 <use images/notion.png>
-Package pdftex.def Info: images/notion.png  used on input line 822.
+Package pdftex.def Info: images/notion.png  used on input line 825.
 (pdftex.def)             Requested size: 34.1431pt x 34.1431pt.
 
-Underfull \hbox (badness 4266) in paragraph at lines 822--822
+Underfull \hbox (badness 4266) in paragraph at lines 825--825
 \T1/lmr/m/n/10.95 bin-ing notes, databases, and kan-ban
  []
 
-[21]
-<images/vscode.png, id=871, 120.45pt x 120.45pt>
+[22]
+<images/vscode.png, id=907, 3854.4pt x 3854.4pt>
 File: images/vscode.png Graphic file (type png)
 <use images/vscode.png>
-Package pdftex.def Info: images/vscode.png  used on input line 829.
-(pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
+Package pdftex.def Info: images/vscode.png  used on input line 832.
+(pdftex.def)             Requested size: 34.11172pt x 34.11172pt.
 
-Underfull \hbox (badness 2229) in paragraph at lines 829--829
+Underfull \hbox (badness 2229) in paragraph at lines 832--832
 \T1/lmr/m/n/10.95 ex-tended with plu-g-ins for Type-Script,
  []
 
-<images/docker.png, id=873, 120.45pt x 120.45pt>
+<images/docker.png, id=909, 120.45pt x 120.45pt>
 File: images/docker.png Graphic file (type png)
 <use images/docker.png>
-Package pdftex.def Info: images/docker.png  used on input line 836.
+Package pdftex.def Info: images/docker.png  used on input line 839.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
-<images/terraform.png, id=875, 120.45pt x 120.45pt>
+<images/terraform.png, id=911, 120.45pt x 120.45pt>
 File: images/terraform.png Graphic file (type png)
 <use images/terraform.png>
-Package pdftex.def Info: images/terraform.png  used on input line 843.
+Package pdftex.def Info: images/terraform.png  used on input line 846.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
-<images/n8n.png, id=877, 200.75pt x 200.75pt>
+<images/n8n.png, id=913, 200.75pt x 200.75pt>
 File: images/n8n.png Graphic file (type png)
 <use images/n8n.png>
-Package pdftex.def Info: images/n8n.png  used on input line 849.
+Package pdftex.def Info: images/n8n.png  used on input line 852.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
-<images/postman.png, id=879, 200.75pt x 200.75pt>
+<images/postman.png, id=915, 200.75pt x 200.75pt>
 File: images/postman.png Graphic file (type png)
 <use images/postman.png>
-Package pdftex.def Info: images/postman.png  used on input line 856.
+Package pdftex.def Info: images/postman.png  used on input line 859.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
-<images/pnpm.png, id=881, 160.6pt x 160.6pt>
+<images/pnpm.png, id=917, 160.6pt x 160.6pt>
 File: images/pnpm.png Graphic file (type png)
 <use images/pnpm.png>
-Package pdftex.def Info: images/pnpm.png  used on input line 862.
+Package pdftex.def Info: images/pnpm.png  used on input line 865.
 (pdftex.def)             Requested size: 34.14359pt x 34.14359pt.
 
-Underfull \hbox (badness 2111) in paragraph at lines 862--862
+Underfull \hbox (badness 2111) in paragraph at lines 865--865
 \T1/lmr/m/n/10.95 A fast, disk-efficient pack-age man-ager
  []
 
 
-Underfull \hbox (badness 1024) in paragraph at lines 862--862
+Underfull \hbox (badness 1024) in paragraph at lines 865--865
 \T1/lmr/m/n/10.95 content-addressable store. It man-aged
  []
 
 
-Underfull \hbox (badness 2142) in paragraph at lines 862--862
+Underfull \hbox (badness 2142) in paragraph at lines 865--865
 \T1/lmr/m/n/10.95 all JavaScript de-pen-den-cies across the
  []
 
-[22 <./images/github.png> <./images/notion.png> <./images/vscode.png> <./images/docker.png> <./images/terraform.png> <./images/n8n.png (PNG copy)>]
-Overfull \hbox (10.54784pt too wide) in paragraph at lines 871--875
-[]\T1/lmr/m/n/10.95 Compared with Ju-mia and Tayara, Cheebo dif-fer-en-ti-ates on \T1/lmr/m/it/10.95 AI ver-i-fi-ca-tion\T1/lmr/m/n/10.95 , \T1/lmr/m/it/10.95 lightweight
+[23 <./images/github.png> <./images/notion.png> <./images/vscode.png> <./images
+/docker.png> <./images/terraform.png> <./images/n8n.png (PNG copy)>]
+Overfull \hbox (10.54784pt too wide) in paragraph at lines 874--878
+[]\T1/lmr/m/n/10.95 Compared with Ju-mia and Tayara, Cheebo dif-fer-en-ti-ates 
+on \T1/lmr/m/it/10.95 AI ver-i-fi-ca-tion\T1/lmr/m/n/10.95 , \T1/lmr/m/it/10.95
+ lightweight
  []
 
 
-Overfull \hbox (8.51996pt too wide) in paragraph at lines 875--878
-\T1/lmr/m/n/10.95 around three mile-stones: foun-da-tions, core mar-ket-place, and intelligence-and-delivery. 
+Overfull \hbox (8.51996pt too wide) in paragraph at lines 878--881
+\T1/lmr/m/n/10.95 around three mile-stones: foun-da-tions, core mar-ket-place, 
+and intelligence-and-delivery. 
  []
 
-[23 <./images/postman.png> <./images/pnpm.png>]
+[24 <./images/postman.png> <./images/pnpm.png>]
 Chapter 2.
 
-Overfull \hbox (16.99815pt too wide) in paragraph at lines 900--900
+Overfull \hbox (16.99815pt too wide) in paragraph at lines 903--903
 |\T1/lmr/bx/n/20.74 Chapter 2 Re-quire-ments Anal-y-sis and Spec-
  []
 
 
-Overfull \hbox (9.34709pt too wide) in paragraph at lines 904--910
-[]\T1/lmr/m/it/10.95 This chap-ter iden-ti-fies the three sys-tem ac-tors, for-malises the func-tional and non-functional
+Overfull \hbox (9.34709pt too wide) in paragraph at lines 907--913
+[]\T1/lmr/m/it/10.95 This chap-ter iden-ti-fies the three sys-tem ac-tors, for-
+malises the func-tional and non-functional
  []
 
-[24
+[25
 
 ]
-Overfull \hbox (4.23083pt too wide) in paragraph at lines 990--994
-\T1/lmr/m/n/12 readable slug de-rived from the store name (e.g. \T1/lmtt/m/n/12 /stores/pawsome-pet-foods\T1/lmr/m/n/12 ),
+Overfull \hbox (4.23083pt too wide) in paragraph at lines 993--997
+\T1/lmr/m/n/12 readable slug de-rived from the store name (e.g. \T1/lmtt/m/n/12
+ /stores/pawsome-pet-foods\T1/lmr/m/n/12 ),
  []
 
-[25]
-Overfull \hbox (33.6511pt too wide) in paragraph at lines 998--1000
-[]\T1/lmr/m/n/12 The store sta-tus (ac-tive, pend-ing, sus-pended) shall be per-sisted in a \T1/lmtt/m/n/12 StoreStatusLog
+[26]
+Overfull \hbox (33.6511pt too wide) in paragraph at lines 1001--1003
+[]\T1/lmr/m/n/12 The store sta-tus (ac-tive, pend-ing, sus-pended) shall be per
+-sisted in a \T1/lmtt/m/n/12 StoreStatusLog
  []
 
-[26] [27] [28] [29]
-<images/uc-global.png, id=969, 751.608pt x 419.166pt>
-File: images/uc-global.png Graphic file (type png)
-<use images/uc-global.png>
-Package pdftex.def Info: images/uc-global.png  used on input line 1168.
-(pdftex.def)             Requested size: 441.01773pt x 245.95625pt.
-<images/uc-customer.png, id=971, 481.8pt x 346.896pt>
-File: images/uc-customer.png Graphic file (type png)
-<use images/uc-customer.png>
-Package pdftex.def Info: images/uc-customer.png  used on input line 1183.
-(pdftex.def)             Requested size: 418.96548pt x 301.66475pt.
- [30 <./images/uc-global.png (PNG copy)>]
-<images/uc-seller.png, id=978, 481.8pt x 366.168pt>
-File: images/uc-seller.png Graphic file (type png)
-<use images/uc-seller.png>
-Package pdftex.def Info: images/uc-seller.png  used on input line 1197.
-(pdftex.def)             Requested size: 418.96548pt x 318.4239pt.
- [31 <./images/uc-customer.png (PNG copy)>]
-<images/uc-admin.png, id=984, 1154.3125pt x 762.85pt>
-File: images/uc-admin.png Graphic file (type png)
-<use images/uc-admin.png>
-Package pdftex.def Info: images/uc-admin.png  used on input line 1211.
-(pdftex.def)             Requested size: 418.96548pt x 276.88397pt.
- [32 <./images/uc-seller.png (PNG copy)>]
-Overfull \hbox (72.72166pt too wide) in paragraph at lines 1226--1233
-\T1/lmr/m/n/12 Figure [][]2.5[][] traces the au-then-ti-ca-tion flow. Reg-is-tra-tion cre-ates a \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 row with \T1/lmtt/m/n/12 emailVerified=false
+[27] [28] [29] [30] [31]
+<diagrams/uc-global.png, id=1010, 3539.2225pt x 1583.9175pt>
+File: diagrams/uc-global.png Graphic file (type png)
+<use diagrams/uc-global.png>
+Package pdftex.def Info: diagrams/uc-global.png  used on input line 1173.
+(pdftex.def)             Requested size: 667.64177pt x 298.77228pt.
+ [32
+
+ <./diagrams/uc-global.png (PNG copy)>]
+<diagrams/uc-customer.png, id=1016, 349.305pt x 732.7375pt>
+File: diagrams/uc-customer.png Graphic file (type png)
+<use diagrams/uc-customer.png>
+Package pdftex.def Info: diagrams/uc-customer.png  used on input line 1189.
+(pdftex.def)             Requested size: 261.33318pt x 548.16994pt.
+ [33
+
+ <./diagrams/uc-customer.png (PNG copy)>]
+<diagrams/uc-seller.png, id=1022, 517.935pt x 1122.1925pt>
+File: diagrams/uc-seller.png Graphic file (type png)
+<use diagrams/uc-seller.png>
+Package pdftex.def Info: diagrams/uc-seller.png  used on input line 1203.
+(pdftex.def)             Requested size: 253.00006pt x 548.16994pt.
+ [34 <./diagrams/uc-seller.png (PNG copy)>]
+<diagrams/uc-admin.png, id=1028, 505.89pt x 800.9925pt>
+File: diagrams/uc-admin.png Graphic file (type png)
+<use diagrams/uc-admin.png>
+Package pdftex.def Info: diagrams/uc-admin.png  used on input line 1217.
+(pdftex.def)             Requested size: 346.2315pt x 548.16994pt.
+
+[35 <./diagrams/uc-admin.png (PNG copy)>]
+Overfull \hbox (72.72166pt too wide) in paragraph at lines 1232--1239
+\T1/lmr/m/n/12 Figure [][]2.5[][] traces the au-then-ti-ca-tion flow. Reg-is-tr
+a-tion cre-ates a \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 row with \T1/lmtt/m/n/12 
+emailVerified=false
  []
 
-<images/seq-auth.png, id=990, 3179.88pt x 2549.525pt>
-File: images/seq-auth.png Graphic file (type png)
-<use images/seq-auth.png>
-Package pdftex.def Info: images/seq-auth.png  used on input line 1236.
-(pdftex.def)             Requested size: 441.01773pt x 353.58545pt.
-[33 <./images/uc-admin.png (PNG copy)>]
-<images/seq-order.png, id=996, 3179.88pt x 1638.12pt>
-File: images/seq-order.png Graphic file (type png)
-<use images/seq-order.png>
-Package pdftex.def Info: images/seq-order.png  used on input line 1253.
-(pdftex.def)             Requested size: 441.01773pt x 227.18561pt.
- [34 <./images/seq-auth.png>]
-<images/seq-verify.png, id=1003, 3179.88pt x 1630.09pt>
-File: images/seq-verify.png Graphic file (type png)
-<use images/seq-verify.png>
-Package pdftex.def Info: images/seq-verify.png  used on input line 1272.
-(pdftex.def)             Requested size: 441.01773pt x 226.07195pt.
- [35 <./images/seq-order.png> <./images/seq-verify.png>] [36]
-Overfull \hbox (3.64037pt too wide) in paragraph at lines 1356--1356
+<diagrams/seq-auth.png, id=1034, 953.5625pt x 970.62625pt>
+File: diagrams/seq-auth.png Graphic file (type png)
+<use diagrams/seq-auth.png>
+Package pdftex.def Info: diagrams/seq-auth.png  used on input line 1242.
+(pdftex.def)             Requested size: 441.01773pt x 448.92242pt.
+[36]
+<diagrams/seq-order.png, id=1041, 1023.825pt x 734.745pt>
+File: diagrams/seq-order.png Graphic file (type png)
+<use diagrams/seq-order.png>
+Package pdftex.def Info: diagrams/seq-order.png  used on input line 1259.
+(pdftex.def)             Requested size: 441.01773pt x 316.49475pt.
+ [37 <./diagrams/seq-auth.png (PNG copy)>]
+<diagrams/seq-verify.png, id=1047, 1340.00626pt x 930.47626pt>
+File: diagrams/seq-verify.png Graphic file (type png)
+<use diagrams/seq-verify.png>
+Package pdftex.def Info: diagrams/seq-verify.png  used on input line 1278.
+(pdftex.def)             Requested size: 441.01773pt x 306.23463pt.
+ [38 <./diagrams/seq-order.png (PNG copy)>] [39 <./diagrams/seq-verify.png (PNG
+ copy)>]
+Overfull \hbox (3.64037pt too wide) in paragraph at lines 1362--1362
  []|[]\T1/lmr/bx/n/10.95 Priority[]| 
  []
 
 
-Overfull \hbox (3.64037pt too wide) in paragraph at lines 1365--1365
+Overfull \hbox (3.64037pt too wide) in paragraph at lines 1371--1371
  []|[]\T1/lmr/bx/n/10.95 Priority[]| 
  []
 
 
-Overfull \hbox (8.88327pt too wide) in paragraph at lines 1375--1376
+Overfull \hbox (8.88327pt too wide) in paragraph at lines 1381--1382
  [] 
  []
 
 
-Overfull \hbox (9.8865pt too wide) in paragraph at lines 1437--1438
+Overfull \hbox (9.8865pt too wide) in paragraph at lines 1443--1444
  [] 
  []
 
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1495: ignored error: Infinite glue shrinkage found in box being split [37]
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1495: ignored error: Infinite glue shrinkage found in box being split [38]
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1495: ignored error: Infinite glue shrinkage found in box being split [39] [40]
-Package mdframed Info: Not enough space on this page on input line 1515.
- [41]
+ignored error: Infinite glue shrinkage found in box being split [40]
+ignored error: Infinite glue shrinkage found in box being split [41]
+ignored error: Infinite glue shrinkage found in box being split [42]
+ignored error: Infinite glue shrinkage found in box being split [43] [44]
 Chapter 3.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1556.
+ mdframed uses option nobreak mdframed on input line 1561.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1556.
-[42
+ mdframed uses option nobreak mdframed on input line 1561.
+[45
 
 ]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1576.
+ mdframed uses option nobreak mdframed on input line 1581.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1576.
+ mdframed uses option nobreak mdframed on input line 1581.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1594.
+ mdframed uses option nobreak mdframed on input line 1599.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1594.
- [43]
-Overfull \hbox (5.37354pt too wide) in paragraph at lines 1603--1608
-\T1/lmr/m/n/12 cen-tral \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 en-tity branches into \T1/lmtt/m/n/12 Store\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 SellerApplication\T1/lmr/m/n/12 , and \T1/lmtt/m/n/12 Order\T1/lmr/m/n/12 , while \T1/lmtt/m/n/12 Product
+ mdframed uses option nobreak mdframed on input line 1599.
+ [46]
+Overfull \hbox (5.37354pt too wide) in paragraph at lines 1608--1613
+\T1/lmr/m/n/12 cen-tral \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 en-tity branches in
+to \T1/lmtt/m/n/12 Store\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 SellerApplication\T1/l
+mr/m/n/12 , and \T1/lmtt/m/n/12 Order\T1/lmr/m/n/12 , while \T1/lmtt/m/n/12 Pro
+duct
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1611.
+ mdframed uses option nobreak mdframed on input line 1616.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1611.
-[44] [45]
+ mdframed uses option nobreak mdframed on input line 1616.
+[47] [48]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1659.
+ mdframed uses option nobreak mdframed on input line 1664.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1659.
- [46]
+ mdframed uses option nobreak mdframed on input line 1664.
+ [49]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1676.
+ mdframed uses option nobreak mdframed on input line 1681.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1676.
+ mdframed uses option nobreak mdframed on input line 1681.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1690.
+ mdframed uses option nobreak mdframed on input line 1695.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1690.
- [47]
-<diagrams/seq-ai-redesign.png, id=1073, 1389.19pt x 709.65125pt>
+ mdframed uses option nobreak mdframed on input line 1695.
+ [50]
+<diagrams/seq-ai-redesign.png, id=1115, 1400.23125pt x 816.04875pt>
 File: diagrams/seq-ai-redesign.png Graphic file (type png)
 <use diagrams/seq-ai-redesign.png>
-Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 1718.
-(pdftex.def)             Requested size: 441.01773pt x 225.28468pt.
- [48]
+Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 1723.
+
+(pdftex.def)             Requested size: 441.01773pt x 257.01936pt.
+ [51]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1734.
+ mdframed uses option nobreak mdframed on input line 1739.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1734.
- [49 <./diagrams/seq-ai-redesign.png (PNG copy)>] [50]
+ mdframed uses option nobreak mdframed on input line 1739.
+ [52 <./diagrams/seq-ai-redesign.png (PNG copy)>]
+[53]
 Chapter 4.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1767.
+ mdframed uses option nobreak mdframed on input line 1772.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1767.
-[51
+ mdframed uses option nobreak mdframed on input line 1772.
+[54
 
 ]
-Overfull \hbox (0.94969pt too wide) in paragraph at lines 1782--1787
-\T1/lmr/m/n/12 Every pro-tected route is se-cured through a com-bi-na-tion of \T1/lmtt/m/n/12 AuthGuard \T1/lmr/m/n/12 and the \T1/lmtt/m/n/12 @Roles()
+Overfull \hbox (0.94969pt too wide) in paragraph at lines 1787--1792
+\T1/lmr/m/n/12 Every pro-tected route is se-cured through a com-bi-na-tion of \
+T1/lmtt/m/n/12 AuthGuard \T1/lmr/m/n/12 and the \T1/lmtt/m/n/12 @Roles()
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1790.
+ mdframed uses option nobreak mdframed on input line 1795.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1790.
+ mdframed uses option nobreak mdframed on input line 1795.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1821.
+ mdframed uses option nobreak mdframed on input line 1826.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1821.
-[52]
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1835.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1835.
- [53]
-File: diagrams/seq-ai-redesign.png Graphic file (type png)
-<use diagrams/seq-ai-redesign.png>
-Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 1857.
-(pdftex.def)             Requested size: 441.01773pt x 225.28468pt.
- [54]
-Overfull \hbox (6.72908pt too wide) in paragraph at lines 1879--1884
-[]\T1/lmr/bx/n/12 AI Agent \T1/lmr/m/n/12 --- an AI Agent node con-nected to the Groq \T1/lmtt/m/n/12 llama-3.3-70b-versatile
- []
-
-
-Overfull \hbox (16.69261pt too wide) in paragraph at lines 1891--1897
-\T1/lmr/m/n/12 merges it with the store de-faults and per-sists it through the ex-ist-ing \T1/lmtt/m/n/12 updateCustomization
- []
-
+ mdframed uses option nobreak mdframed on input line 1826.
 [55]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1915.
+ mdframed uses option nobreak mdframed on input line 1840.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1915.
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1928.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1928.
+ mdframed uses option nobreak mdframed on input line 1840.
  [56]
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1942.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1942.
+File: diagrams/seq-ai-redesign.png Graphic file (type png)
+<use diagrams/seq-ai-redesign.png>
+Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 1862.
+
+(pdftex.def)             Requested size: 441.01773pt x 257.01936pt.
  [57]
+Overfull \hbox (6.72908pt too wide) in paragraph at lines 1884--1889
+[]\T1/lmr/bx/n/12 AI Agent \T1/lmr/m/n/12 --- an AI Agent node con-nected to th
+e Groq \T1/lmtt/m/n/12 llama-3.3-70b-versatile
+ []
+
+
+Overfull \hbox (16.69261pt too wide) in paragraph at lines 1896--1902
+\T1/lmr/m/n/12 merges it with the store de-faults and per-sists it through the 
+ex-ist-ing \T1/lmtt/m/n/12 updateCustomization
+ []
+
+[58]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1955.
+ mdframed uses option nobreak mdframed on input line 1924.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1955.
- [58] [59]
+ mdframed uses option nobreak mdframed on input line 1924.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1935.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1935.
+ [59]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1947.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1947.
+ [60]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1958.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1958.
+ [61]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1969.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1969.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1980.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1980.
+ [62]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 1993.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 1993.
+ [63]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2005.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2005.
+ [64]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2016.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2016.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2027.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2027.
+ [65]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2038.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2038.
+ [66]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2049.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2049.
+ [67]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2062.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2062.
+ [68]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2073.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2073.
+ [69]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2085.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2085.
+ [70]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2096.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2096.
+ [71]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2107.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2107.
+ [72]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2118.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2118.
+
+[73]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2129.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2129.
+ [74]
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2144.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2144.
+ [75] [76]
 Chapter 5.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1990.
+ mdframed uses option nobreak mdframed on input line 2179.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1990.
-[60
+ mdframed uses option nobreak mdframed on input line 2179.
+[77
 
 ]
-Overfull \hbox (10.15645pt too wide) in paragraph at lines 2019--2024
-[]\T1/lmr/m/n/12 Both records ref-er-ence \T1/lmtt/m/n/12 digitalocean_droplet.cheebo.ipv4_address \T1/lmr/m/n/12 di-rectly. This
+Overfull \hbox (10.15645pt too wide) in paragraph at lines 2208--2213
+[]\T1/lmr/m/n/12 Both records ref-er-ence \T1/lmtt/m/n/12 digitalocean_droplet.
+cheebo.ipv4_address \T1/lmr/m/n/12 di-rectly. This
  []
 
 
-Overfull \hbox (21.851pt too wide) in paragraph at lines 2025--2029
-[]\T1/lmr/m/n/12 The do-main's name-servers are del-e-gated to Dig-i-talO-cean (\T1/lmtt/m/n/12 ns1--ns3.digitalocean.com\T1/lmr/m/n/12 )
+Overfull \hbox (21.851pt too wide) in paragraph at lines 2214--2218
+[]\T1/lmr/m/n/12 The do-main's name-servers are del-e-gated to Dig-i-talO-cean 
+(\T1/lmtt/m/n/12 ns1--ns3.digitalocean.com\T1/lmr/m/n/12 )
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2048.
+ mdframed uses option nobreak mdframed on input line 2237.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2048.
-[61]
+ mdframed uses option nobreak mdframed on input line 2237.
+[78]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2066.
+ mdframed uses option nobreak mdframed on input line 2255.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2066.
- [62]
-Overfull \hbox (31.32735pt too wide) in paragraph at lines 2102--2108
-[]\T1/lmr/m/n/12 The ap-pli-ca-tion is ac-cessed ex-clu-sively through the do-main name \T1/lmtt/m/n/12 nadim-jabali.engineer\T1/lmr/m/n/12 .
+ mdframed uses option nobreak mdframed on input line 2255.
+ [79]
+Overfull \hbox (31.32735pt too wide) in paragraph at lines 2291--2297
+[]\T1/lmr/m/n/12 The ap-pli-ca-tion is ac-cessed ex-clu-sively through the do-m
+ain name \T1/lmtt/m/n/12 nadim-jabali.engineer\T1/lmr/m/n/12 .
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2119.
+ mdframed uses option nobreak mdframed on input line 2308.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2119.
-[63] [64] [65
+ mdframed uses option nobreak mdframed on input line 2308.
+[80] [81] [82
 
-] [66
+] [83
 
 ]
 Appendix A.
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 2175.
-[67
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 2364.
+[84
 
 ]
 Appendix B.
-[68
+[85
 
 ]
 Appendix C.
-[69
+[86
 
 ]
 Appendix D.
-[70
+[87
 
 ]
 Appendix E.
-[71
+[88
 
 ] (./rapport.aux)
  ***********
@@ -1127,21 +1354,27 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: A25D6AC9975C04ABB43ED5B6F40A18D2;24680.
+(rerunfilecheck)             Checksum: 58EE15D8840C55F3CD935F7FD6974F27;24697.
  ) 
 Here is how much of TeX's memory you used:
- 17724 strings out of 467533
- 286214 string characters out of 5422138
- 806717 words of memory out of 5000000
- 46058 multiletter control sequences out of 15000+600000
+ 17845 strings out of 467533
+ 288873 string characters out of 5422138
+ 809453 words of memory out of 5000000
+ 46137 multiletter control sequences out of 15000+600000
  694285 words of font info for 76 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 76i,14n,84p,519b,1093s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on rapport.pdf (72 pages, 1685926 bytes).
+ 76i,14n,84p,517b,1093s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
+pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
+r/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/pub
+lic/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on rapport.pdf (89 pages, 1677978 bytes).
 PDF statistics:
- 1330 PDF objects out of 1440 (max. 8388607)
- 1192 compressed objects within 12 object streams
- 305 named destinations out of 1000 (max. 500000)
+ 1456 PDF objects out of 1728 (max. 8388607)
+ 1302 compressed objects within 14 object streams
+ 338 named destinations out of 1000 (max. 500000)
  1168 words of extra memory for PDF output out of 10000 (max. 10000000)
 

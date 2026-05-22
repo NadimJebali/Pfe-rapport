@@ -29,7 +29,6 @@ flowchart LR
     C --> UC_AUTH
     C --> UC_BROWSE
     C --> UC_ORDER
-    C --> UC_CHAT
     C --> UC_APPLY
 
     S --> UC_AUTH
@@ -44,8 +43,10 @@ flowchart LR
     A --> UC_MOD
     A --> UC_SUSP
     A --> UC_FEAT
+    A --> UC_CHAT
 
     UC_APPLY -. "«triggers»" .-> UC_REV
+    UC_STORE -. "«verified by AI»" .-> AI_V
     UC_PROD  -. "«verified by AI»" .-> AI_V
     AI_V     -. "«auto-flag»" .-> UC_MOD
 
@@ -58,7 +59,7 @@ flowchart LR
 
     class C,S,A actor
     class UC_AUTH shared
-    class UC_BROWSE,UC_ORDER,UC_CHAT,UC_APPLY customer
+    class UC_BROWSE,UC_ORDER,UC_APPLY customer
     class UC_STORE,UC_PROD,UC_AN,UC_UPG,UC_SALE seller
-    class UC_REV,UC_MOD,UC_SUSP,UC_FEAT admin
+    class UC_REV,UC_MOD,UC_SUSP,UC_FEAT,UC_CHAT admin
     class AI_V aicase

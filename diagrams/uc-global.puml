@@ -1,4 +1,4 @@
-@startuml
+@startuml uc-global
 !pragma layout elk
 
 skinparam defaultFontName Helvetica
@@ -20,87 +20,99 @@ skinparam usecase {
 skinparam rectangle {
   BackgroundColor #F8FAFC
   BorderColor #1E40AF
-  BorderThickness 2.5
+  BorderThickness 2
   FontColor #1E40AF
   FontStyle bold
-  FontSize 14
+  FontSize 13
 }
 
 left to right direction
 
-actor Customer      #FFFFFF
-actor Seller        #FFFFFF
-actor Administrator #FFFFFF
+' ── Primary actors (LEFT) ──
+actor Customer      as Customer
+actor Seller        as Seller
+actor Administrator as Admin
 
 rectangle "Cheebo Marketplace" {
-  ' ── Shared ──────────────────────────
-  (Register / Log in)           as A1 #DBEAFE
-  (Verify email)                as A2 #BFDBFE
-  (Reset password)              as A3 #DBEAFE
 
-  ' ── Customer ─────────────────────────
-  (Browse & search catalogue)   as C1 #FEF3C7
-  (Filter by price / tag)       as C2 #FDE68A
-  (View store page)             as C3 #FEF3C7
-  (View product details)        as C4 #FEF3C7
-  (Add to cart)                 as C5 #FEF3C7
-  (Checkout)                    as C6 #FEF3C7
-  (Place an order)              as C7 #FDE68A
-  (Receive confirmation email)  as C8 #FDE68A
-  (View order history)          as C9 #FEF3C7
-  (Chat with AI assistant)      as C10 #FEF3C7
-  (Apply to become a seller)    as C11 #FEF3C7
+  rectangle "Authentication & Account" #EFF6FF {
+    (Register / Log in)            as A1 #DBEAFE
+    (Verify email)                 as A2 #BFDBFE
+    (Reset password)               as A3 #DBEAFE
+  }
 
-  ' ── Seller ───────────────────────────
-  (Create store)                as S1 #DCFCE7
-  (Edit store profile)          as S2 #DCFCE7
-  (Customise storefront)        as S3 #DCFCE7
-  (Apply preset)                as S3a #BBF7D0
-  (Upload banner)               as S3b #BBF7D0
-  (Add product)                 as S4 #DCFCE7
-  (Upload product images)       as S4a #BBF7D0
-  (Tag product)                 as S4b #BBF7D0
-  (Edit / delete product)       as S5 #DCFCE7
-  (View store analytics)        as S6 #DCFCE7
-  (View order list)             as S7 #DCFCE7
-  (Upgrade to premium tier)     as S8 #DCFCE7
-  (Open additional store)       as S9 #BBF7D0
+  rectangle "Shopping" #FFFBEB {
+    (Browse & search catalogue)    as C1  #FEF3C7
+    (Filter by price / tag)        as C2  #FDE68A
+    (View store page)              as C3  #FEF3C7
+    (View product details)         as C4  #FEF3C7
+    (Add to cart)                  as C5  #FEF3C7
+    (Remove from cart)             as C6  #FEF3C7
+    (Checkout)                     as C7  #FEF3C7
+    (Place an order)               as C8  #FDE68A
+    (Confirmation email)           as C9  #FDE68A
+    (Order history)                as C10 #FEF3C7
+    (Apply to be seller)           as C11 #FEF3C7
+  }
 
-  ' ── Admin ────────────────────────────
-  (Review seller applications)  as D1 #FCE7F3
-  (Approve / reject seller)     as D2 #FBCFE8
-  (Browse all stores)           as D3 #FCE7F3
-  (Browse all products)         as D4 #FCE7F3
-  (Suspend store)               as D5 #FCE7F3
-  (Reactivate store)            as D6 #FCE7F3
-  (Delete store)                as D7 #FCE7F3
-  (Override AI verdict)         as D8 #FCE7F3
-  (Curate featured content)     as D9 #FCE7F3
-  (Manage categories)           as D10 #FCE7F3
-  (Ban / warn user)             as D11 #FCE7F3
-  (Query DB via AI chat)        as D12 #FCE7F3
+  rectangle "Store & Products" #F0FDF4 {
+    (Create store)                 as S1  #DCFCE7
+    (Edit store profile)           as S2  #DCFCE7
+    (Customise storefront)         as S3  #DCFCE7
+    (Apply preset)                 as S3a #BBF7D0
+    (Upload banner)                as S3b #BBF7D0
+    (AI redesign storefront)       as S3c #DCFCE7
+    (Add product)                  as S4  #DCFCE7
+    (Upload images)                as S4a #BBF7D0
+    (Tag product)                  as S4b #BBF7D0
+    (Edit / delete product)        as S5  #DCFCE7
+    (Analytics & orders)           as S6  #DCFCE7
+    (Activate store sale)          as S7  #DCFCE7
+    (Upgrade to premium)           as S8  #DCFCE7
+    (Open additional store)        as S9  #BBF7D0
+  }
 
-  ' ── AI ───────────────────────────────
-  (Auto-verify store / product) as V1 #EDE9FE
-  (Return verdict + rationale)  as V2 #DDD6FE
-  (Flag suspicious content)     as V3 #EDE9FE
+  rectangle "Administration" #FDF2F8 {
+    (Review applications)          as D1  #FCE7F3
+    (Approve / reject)             as D2  #FBCFE8
+    (Browse all stores)            as D3  #FCE7F3
+    (Browse all products)          as D4  #FCE7F3
+    (Browse all orders)            as D5  #FCE7F3
+    (Suspend store)                as D6  #FCE7F3
+    (Reactivate store)             as D7  #FCE7F3
+    (Delete store)                 as D8  #FCE7F3
+    (Override AI verdict)          as D9  #FCE7F3
+    (Curate featured)              as D10 #FCE7F3
+    (Manage categories)            as D11 #FCE7F3
+    (Manage users)                 as D12 #FCE7F3
+    (Query DB via AI chat)         as D13 #FCE7F3
+  }
+
+  rectangle "AI Features" #F5F3FF {
+    (Auto-verify store / product)  as V1 #EDE9FE
+    (Return verdict + rationale)   as V2 #DDD6FE
+    (Flag suspicious content)      as V3 #EDE9FE
+    (Natural-language DB query)    as V4 #EDE9FE
+    (AI-generate store design)     as V5 #EDE9FE
+  }
 }
 
+' ── Secondary actors (RIGHT) ──
 actor "AI Verification\n(n8n + LLM)" as AI   #EDE9FE
 actor "Email Service\n(Nodemailer)"  as MAIL #FEF9C3
 
-' ── Customer ──────────────────────────────
+' ── Customer ──
 Customer --> A1
 Customer --> C1
 Customer --> C3
 Customer --> C4
 Customer --> C5
 Customer --> C6
-Customer --> C9
+Customer --> C7
 Customer --> C10
 Customer --> C11
 
-' ── Seller ────────────────────────────────
+' ── Seller ──
 Seller --> A1
 Seller --> S1
 Seller --> S2
@@ -112,43 +124,47 @@ Seller --> S7
 Seller --> S8
 Seller --> S9
 
-' ── Administrator ─────────────────────────
-Administrator --> A1
-Administrator --> D1
-Administrator --> D3
-Administrator --> D4
-Administrator --> D5
-Administrator --> D6
-Administrator --> D7
-Administrator --> D8
-Administrator --> D9
-Administrator --> D10
-Administrator --> D11
-Administrator --> D12
+' ── Administrator ──
+Admin --> A1
+Admin --> D1
+Admin --> D3
+Admin --> D4
+Admin --> D5
+Admin --> D6
+Admin --> D7
+Admin --> D8
+Admin --> D9
+Admin --> D10
+Admin --> D11
+Admin --> D12
+Admin --> D13
 
-' ── System actors ─────────────────────────
-AI   --> V1
-MAIL --> C8
+' ── Secondary actor connections (RIGHT) ──
+V1 --> AI
+V4 --> AI
+V5 --> AI
+C9 --> MAIL
 
-' ── Include / extend / trigger ────────────
+' ── Include / extend / triggers ──
 A1  .> A2  : <<include>>
 C1  .> C2  : <<extend>>
-C6  .> C7  : <<include>>
-C6  .> A1  : <<include>>
 C7  .> C8  : <<include>>
+C8  .> C9  : <<include>>
 S3  .> S3a : <<include>>
 S3  .> S3b : <<include>>
+S3  .> S3c : <<extend>>
 S4  .> S4a : <<include>>
 S4  .> S4b : <<include>>
 S9  .> S8  : <<requires>>
 D1  .> D2  : <<include>>
-D7  .> D5  : <<extend>>
+D8  .> D6  : <<extend>>
 
 C11 .> D1  : <<triggers>>
-S4  .> V1  : <<triggers>>
 S1  .> V1  : <<triggers>>
+S4  .> V1  : <<triggers>>
 V1  .> V2  : <<include>>
-V3  .> D8  : <<triggers>>
-D12 .> V3  : <<include>>
+V3  .> D9  : <<auto-flag>>
+D13 .> V4  : <<uses>>
+S3c .> V5  : <<uses>>
 
 @enduml

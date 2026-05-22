@@ -3,33 +3,34 @@ sequenceDiagram
     actor S as Seller
     participant FE as React SPA
     participant BE as NestJS API
-    participant PM as Product Module
+    participant PM as Product / Store Module
     participant DB as MariaDB
     participant N8N as n8n Webhook (cheebo-ai-verify)
     participant LLM as LLM (Gemini / Groq)
     actor A as Administrator
 
-    S->>FE: Create product
-    FE->>BE: POST /product
+    Note over S,DB: Same workflow applies to both product and store creation
+    S->>FE: Create product or store
+    FE->>BE: POST /product or POST /store
     BE->>PM: create(dto)
-    PM->>DB: INSERT Product (adminReviewed=null)
-    PM-->>BE: Product
-    BE->>N8N: POST cheebo-ai-verify { productId, name, description, images }
+    PM->>DB: INSERT entity (aiReviewed=false, adminReviewed=false)
+    PM-->>BE: entity
+    BE->>N8N: POST cheebo-ai-verify { entityId, type, name, description, images }
 
     N8N->>LLM: Evaluate against marketplace rules
     LLM-->>N8N: { decision, rationale }
-    N8N->>BE: PATCH /product/:id/ai-review { decision, rationale }
-    BE->>PM: applyAIDecision(productId, decision)
-    PM->>DB: UPDATE Product SET adminReviewed = decision
+    N8N->>BE: PATCH /verify-callback { entityId, type, decision, rationale }
+    BE->>PM: applyAIDecision(entityId, decision)
+    PM->>DB: UPDATE entity SET aiReviewed = true, aiReviewNote = rationale
 
     alt Auto-approved
-      BE-->>S: (badge visible on next refresh)
+      BE-->>S: Entity becomes visible (aiReviewed = true)
     else Flagged / borderline
       BE-->>A: Visible in admin moderation queue
       A->>FE: Open moderation panel
-      FE->>BE: GET /product/pending
+      FE->>BE: GET /verification/pending
       A->>FE: Approve / reject
-      FE->>BE: PATCH /product/:id/ai-review
+      FE->>BE: PATCH /verify-override
       BE->>PM: applyAdminOverride()
-      PM->>DB: UPDATE Product
+      PM->>DB: UPDATE entity SET adminReviewed = true, aiReviewed = false
     end

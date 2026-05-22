@@ -1,4 +1,4 @@
-@startuml
+@startuml uc-seller
 !pragma layout smetana
 
 skinparam defaultFontName Helvetica
@@ -43,6 +43,8 @@ rectangle "Seller-facing Features" {
   (View store analytics)      as UC10 #DCFCE7
   (Upgrade to premium tier)   as UC11 #DCFCE7
   (Open additional store)     as UC12 #DCFCE7
+  (Activate store sale)       as UC13 #DCFCE7
+  (AI redesign storefront)    as UC14 #DCFCE7
 }
 
 Seller --> UC1
@@ -55,11 +57,21 @@ Seller --> UC9
 Seller --> UC10
 Seller --> UC11
 Seller --> UC12
+Seller --> UC13
+Seller --> UC14
+
+' ── Secondary actor (RIGHT) ──
+actor "AI Verification\n(n8n + LLM)" as AI #EDE9FE
+
+UC2  <.. AI : <<auto-verify>>
+UC5  <.. AI : <<auto-verify>>
+UC14 <.. AI : <<generates>>
 
 UC2  .> UC1  : <<requires approval>>
 UC4  .> UC4a : <<include>>
 UC4  .> UC4b : <<include>>
 UC4  .> UC4c : <<include>>
+UC4  .> UC14 : <<extend>>
 UC5  .> UC6  : <<include>>
 UC5  .> UC7  : <<include>>
 UC12 .> UC11 : <<requires>>

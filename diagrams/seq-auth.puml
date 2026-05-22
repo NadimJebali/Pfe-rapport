@@ -1,0 +1,60 @@
+@startuml seq-auth
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 1.2
+skinparam sequenceParticipantBorderThickness 1.5
+
+skinparam sequence {
+  ActorBackgroundColor       #FFFFFF
+  ActorBorderColor           #1E40AF
+  ActorFontColor             #111111
+  ParticipantBackgroundColor #F5F5F5
+  ParticipantBorderColor     #1E40AF
+  ParticipantFontColor       #111111
+  LifeLineBorderColor        #1E40AF
+  ArrowColor                 #1E40AF
+  ArrowFontColor             #111111
+  GroupBackgroundColor       #EFF6FF
+  GroupBorderColor           #1E40AF
+  NoteBackgroundColor        #F5F5F5
+  NoteBorderColor            #1E40AF
+}
+
+actor       "User"         as U
+participant "React SPA"    as FE
+participant "NestJS API"   as BE
+participant "Better-Auth"  as BA
+participant "Nodemailer"   as MAIL
+database    "MariaDB"      as DB
+
+U -> FE  : Submit registration form
+FE -> BE : POST /auth/sign-up
+BE -> BA : createUser(email, password)
+BA -> DB : INSERT User (emailVerified=false)
+BA -> MAIL : sendVerificationEmail(token)
+MAIL --> U : Verification email
+BA --> BE : 201 Created
+BE --> FE : 201 + session cookie (pending verification)
+FE --> U  : "Check your inbox" screen
+
+== Email verification ==
+U -> FE  : Click verification link
+FE -> BE : GET /auth/verify-email?token=...
+BE -> BA : verifyToken(token)
+BA -> DB : UPDATE User SET emailVerified=true
+BA --> BE : OK
+BE --> FE : Redirect /email-verified
+FE --> U  : "Account verified" page
+
+== Login ==
+U -> FE  : Submit login form
+FE -> BE : POST /auth/sign-in
+BE -> BA : authenticate(email, password)
+BA -> DB : SELECT User
+BA --> BE : Session token (DB-backed)
+BE --> FE : 200 + Set-Cookie session
+FE --> U  : Redirect to dashboard
+
+@enduml

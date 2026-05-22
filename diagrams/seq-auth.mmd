@@ -31,6 +31,6 @@ sequenceDiagram
     FE->>BE: POST /auth/sign-in
     BE->>BA: authenticate(email, password)
     BA->>DB: SELECT User
-    BA-->>BE: Session token (JWT)
+    BA-->>BE: Session token (DB-backed)
     BE-->>FE: 200 + Set-Cookie session
     FE-->>U: Redirect to dashboard

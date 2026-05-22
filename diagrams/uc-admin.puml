@@ -1,4 +1,4 @@
-@startuml
+@startuml uc-admin
 !pragma layout smetana
 
 skinparam defaultFontName Helvetica
@@ -26,7 +26,6 @@ skinparam rectangle {
 left to right direction
 
 actor Administrator #FFFFFF
-actor "AI Verification\n(n8n + LLM)" as AI #EDE9FE
 
 rectangle "Administration Tooling" {
   (Review seller applications) as UC1  #FCE7F3
@@ -41,6 +40,8 @@ rectangle "Administration Tooling" {
   (Curate featured products)   as UC10 #FCE7F3
   (Manage categories)          as UC11 #FCE7F3
   (Query DB via AI chat)       as UC12 #FCE7F3
+  (Browse all orders)          as UC13 #FCE7F3
+  (Manage users)               as UC14 #FCE7F3
 }
 
 Administrator --> UC1
@@ -54,8 +55,14 @@ Administrator --> UC9
 Administrator --> UC10
 Administrator --> UC11
 Administrator --> UC12
+Administrator --> UC13
+Administrator --> UC14
 
-AI --> UC8 : <<auto-flag>>
+' ── Secondary actor (RIGHT) ──
+actor "AI Verification\n(n8n + LLM)" as AI #EDE9FE
+
+UC8  <.. AI : <<auto-flag>>
+UC12 <.. AI : <<answers>>
 
 UC1 .> UC2 : <<include>>
 

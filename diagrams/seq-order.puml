@@ -1,0 +1,55 @@
+@startuml seq-order
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam sequenceArrowThickness 1.2
+skinparam sequenceParticipantBorderThickness 1.5
+
+skinparam sequence {
+  ActorBackgroundColor       #FFFFFF
+  ActorBorderColor           #1E40AF
+  ActorFontColor             #111111
+  ParticipantBackgroundColor #F5F5F5
+  ParticipantBorderColor     #1E40AF
+  ParticipantFontColor       #111111
+  LifeLineBorderColor        #1E40AF
+  ArrowColor                 #1E40AF
+  ArrowFontColor             #111111
+  GroupBackgroundColor       #EFF6FF
+  GroupBorderColor           #1E40AF
+  NoteBackgroundColor        #F5F5F5
+  NoteBorderColor            #1E40AF
+}
+
+actor       "Customer"            as C
+participant "React SPA"           as FE
+participant "Cart Store\n(Zustand)" as Z
+participant "NestJS API"          as BE
+participant "Order Module"        as OM
+participant "OrderItems Module"   as OIM
+database    "MariaDB"             as DB
+participant "Nodemailer"          as MAIL
+
+C  -> FE : Click "Checkout"
+FE -> Z  : getCartItems()
+Z  --> FE : items[]
+FE -> BE : POST /order { items, shippingInfo }
+BE -> BE : AuthGuard.canActivate(req)
+BE -> OM : createOrder(userId, items)
+note right of OM
+  unitPrice = salePrice ?? displayPrice
+  (store-wide sale applied here)
+end note
+OM -> DB : INSERT Order
+OM -> OIM : createMany(orderId, items)
+OIM -> DB : INSERT OrderItems
+OM -> DB : SELECT for confirmation
+OM --> BE : Order { id, total, items }
+BE -> MAIL : sendOrderConfirmation(user, order)
+MAIL --> C : Confirmation email
+BE --> FE : 201 + order payload
+FE -> Z  : clearCart()
+FE --> C : Redirect /order-success
+
+@enduml

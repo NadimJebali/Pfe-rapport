@@ -16,8 +16,7 @@ flowchart LR
       UC10(["Checkout"])
       UC11(["Place an order"])
       UC12(["View order history"])
-      UC13(["Chat with AI assistant"])
-      UC14(["Submit seller application"])
+      UC13(["Submit seller application"])
     end
 
     C --> UC1
@@ -31,7 +30,6 @@ flowchart LR
     C --> UC10
     C --> UC12
     C --> UC13
-    C --> UC14
 
     UC1  -. "«include»" .-> UC2
     UC10 -. "«include»" .-> UC11
@@ -42,5 +40,5 @@ flowchart LR
     classDef sub   fill:#FDE68A,stroke:#B45309,stroke-width:2px,color:#1E293B
 
     class C actor
-    class UC1,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC12,UC13,UC14 uc
+    class UC1,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10,UC12,UC13 uc
     class UC2,UC11 sub
