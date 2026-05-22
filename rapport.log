@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  22 MAY 2026 01:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  22 MAY 2026 04:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -770,113 +770,113 @@ Overfull \hbox (4.26363pt too wide) in paragraph at lines 585--589
 <images/scrum-framework.png, id=836, 1193.45876pt x 664.4825pt>
 File: images/scrum-framework.png Graphic file (type png)
 <use images/scrum-framework.png>
-Package pdftex.def Info: images/scrum-framework.png  used on input line 694.
+Package pdftex.def Info: images/scrum-framework.png  used on input line 696.
 (pdftex.def)             Requested size: 374.86775pt x 208.71487pt.
  [19 <./images/scrum-framework.png>] [20]
 <images/github.png, id=846, 562.1pt x 562.1pt>
 File: images/github.png Graphic file (type png)
 <use images/github.png>
-Package pdftex.def Info: images/github.png  used on input line 806.
+Package pdftex.def Info: images/github.png  used on input line 808.
 (pdftex.def)             Requested size: 34.13623pt x 34.13623pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 806.
+(Font)              <10.95> on input line 808.
 
-Underfull \hbox (badness 1616) in paragraph at lines 806--806
+Underfull \hbox (badness 1616) in paragraph at lines 808--808
 \T1/lmr/m/n/10.95 and col-lab-o-ra-tive soft-ware de-vel-op-ment
  []
 
 <images/notion.png, id=848, 513.92pt x 513.92pt>
 File: images/notion.png Graphic file (type png)
 <use images/notion.png>
-Package pdftex.def Info: images/notion.png  used on input line 812.
+Package pdftex.def Info: images/notion.png  used on input line 814.
 (pdftex.def)             Requested size: 34.1431pt x 34.1431pt.
 
-Underfull \hbox (badness 4266) in paragraph at lines 812--812
+Underfull \hbox (badness 4266) in paragraph at lines 814--814
 \T1/lmr/m/n/10.95 bin-ing notes, databases, and kan-ban
  []
 
 <images/vscode.png, id=851, 120.45pt x 120.45pt>
 File: images/vscode.png Graphic file (type png)
 <use images/vscode.png>
-Package pdftex.def Info: images/vscode.png  used on input line 819.
+Package pdftex.def Info: images/vscode.png  used on input line 821.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
 
-Underfull \hbox (badness 2229) in paragraph at lines 819--819
+Underfull \hbox (badness 2229) in paragraph at lines 821--821
 \T1/lmr/m/n/10.95 ex-tended with plu-g-ins for Type-Script,
  []
 
 <images/docker.png, id=853, 120.45pt x 120.45pt>
 File: images/docker.png Graphic file (type png)
 <use images/docker.png>
-Package pdftex.def Info: images/docker.png  used on input line 826.
+Package pdftex.def Info: images/docker.png  used on input line 828.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
 <images/terraform.png, id=855, 120.45pt x 120.45pt>
 File: images/terraform.png Graphic file (type png)
 <use images/terraform.png>
-Package pdftex.def Info: images/terraform.png  used on input line 833.
+Package pdftex.def Info: images/terraform.png  used on input line 835.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
 <images/n8n.png, id=857, 200.75pt x 200.75pt>
 File: images/n8n.png Graphic file (type png)
 <use images/n8n.png>
-Package pdftex.def Info: images/n8n.png  used on input line 839.
+Package pdftex.def Info: images/n8n.png  used on input line 841.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
 [21 <./images/github.png> <./images/notion.png> <./images/vscode.png> <./images/docker.png>]
 <images/postman.png, id=869, 200.75pt x 200.75pt>
 File: images/postman.png Graphic file (type png)
 <use images/postman.png>
-Package pdftex.def Info: images/postman.png  used on input line 846.
+Package pdftex.def Info: images/postman.png  used on input line 848.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
 <images/pnpm.png, id=871, 160.6pt x 160.6pt>
 File: images/pnpm.png Graphic file (type png)
 <use images/pnpm.png>
-Package pdftex.def Info: images/pnpm.png  used on input line 852.
+Package pdftex.def Info: images/pnpm.png  used on input line 854.
 (pdftex.def)             Requested size: 34.14359pt x 34.14359pt.
 
-Underfull \hbox (badness 2111) in paragraph at lines 852--852
+Underfull \hbox (badness 2111) in paragraph at lines 854--854
 \T1/lmr/m/n/10.95 A fast, disk-efficient pack-age man-ager
  []
 
 
-Underfull \hbox (badness 1024) in paragraph at lines 852--852
+Underfull \hbox (badness 1024) in paragraph at lines 854--854
 \T1/lmr/m/n/10.95 content-addressable store. It man-aged
  []
 
 
-Underfull \hbox (badness 2142) in paragraph at lines 852--852
+Underfull \hbox (badness 2142) in paragraph at lines 854--854
 \T1/lmr/m/n/10.95 all JavaScript de-pen-den-cies across the
  []
 
 
-Overfull \hbox (10.54784pt too wide) in paragraph at lines 861--865
+Overfull \hbox (10.54784pt too wide) in paragraph at lines 863--867
 []\T1/lmr/m/n/10.95 Compared with Ju-mia and Tayara, Cheebo dif-fer-en-ti-ates on \T1/lmr/m/it/10.95 AI ver-i-fi-ca-tion\T1/lmr/m/n/10.95 , \T1/lmr/m/it/10.95 lightweight
  []
 
 
-Overfull \hbox (8.51996pt too wide) in paragraph at lines 865--868
+Overfull \hbox (8.51996pt too wide) in paragraph at lines 867--870
 \T1/lmr/m/n/10.95 around three mile-stones: foun-da-tions, core mar-ket-place, and intelligence-and-delivery. 
  []
 
 [22 <./images/terraform.png> <./images/n8n.png (PNG copy)> <./images/postman.png> <./images/pnpm.png>] [23]
 Chapter 2.
 
-Overfull \hbox (16.99815pt too wide) in paragraph at lines 890--890
+Overfull \hbox (16.99815pt too wide) in paragraph at lines 892--892
 |\T1/lmr/bx/n/20.74 Chapter 2 Re-quire-ments Anal-y-sis and Spec-
  []
 
 
-Overfull \hbox (9.34709pt too wide) in paragraph at lines 894--900
+Overfull \hbox (9.34709pt too wide) in paragraph at lines 896--902
 []\T1/lmr/m/it/10.95 This chap-ter iden-ti-fies the three sys-tem ac-tors, for-malises the func-tional and non-functional
  []
 
 [24
 
 ]
-Overfull \hbox (4.23083pt too wide) in paragraph at lines 980--984
+Overfull \hbox (4.23083pt too wide) in paragraph at lines 982--986
 \T1/lmr/m/n/12 readable slug de-rived from the store name (e.g. \T1/lmtt/m/n/12 /stores/pawsome-pet-foods\T1/lmr/m/n/12 ),
  []
 
 [25]
-Overfull \hbox (33.6511pt too wide) in paragraph at lines 988--990
+Overfull \hbox (33.6511pt too wide) in paragraph at lines 990--992
 []\T1/lmr/m/n/12 The store sta-tus (ac-tive, pend-ing, sus-pended) shall be per-sisted in a \T1/lmtt/m/n/12 StoreStatusLog
  []
 
@@ -884,207 +884,205 @@ Overfull \hbox (33.6511pt too wide) in paragraph at lines 988--990
 <images/uc-global.png, id=952, 751.608pt x 419.166pt>
 File: images/uc-global.png Graphic file (type png)
 <use images/uc-global.png>
-Package pdftex.def Info: images/uc-global.png  used on input line 1143.
+Package pdftex.def Info: images/uc-global.png  used on input line 1145.
 (pdftex.def)             Requested size: 441.01773pt x 245.95625pt.
 <images/uc-customer.png, id=954, 481.8pt x 346.896pt>
 File: images/uc-customer.png Graphic file (type png)
 <use images/uc-customer.png>
-Package pdftex.def Info: images/uc-customer.png  used on input line 1158.
+Package pdftex.def Info: images/uc-customer.png  used on input line 1160.
 (pdftex.def)             Requested size: 418.96548pt x 301.66475pt.
  [30 <./images/uc-global.png (PNG copy)>]
 <images/uc-seller.png, id=961, 481.8pt x 366.168pt>
 File: images/uc-seller.png Graphic file (type png)
 <use images/uc-seller.png>
-Package pdftex.def Info: images/uc-seller.png  used on input line 1172.
+Package pdftex.def Info: images/uc-seller.png  used on input line 1174.
 (pdftex.def)             Requested size: 418.96548pt x 318.4239pt.
  [31 <./images/uc-customer.png (PNG copy)>]
 <images/uc-admin.png, id=967, 1154.3125pt x 762.85pt>
 File: images/uc-admin.png Graphic file (type png)
 <use images/uc-admin.png>
-Package pdftex.def Info: images/uc-admin.png  used on input line 1186.
+Package pdftex.def Info: images/uc-admin.png  used on input line 1188.
 (pdftex.def)             Requested size: 418.96548pt x 276.88397pt.
  [32 <./images/uc-seller.png (PNG copy)>]
-Overfull \hbox (72.72166pt too wide) in paragraph at lines 1201--1208
+Overfull \hbox (72.72166pt too wide) in paragraph at lines 1203--1210
 \T1/lmr/m/n/12 Figure [][]2.5[][] traces the au-then-ti-ca-tion flow. Reg-is-tra-tion cre-ates a \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 row with \T1/lmtt/m/n/12 emailVerified=false
  []
 
 <images/seq-auth.png, id=973, 3179.88pt x 2549.525pt>
 File: images/seq-auth.png Graphic file (type png)
 <use images/seq-auth.png>
-Package pdftex.def Info: images/seq-auth.png  used on input line 1211.
+Package pdftex.def Info: images/seq-auth.png  used on input line 1213.
 (pdftex.def)             Requested size: 441.01773pt x 353.58545pt.
 [33 <./images/uc-admin.png (PNG copy)>]
 <images/seq-order.png, id=979, 3179.88pt x 1638.12pt>
 File: images/seq-order.png Graphic file (type png)
 <use images/seq-order.png>
-Package pdftex.def Info: images/seq-order.png  used on input line 1228.
+Package pdftex.def Info: images/seq-order.png  used on input line 1230.
 (pdftex.def)             Requested size: 441.01773pt x 227.18561pt.
  [34 <./images/seq-auth.png>]
 <images/seq-verify.png, id=986, 3179.88pt x 1630.09pt>
 File: images/seq-verify.png Graphic file (type png)
 <use images/seq-verify.png>
-Package pdftex.def Info: images/seq-verify.png  used on input line 1247.
+Package pdftex.def Info: images/seq-verify.png  used on input line 1249.
 (pdftex.def)             Requested size: 441.01773pt x 226.07195pt.
  [35 <./images/seq-order.png> <./images/seq-verify.png>] [36]
-Overfull \hbox (3.64037pt too wide) in paragraph at lines 1331--1331
+Overfull \hbox (3.64037pt too wide) in paragraph at lines 1333--1333
  []|[]\T1/lmr/bx/n/10.95 Priority[]| 
  []
 
 
-Overfull \hbox (3.64037pt too wide) in paragraph at lines 1340--1340
+Overfull \hbox (3.64037pt too wide) in paragraph at lines 1342--1342
  []|[]\T1/lmr/bx/n/10.95 Priority[]| 
  []
 
 
-Overfull \hbox (8.88327pt too wide) in paragraph at lines 1350--1351
+Overfull \hbox (8.88327pt too wide) in paragraph at lines 1352--1353
  [] 
  []
 
 
-Overfull \hbox (9.8865pt too wide) in paragraph at lines 1409--1410
+Overfull \hbox (9.8865pt too wide) in paragraph at lines 1414--1415
  [] 
  []
 
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1464: ignored error: Infinite glue shrinkage found in box being split [37]
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1464: ignored error: Infinite glue shrinkage found in box being split [38]
-/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1464: ignored error: Infinite glue shrinkage found in box being split [39]
-Package mdframed Info: Box was splittet wrong
- starting loop to iterate the splitting point
-(mdframed)              on input line 1484.
- [40] [41]
+/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1472: ignored error: Infinite glue shrinkage found in box being split [37]
+/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1472: ignored error: Infinite glue shrinkage found in box being split [38]
+/home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex:1472: ignored error: Infinite glue shrinkage found in box being split [39] [40]
+Package mdframed Info: Not enough space on this page on input line 1492.
+ [41]
 Chapter 3.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1524.
+ mdframed uses option nobreak mdframed on input line 1532.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1524.
+ mdframed uses option nobreak mdframed on input line 1532.
 [42
 
 ]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1544.
+ mdframed uses option nobreak mdframed on input line 1552.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1544.
+ mdframed uses option nobreak mdframed on input line 1552.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1562.
+ mdframed uses option nobreak mdframed on input line 1570.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1562.
+ mdframed uses option nobreak mdframed on input line 1570.
  [43]
-Overfull \hbox (5.37354pt too wide) in paragraph at lines 1571--1576
+Overfull \hbox (5.37354pt too wide) in paragraph at lines 1579--1584
 \T1/lmr/m/n/12 cen-tral \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 en-tity branches into \T1/lmtt/m/n/12 Store\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 SellerApplication\T1/lmr/m/n/12 , and \T1/lmtt/m/n/12 Order\T1/lmr/m/n/12 , while \T1/lmtt/m/n/12 Product
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1579.
+ mdframed uses option nobreak mdframed on input line 1587.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1579.
+ mdframed uses option nobreak mdframed on input line 1587.
 [44] [45]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1627.
+ mdframed uses option nobreak mdframed on input line 1635.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1627.
+ mdframed uses option nobreak mdframed on input line 1635.
  [46]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1644.
+ mdframed uses option nobreak mdframed on input line 1652.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1644.
+ mdframed uses option nobreak mdframed on input line 1652.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1658.
+ mdframed uses option nobreak mdframed on input line 1666.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1658.
+ mdframed uses option nobreak mdframed on input line 1666.
  [47]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1674.
+ mdframed uses option nobreak mdframed on input line 1682.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1674.
+ mdframed uses option nobreak mdframed on input line 1682.
  [48] [49]
 Chapter 4.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1707.
+ mdframed uses option nobreak mdframed on input line 1715.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1707.
+ mdframed uses option nobreak mdframed on input line 1715.
 [50
 
 ]
-Overfull \hbox (0.94969pt too wide) in paragraph at lines 1722--1727
+Overfull \hbox (0.94969pt too wide) in paragraph at lines 1730--1735
 \T1/lmr/m/n/12 Every pro-tected route is se-cured through a com-bi-na-tion of \T1/lmtt/m/n/12 AuthGuard \T1/lmr/m/n/12 and the \T1/lmtt/m/n/12 @Roles()
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1730.
+ mdframed uses option nobreak mdframed on input line 1738.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1730.
+ mdframed uses option nobreak mdframed on input line 1738.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1761.
+ mdframed uses option nobreak mdframed on input line 1769.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1761.
+ mdframed uses option nobreak mdframed on input line 1769.
 [51]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1775.
+ mdframed uses option nobreak mdframed on input line 1783.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1775.
+ mdframed uses option nobreak mdframed on input line 1783.
  [52]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1805.
+ mdframed uses option nobreak mdframed on input line 1813.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1805.
+ mdframed uses option nobreak mdframed on input line 1813.
  [53]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1818.
+ mdframed uses option nobreak mdframed on input line 1826.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1818.
+ mdframed uses option nobreak mdframed on input line 1826.
  [54]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1832.
+ mdframed uses option nobreak mdframed on input line 1840.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1832.
+ mdframed uses option nobreak mdframed on input line 1840.
  [55]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1845.
+ mdframed uses option nobreak mdframed on input line 1853.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1845.
+ mdframed uses option nobreak mdframed on input line 1853.
  [56] [57]
 Chapter 5.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1880.
+ mdframed uses option nobreak mdframed on input line 1888.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1880.
+ mdframed uses option nobreak mdframed on input line 1888.
 [58
 
 ]
-Overfull \hbox (10.15645pt too wide) in paragraph at lines 1909--1914
+Overfull \hbox (10.15645pt too wide) in paragraph at lines 1917--1922
 []\T1/lmr/m/n/12 Both records ref-er-ence \T1/lmtt/m/n/12 digitalocean_droplet.cheebo.ipv4_address \T1/lmr/m/n/12 di-rectly. This
  []
 
 
-Overfull \hbox (21.851pt too wide) in paragraph at lines 1915--1919
+Overfull \hbox (21.851pt too wide) in paragraph at lines 1923--1927
 []\T1/lmr/m/n/12 The do-main's name-servers are del-e-gated to Dig-i-talO-cean (\T1/lmtt/m/n/12 ns1--ns3.digitalocean.com\T1/lmr/m/n/12 )
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1938.
+ mdframed uses option nobreak mdframed on input line 1946.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1938.
+ mdframed uses option nobreak mdframed on input line 1946.
 [59]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 1956.
+ mdframed uses option nobreak mdframed on input line 1964.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 1956.
+ mdframed uses option nobreak mdframed on input line 1964.
  [60]
-Overfull \hbox (31.32735pt too wide) in paragraph at lines 1992--1998
+Overfull \hbox (31.32735pt too wide) in paragraph at lines 2000--2006
 []\T1/lmr/m/n/12 The ap-pli-ca-tion is ac-cessed ex-clu-sively through the do-main name \T1/lmtt/m/n/12 nadim-jabali.engineer\T1/lmr/m/n/12 .
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2009.
+ mdframed uses option nobreak mdframed on input line 2017.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2009.
+ mdframed uses option nobreak mdframed on input line 2017.
 [61] [62] [63
 
 ] [64
 
 ]
 Appendix A.
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 2065.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 2073.
 [65
 
 ]
@@ -1114,13 +1112,13 @@ Package rerunfilecheck Info: File `rapport.out' has not changed.
 Here is how much of TeX's memory you used:
  17701 strings out of 467533
  285763 string characters out of 5422138
- 801549 words of memory out of 5000000
+ 806549 words of memory out of 5000000
  46047 multiletter control sequences out of 15000+600000
  694285 words of font info for 76 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  76i,14n,84p,519b,1093s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on rapport.pdf (70 pages, 1599658 bytes).
+Output written on rapport.pdf (70 pages, 1600304 bytes).
 PDF statistics:
  1297 PDF objects out of 1440 (max. 8388607)
  1162 compressed objects within 12 object streams

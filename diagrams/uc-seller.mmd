@@ -19,6 +19,8 @@ flowchart LR
       UC10(["View store analytics"])
       UC11(["Upgrade to premium tier"])
       UC12(["Open additional store"])
+      UC13(["Activate store sale"])
+      UC14(["AI redesign storefront"])
     end
 
     S --> UC1
@@ -36,14 +38,17 @@ flowchart LR
     UC4  -. "«include»" .-> UC4a
     UC4  -. "«include»" .-> UC4b
     UC4  -. "«include»" .-> UC4c
+    UC4  -. "«extend»" .-> UC14
     UC5  -. "«include»" .-> UC6
     UC5  -. "«include»" .-> UC7
     UC12 -. "«requires»" .-> UC11
+    S --> UC13
+    S --> UC14
 
     classDef actor fill:#FFFFFF,stroke:#16A34A,stroke-width:2.5px,color:#1E293B
     classDef uc    fill:#DCFCE7,stroke:#16A34A,stroke-width:2px,color:#1E293B
     classDef sub   fill:#BBF7D0,stroke:#15803D,stroke-width:2px,color:#1E293B
 
     class S actor
-    class UC1,UC2,UC3,UC4,UC5,UC8,UC9,UC10,UC11,UC12 uc
+    class UC1,UC2,UC3,UC4,UC5,UC8,UC9,UC10,UC11,UC12,UC13,UC14 uc
     class UC4a,UC4b,UC4c,UC6,UC7 sub
