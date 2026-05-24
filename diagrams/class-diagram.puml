@@ -1,0 +1,169 @@
+@startuml class-diagram
+!pragma layout elk
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+skinparam backgroundColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #1E40AF
+  BorderThickness 1.5
+  ArrowColor #475569
+  FontColor #1E293B
+}
+skinparam stereotypeCBackgroundColor #DBEAFE
+skinparam stereotypeABackgroundColor #FEF3C7
+skinparam stereotypeIBackgroundColor #DCFCE7
+
+enum UserRole {
+  CUSTOMER
+  SELLER
+  ADMIN
+}
+
+enum StoreStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+class User <<entity>> #DBEAFE {
+  + id : String
+  + name : String
+  + email : String
+  + emailVerified : Boolean
+  + role : UserRole
+  + isPremium : Boolean
+  + premiumExpiresAt : DateTime
+  --
+  + register() : void
+  + verifyEmail() : void
+  + upgradeToPremium() : void
+}
+
+class SellerApplication <<entity>> #FEF3C7 {
+  + id : Int
+  + status : SellerApplicationStatus
+  + businessDescription : String
+  + idDocumentUrl : String
+  --
+  + submit() : void
+  + approve() : void
+  + reject(note : String) : void
+}
+
+class Store <<entity>> #DCFCE7 {
+  + id : Int
+  + name : String
+  + slug : String
+  + description : String
+  + customization : Json
+  + currentStatus : StoreStatus
+  + aiReviewed : Boolean
+  + saleEnabled : Boolean
+  + saleDiscountPercent : Int
+  --
+  + create() : void
+  + suspend(reason : String) : void
+  + applyAIDesign() : void
+  + activateSale(pct : Int) : void
+}
+
+class StoreStatusLog <<entity>> #DCFCE7 {
+  + id : Int
+  + status : StoreStatus
+  + title : String
+  + isResolved : Boolean
+}
+
+class Product <<entity>> #CCFBF1 {
+  + id : Int
+  + name : String
+  + price : Float
+  + displayPrice : Float
+  + stock : Int
+  + aiReviewed : Boolean
+  + adminReviewed : Boolean
+  --
+  + create() : void
+  + computeSalePrice() : Float
+  + verifyByAI() : void
+}
+
+class ProductImage <<entity>> #CCFBF1 {
+  + id : Int
+  + url : String
+}
+
+class ProductTag <<entity>> #CCFBF1 {
+  + id : Int
+  + name : String
+}
+
+class Category <<entity>> #F0FDF4 {
+  + id : Int
+  + name : String
+}
+
+class Subcategory <<entity>> #F0FDF4 {
+  + id : Int
+  + name : String
+}
+
+class Order <<entity>> #FCE7F3 {
+  + id : Int
+  + status : OrderStatus
+  + totalAmount : Float
+  + streetAddress : String
+  --
+  + create() : void
+  + sendConfirmation() : void
+}
+
+class OrderItems <<entity>> #FCE7F3 {
+  + id : Int
+  + quantity : Int
+  + unitPrice : Float
+  + subtotal : Float
+}
+
+' ── Associations ──
+User "1" -- "0..1" SellerApplication : applies as >
+User "1" -- "0..*" Store : owns >
+User "1" -- "0..*" Order : places >
+
+Store "1" *-- "0..*" Product : contains
+Store "1" *-- "0..*" StoreStatusLog : audits
+Store "1" -- "0..*" Order : receives >
+
+Product "1" *-- "0..*" ProductImage : has
+Product "0..*" -- "0..*" ProductTag : tagged >
+Product "*" -- "1" Subcategory : classified by >
+
+Category "1" *-- "0..*" Subcategory : groups
+
+Order "1" o-- "1..*" OrderItems : contains
+Product "1" -- "0..*" OrderItems : ordered as >
+
+User .. UserRole
+Store .. StoreStatus
+Order .. OrderStatus
+Product .. VerificationStatus
+
+@enduml

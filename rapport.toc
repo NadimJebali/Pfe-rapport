@@ -61,75 +61,84 @@
 \contentsline {chapter}{\numberline {3}Design and Architecture}{45}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Global Architecture}{45}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}3-Tier Architecture Overview}{45}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}N8N as an Automation Layer}{45}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Detailed Technical Architecture}{45}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}NestJS Modular Architecture}{46}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}React SPA Architecture}{46}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Docker Compose Services Diagram}{46}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Database Design}{47}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Entity-Relationship Diagram}{47}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Prisma Schema Overview}{48}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Explanation of Key Relationships}{48}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}API Design}{48}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}REST API Design Principles}{48}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Endpoint Structure}{49}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Authentication Flow (Better-Auth)}{49}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}N8N Workflow Design}{49}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}AI Verification Workflow}{50}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Database Chat Assistant Workflow}{50}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}AI Storefront Redesign Workflow}{51}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Class Diagram}{52}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Development and Implementation}{54}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Development Environment}{54}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Hardware and Software}{54}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}VSCode and Extensions}{54}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}pnpm Monorepo Structure}{54}{subsection.4.1.3}%
-\contentsline {section}{\numberline {4.2}Backend (NestJS)}{55}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Project Structure}{55}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Key Modules}{55}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Authentication Guards and Role-Based Access Control}{55}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}File Upload System (Multer)}{55}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Email System (Nodemailer)}{55}{subsection.4.2.5}%
-\contentsline {section}{\numberline {4.3}Frontend (React + Vite)}{55}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Project Structure}{55}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Routing and Layouts}{55}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}State Management (TanStack Query + Zustand)}{55}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Admin Dashboard Panels}{55}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Store and Product Management Interface}{56}{subsection.4.3.5}%
-\contentsline {section}{\numberline {4.4}AI Integration with N8N}{57}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}AI Product/Store Verification Pipeline}{57}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Database Chat Assistant}{57}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}N8N Workflow --- AI Storefront Redesign}{57}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Google Gemini / Groq Integration}{59}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}N8N Workflow Implementation}{59}{subsection.4.4.5}%
-\contentsline {section}{\numberline {4.5}Interface Screenshots}{59}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Customer Experience}{59}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Seller Dashboard}{63}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Administrator Tools}{68}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}AI Assistant}{75}{subsection.4.5.4}%
-\contentsline {chapter}{\numberline {5}Infrastructure and Deployment}{77}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Containerisation with Docker}{77}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}Dockerfiles (Frontend and Backend)}{77}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Docker Compose Configuration}{77}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Multi-Service Networking}{77}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Infrastructure as Code with Terraform}{78}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}DigitalOcean Provider}{78}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}VPC, Droplet and Firewall Resources}{78}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}DNS Management with DigitalOcean}{78}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Remote State Management with DigitalOcean Spaces}{78}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{79}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{79}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{80}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{80}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Environment Secrets Management}{80}{subsection.5.3.4}%
-\contentsline {section}{\numberline {5.4}Production Environment}{80}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}DigitalOcean Droplet Specifications}{80}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Production Service Architecture}{80}{subsection.5.4.2}%
-\contentsline {subsection}{\numberline {5.4.3}N8N Deployment Alongside the Application}{81}{subsection.5.4.3}%
-\contentsline {chapter}{General Conclusion}{82}{chapter*.57}%
-\contentsline {chapter}{Bibliography and Webography}{83}{chapter*.57}%
-\contentsline {chapter}{\numberline {A}Complete Prisma Schema}{84}{appendix.A}%
-\contentsline {chapter}{\numberline {B}API Endpoints Reference}{85}{appendix.B}%
-\contentsline {chapter}{\numberline {C}N8N Workflow JSON Exports}{86}{appendix.C}%
-\contentsline {chapter}{\numberline {D}Docker Compose File}{87}{appendix.D}%
-\contentsline {chapter}{\numberline {E}GitHub Actions Workflow}{88}{appendix.E}%
+\contentsline {subsection}{\numberline {3.1.2}N8N as an Automation Layer}{46}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Detailed Technical Architecture}{47}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}NestJS Modular Architecture}{47}{subsection.3.2.1}%
+\contentsline {paragraph}{Cross-cutting modules.}{47}{paragraph*.19}%
+\contentsline {paragraph}{Feature modules grouped by domain.}{47}{paragraph*.20}%
+\contentsline {subsection}{\numberline {3.2.2}React SPA Architecture}{50}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Docker Compose Services Diagram}{50}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Database Design}{52}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Entity-Relationship Diagram}{52}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Prisma Schema Overview}{53}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Explanation of Key Relationships}{54}{subsection.3.3.3}%
+\contentsline {paragraph}{User $\rightarrow $ Store $\rightarrow $ Product (1:N:N).}{54}{paragraph*.24}%
+\contentsline {paragraph}{User $\leftrightarrow $ SellerApplication (1:0..1).}{54}{paragraph*.25}%
+\contentsline {paragraph}{Order $\rightarrow $ Store and Order $\rightarrow $ OrderItems.}{54}{paragraph*.26}%
+\contentsline {paragraph}{Product $\leftrightarrow $ ProductTag (M:N).}{54}{paragraph*.27}%
+\contentsline {paragraph}{Verification flags on Store and Product.}{55}{paragraph*.28}%
+\contentsline {paragraph}{Sale fields on Store.}{55}{paragraph*.29}%
+\contentsline {section}{\numberline {3.4}API Design}{55}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}REST API Design Principles}{55}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Endpoint Structure}{56}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Authentication Flow (Better-Auth)}{58}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}N8N Workflow Design}{59}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}AI Verification Workflow}{60}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Database Chat Assistant Workflow}{60}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}AI Storefront Redesign Workflow}{61}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Class Diagram}{62}{section.3.6}%
+\contentsline {section}{Chapter Conclusion}{65}{figure.caption.36}%
+\contentsline {chapter}{\numberline {4}Development and Implementation}{66}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Development Environment}{66}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Hardware and Software}{66}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}VSCode and Extensions}{66}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}pnpm Monorepo Structure}{66}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Backend (NestJS)}{67}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Project Structure}{67}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Key Modules}{67}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Authentication Guards and Role-Based Access Control}{67}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}File Upload System (Multer)}{67}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Email System (Nodemailer)}{67}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Frontend (React + Vite)}{67}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Project Structure}{67}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Routing and Layouts}{67}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}State Management (TanStack Query + Zustand)}{67}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Admin Dashboard Panels}{67}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Store and Product Management Interface}{68}{subsection.4.3.5}%
+\contentsline {section}{\numberline {4.4}AI Integration with N8N}{69}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}AI Product/Store Verification Pipeline}{69}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Database Chat Assistant}{69}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}N8N Workflow --- AI Storefront Redesign}{69}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Google Gemini / Groq Integration}{71}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}N8N Workflow Implementation}{71}{subsection.4.4.5}%
+\contentsline {section}{\numberline {4.5}Interface Screenshots}{71}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Customer Experience}{71}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Seller Dashboard}{75}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Administrator Tools}{80}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}AI Assistant}{87}{subsection.4.5.4}%
+\contentsline {chapter}{\numberline {5}Infrastructure and Deployment}{89}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Containerisation with Docker}{89}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Dockerfiles (Frontend and Backend)}{89}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Docker Compose Configuration}{89}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Multi-Service Networking}{89}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Infrastructure as Code with Terraform}{90}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}DigitalOcean Provider}{90}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}VPC, Droplet and Firewall Resources}{90}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}DNS Management with DigitalOcean}{90}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Remote State Management with DigitalOcean Spaces}{90}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{91}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{91}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{92}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{92}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Environment Secrets Management}{92}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Production Environment}{92}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}DigitalOcean Droplet Specifications}{92}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Production Service Architecture}{92}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}N8N Deployment Alongside the Application}{93}{subsection.5.4.3}%
+\contentsline {chapter}{General Conclusion}{94}{chapter*.66}%
+\contentsline {chapter}{Bibliography and Webography}{95}{chapter*.66}%
+\contentsline {chapter}{\numberline {A}Complete Prisma Schema}{96}{appendix.A}%
+\contentsline {chapter}{\numberline {B}API Endpoints Reference}{97}{appendix.B}%
+\contentsline {chapter}{\numberline {C}N8N Workflow JSON Exports}{98}{appendix.C}%
+\contentsline {chapter}{\numberline {D}Docker Compose File}{99}{appendix.D}%
+\contentsline {chapter}{\numberline {E}GitHub Actions Workflow}{100}{appendix.E}%

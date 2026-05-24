@@ -1,0 +1,209 @@
+@startuml er-diagram
+!pragma layout elk
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+skinparam backgroundColor #FFFFFF
+skinparam linetype ortho
+
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #1E40AF
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+
+entity User #DBEAFE {
+  * id : String (PK)
+  --
+  * name : String
+  * email : String (unique)
+  * emailVerified : Boolean
+  phone : String
+  image : String
+  * role : UserRole
+  * isBanned : Boolean
+  * isPremium : Boolean
+  premiumExpiresAt : DateTime
+}
+
+entity Session #DBEAFE {
+  * id : String (PK)
+  --
+  * token : String (unique)
+  * userId : String (FK)
+  * expiresAt : DateTime
+  ipAddress : String
+  userAgent : String
+}
+
+entity Account #DBEAFE {
+  * id : String (PK)
+  --
+  * userId : String (FK)
+  * providerId : String
+  password : String (hash)
+}
+
+entity SellerApplication #FEF3C7 {
+  * id : Int (PK)
+  --
+  * userId : String (FK, unique)
+  * status : SellerApplicationStatus
+  * fullName : String
+  * phoneNumber : String
+  * businessDescription : String
+  * idDocumentUrl : String
+  businessLicenseUrl : String
+  adminNote : String
+}
+
+entity Store #DCFCE7 {
+  * id : Int (PK)
+  --
+  * name : String
+  * slug : String (unique)
+  * description : String
+  logoUrl : String
+  thumbnailUrl : String
+  * currentStatus : StoreStatus
+  * template : StoreTemplate
+  * customization : Json
+  * aiReviewed : Boolean
+  aiReviewNote : String
+  * adminReviewed : Boolean
+  * saleEnabled : Boolean
+  * saleDiscountPercent : Int
+  * saleLabel : String
+  saleEndsAt : DateTime
+  * userId : String (FK)
+}
+
+entity StoreStatusLog #DCFCE7 {
+  * id : Int (PK)
+  --
+  * storeId : Int (FK)
+  * status : StoreStatus
+  reason : StoreStatusReason
+  * title : String
+  description : String
+  * isResolved : Boolean
+}
+
+entity Product #CCFBF1 {
+  * id : Int (PK)
+  --
+  * name : String
+  * description : String
+  * price : Float
+  * displayPrice : Float
+  * stock : Int
+  * status : ProductStatus
+  * isBanned : Boolean
+  * verificationStatus : VerificationStatus
+  * aiReviewed : Boolean
+  * adminReviewed : Boolean
+  * storeId : Int (FK)
+  * subcategoryId : Int (FK)
+  thumbnailId : Int (FK)
+}
+
+entity ProductImage #CCFBF1 {
+  * id : Int (PK)
+  --
+  * productId : Int (FK)
+  * url : String
+}
+
+entity ProductTag #CCFBF1 {
+  * id : Int (PK)
+  --
+  * name : String (unique)
+}
+
+entity Category #F0FDF4 {
+  * id : Int (PK)
+  --
+  * name : String
+}
+
+entity Subcategory #F0FDF4 {
+  * id : Int (PK)
+  --
+  * categoryId : Int (FK)
+  * name : String
+}
+
+entity Order #FCE7F3 {
+  * id : Int (PK)
+  --
+  * userId : String (FK)
+  * storeId : Int (FK)
+  * status : OrderStatus
+  * totalAmount : Float
+  * city : String
+  * state : String
+  * country : String
+  * zipCode : String
+  * streetAddress : String
+  notes : String
+}
+
+entity OrderItems #FCE7F3 {
+  * id : Int (PK)
+  --
+  * orderId : Int (FK)
+  * productId : Int (FK)
+  * quantity : Int
+  * unitPrice : Float
+  * subtotal : Float
+}
+
+entity FeaturedStore #FEF9C3 {
+  * id : Int (PK)
+  --
+  * storeId : Int (FK, unique)
+  * position : Int
+}
+
+entity FeaturedProduct #FEF9C3 {
+  * id : Int (PK)
+  --
+  * productId : Int (FK, unique)
+  * position : Int
+}
+
+entity Notification #EDE9FE {
+  * id : Int (PK)
+  --
+  * userId : String (FK)
+  * type : NotificationType
+  * title : String
+  * body : String
+  * isRead : Boolean
+}
+
+' ── Relationships ──
+User ||--o{ Session
+User ||--o{ Account
+User ||--o| SellerApplication
+User ||--o{ Store
+User ||--o{ Order
+User ||--o{ Notification
+
+Store ||--o{ Product
+Store ||--o{ Order
+Store ||--o{ StoreStatusLog
+Store ||--o| FeaturedStore
+
+Product ||--o{ ProductImage
+Product }o--o{ ProductTag
+Product ||--o{ OrderItems
+Product ||--o| FeaturedProduct
+Product }o--|| Subcategory
+
+Category ||--o{ Subcategory
+
+Order ||--o{ OrderItems
+
+@enduml

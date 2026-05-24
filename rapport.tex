@@ -956,6 +956,7 @@ landing page, manages categories and sub-categories, and consults
 the platform through a database-aware AI chat assistant.
 
 \section{Functional Requirements}
+\label{sec:functional-requirements}
 
 The functional requirements are grouped into seven domains. Each
 domain corresponds to a NestJS module on the backend and to a
@@ -1542,110 +1543,489 @@ these specifications to present the system design and architecture.
 \chapter{Design and Architecture}
 
 \begin{chapterintro}
-  This chapter presents the global and detailed system architecture, database
-  design, API design, and the N8N automation workflow designs.
+  This chapter translates the requirements identified in
+  Chapter~\ref{chap:requirements} into a concrete system design. It opens
+  with a global three-tier view, then drills down into the NestJS module
+  layout, the React SPA structure, the Docker Compose topology, the
+  database schema, the REST API contract, the three n8n workflows that
+  carry the platform's AI features, and finally the UML class model that
+  unifies all the design decisions.
 \end{chapterintro}
 
 \section{Global Architecture}
 
 \subsection{3-Tier Architecture Overview}
 
-Cheebo follows a classic three-tier architecture separating
-presentation, business logic, and data concerns. Figure~\ref{fig:arch-global}
-illustrates how the React SPA (frontend), the NestJS API (backend),
-and the MariaDB database interact, with n8n sitting alongside the
-backend as an automation layer.
+Cheebo follows a classic \textbf{three-tier architecture} that separates
+the user interface (presentation), the business logic (application), and
+the persistent data (data) into three independent layers. This separation
+is the structural foundation on which every other design decision in this
+chapter builds: it lets each tier evolve at its own pace, scales the
+backend horizontally without touching the frontend, and keeps the database
+schema decoupled from the public REST contract.
+
+Figure~\ref{fig:arch-global} shows the three tiers and the auxiliary
+components that orbit them. End users reach the platform exclusively
+through HTTPS to an \textbf{Nginx} reverse proxy, which serves the static
+React bundle and forwards every \texttt{/api/*} request to the
+NestJS API container over the Docker bridge network. The NestJS
+application implements the entire business logic --- authentication,
+catalogue management, order processing, moderation --- and persists state
+to a single \textbf{MariaDB 11} instance through the \textbf{Prisma} ORM.
+File uploads are handled by \textbf{Multer} and stored on a Docker
+volume; transactional emails are dispatched through \textbf{Nodemailer}
+over SMTP.
+
+Sitting alongside the backend rather than inside it, \textbf{n8n} hosts
+the three AI workflows (verification, database chat, AI redesign). The
+backend reaches n8n via internal HTTP webhooks; n8n in turn calls the
+LLM providers (Groq and Gemini) over the public internet. This
+separation isolates AI orchestration --- prompt templates, model
+selection, retry logic --- from the core business logic, so it can be
+modified through the n8n editor without redeploying the API.
+
+Figure~\ref{fig:arch-global} summarises the topology. End users on
+the left reach Nginx, which serves the SPA and forwards API traffic
+to the NestJS backend; the backend in turn talks to MariaDB,
+Nodemailer and Multer, and exchanges webhooks with n8n on the right,
+which itself calls the LLM providers.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{3-tier architecture diagram (Frontend / Backend / DB)}
-  \caption{Global system architecture}
+  \includegraphics[height=0.75\textheight,keepaspectratio]{arch-3tier.png}
+  \caption{Global system architecture (three tiers + n8n automation layer)}
   \label{fig:arch-global}
 \end{figure}
 
 \subsection{N8N as an Automation Layer}
-% TODO
+
+n8n was introduced as a deliberate architectural choice rather than an
+ad-hoc tool. Three properties made it the right fit for Cheebo's AI
+features:
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Workflow-as-data.} Every AI feature is expressed as a
+        JSON workflow that can be exported, version-controlled in the
+        repository (\texttt{n8n-workflows/}), and re-imported on any
+        n8n instance. The workflow becomes a first-class artefact of
+        the system, reviewed alongside the application code.
+  \item \textbf{Provider abstraction.} The NestJS backend never imports
+        an LLM SDK. Switching from Gemini to Groq, or adding a new
+        provider for a specific node, is a configuration change inside
+        the n8n editor with no NestJS recompilation. This decoupling
+        also keeps API keys out of the backend container.
+  \item \textbf{Native webhook orientation.} n8n exposes any workflow as
+        a webhook endpoint (\texttt{/webhook/<name>}) and supports
+        synchronous \emph{Respond to Webhook} for request/response flows
+        and asynchronous patterns for fire-and-forget jobs. This matches
+        exactly the three integration patterns Cheebo needs:
+        asynchronous (verification fires on entity creation and writes
+        back later), synchronous (AI redesign returns the
+        \texttt{StoreCustomization} to the seller's editor in the same
+        call), and conversational (the database chat assistant streams
+        messages between the admin and the LLM).
+\end{enumerate}
+
+The trade-off accepted in exchange for these benefits is one additional
+container in the production stack and one additional persistence volume
+(\texttt{n8n\_data}) to back up. Both are justified by the maintainability
+gains.
 
 \section{Detailed Technical Architecture}
 
 \subsection{NestJS Modular Architecture}
 
-The backend is structured as a set of feature modules, each
-encapsulating its own controller, service, and DTOs.
-Figure~\ref{fig:arch-nest} shows the principal modules ---
-Auth, Store, Product, Order, Category, and AI --- and their
-dependency relationships.
+The backend is structured as a set of \textbf{feature modules}, each
+encapsulating its own controller, service, DTOs, and Prisma queries.
+Every module declares its own \texttt{@Module()} decorator and exports
+the providers consumed by sibling modules; this strict separation is
+what allows the dependency graph in Figure~\ref{fig:arch-nest} to remain
+acyclic in a system that hosts almost twenty modules.
+
+\paragraph{Cross-cutting modules.}
+Four modules are imported by virtually every feature:
+\texttt{PrismaModule} exposes the singleton Prisma client;
+\texttt{AuthModule} provides the \texttt{AuthGuard} and the
+\texttt{@Roles()} decorator that gate every protected route;
+\texttt{NotificationModule} centralises in-app notifications dispatched
+through the EventEmitter;
+\texttt{SettingsModule} stores platform-wide configuration that
+administrators can update without redeploying.
+
+\paragraph{Feature modules grouped by domain.}
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{User and application:} \texttt{UserModule} and
+        \texttt{SellerApplicationModule} handle profile management
+        and the seller onboarding workflow.
+  \item \textbf{Storefront:} \texttt{StoreModule}, \texttt{StoreStatusLogModule},
+        \texttt{ProductModule}, \texttt{ProductImageModule}, and
+        \texttt{ProductTagModule} cover everything a seller owns.
+  \item \textbf{Catalogue:} \texttt{CategoryModule} and
+        \texttt{SubCategoryModule} maintain the taxonomy that the
+        product grid filters by.
+  \item \textbf{Commerce:} \texttt{OrderModule} and
+        \texttt{OrderItemsModule} create orders and persist line items
+        with the discounted unit price computed at checkout.
+  \item \textbf{Discovery and analytics:} \texttt{HomeModule} powers
+        the landing page (featured stores, featured products, tag-based
+        recommendations); \texttt{AnalyticsModule} computes per-store
+        revenue and visitor metrics.
+  \item \textbf{AI integration:} \texttt{ChatModule} relays
+        administrator messages to the database chat workflow;
+        \texttt{N8nModule} centralises the webhook calls used by both
+        the verification pipeline and the AI redesign feature.
+\end{itemize}
+
+This layout maps one-to-one onto the functional requirement domains of
+Section~\ref{sec:functional-requirements}, which makes it easy to
+trace a requirement to a single module and vice versa.
+
+Figure~\ref{fig:arch-nest} visualises the resulting module catalogue.
+The cross-cutting providers are shown in blue at the top, the
+domain-specific feature modules are grouped into five coloured packages,
+and the AI integration package on the right collects the modules that
+exchange webhooks with n8n.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{NestJS module diagram (Auth, Store, Product, Order, AI…)}
-  \caption{NestJS modular architecture}
+  \includegraphics[height=0.85\textheight,keepaspectratio]{arch-nestjs.png}
+  \caption{NestJS modular architecture: groups of feature modules and their dependencies}
   \label{fig:arch-nest}
 \end{figure}
 
 \subsection{React SPA Architecture}
-% TODO
+
+The frontend is a \textbf{Single-Page Application} built with React 19
+and bundled by \textbf{Vite}. The codebase under
+\texttt{frontend/src/} is split into seven top-level folders, each
+playing a clearly defined role:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{pages/} --- one file per route, including the public
+        catalogue (\texttt{Home}, \texttt{ProductsPage},
+        \texttt{StorePage}, \texttt{ProductPage}), the checkout flow
+        (\texttt{CartPage}, \texttt{CheckoutPage},
+        \texttt{OrderSuccessPage}), authentication
+        (\texttt{Login}, \texttt{Register},
+        \texttt{EmailVerified}), and a nested
+        \texttt{dashboard/} subtree split by role (seller, admin).
+  \item \texttt{components/} --- reusable building blocks
+        (\texttt{ProductCard}, \texttt{StoreCard},
+        \texttt{SearchBar}, \texttt{AiChatFab}, and the
+        \texttt{ui/} folder of \texttt{shadcn/ui} primitives).
+  \item \texttt{api/} --- one TypeScript file per backend module
+        (\texttt{store.api.ts}, \texttt{product.api.ts}, \ldots)
+        that wraps the typed Axios client and exposes a single
+        object of named functions, mirroring the NestJS layout.
+  \item \texttt{stores/} --- Zustand stores for client-side state
+        (\texttt{auth.store}, \texttt{cart.store},
+        \texttt{admin.store}, \texttt{category.store},
+        \texttt{customization.editor.store}).
+  \item \texttt{hooks/} --- TanStack React Query hooks that wrap
+        the API layer, providing caching, deduplication, and
+        background refetching.
+  \item \texttt{lib/} --- framework-agnostic utilities (Axios
+        instance, customisation hydration, error formatter).
+  \item \texttt{types/} and \texttt{constants/} --- domain types
+        shared with the backend DTOs and constant tables (roles,
+        statuses, MIME lists).
+\end{itemize}
+
+State management follows a strict two-tier convention: \textbf{server
+state} (anything originating from the API) lives in \textbf{TanStack
+Query} caches keyed by the API path; \textbf{client-only state} (cart
+contents, theme preference, draft store customisation in the WYSIWYG
+editor) lives in \textbf{Zustand} stores. This division eliminates the
+classic React anti-pattern of duplicating server data into a Redux
+store and then fighting cache invalidation.
+
+The storefront editor itself is a separate sub-architecture built on
+\textbf{Craft.js}: the canvas, the section palette, and the
+inspector panel are wired around a single \texttt{<Editor>} provider,
+and a Zustand store mirrors the Craft editor state so that the
+\textit{Save} button can submit a stable JSON payload to the
+backend.
 
 \subsection{Docker Compose Services Diagram}
 
 The full application stack is defined in a single
-\texttt{docker-compose.yml} file. Figure~\ref{fig:docker-services}
-shows the four services --- frontend (Nginx), backend (NestJS),
-database (MariaDB), and n8n --- together with their exposed ports
-and shared volumes.
+\texttt{docker-compose.yml} file at the root of the monorepo. Four
+services are declared (Figure~\ref{fig:docker-services}):
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{db} --- official \texttt{mariadb:11} image with a
+        named volume \texttt{db\_data} and a health-check that
+        gates the backend's start-up.
+  \item \textbf{backend} --- the pre-built
+        \texttt{sirvinny/cheebo-backend:latest} image, configured
+        from environment variables (database credentials,
+        Better-Auth secret, SMTP settings, n8n webhook URLs,
+        premium-tier limits) and mounting an \texttt{uploads}
+        volume for stored images.
+  \item \textbf{frontend} --- the pre-built
+        \texttt{sirvinny/cheebo-frontend:latest} image (Nginx
+        serving the React bundle) with the only published port,
+        \texttt{80:80}.
+  \item \textbf{n8n} --- the official \texttt{n8nio/n8n:latest}
+        image with a named volume \texttt{n8n\_data} preserving
+        workflows and credentials across restarts.
+\end{itemize}
+
+All services share a single Docker bridge network that is created
+implicitly by Compose; only the frontend port is published. The
+backend, database, and n8n are never reachable directly from the
+public internet --- the backend's URL is \texttt{http://backend:3000}
+from inside the bridge network, and the database is reachable as
+\texttt{db:3306}. This single-host topology is intentional: the
+production droplet specifications (Section~\ref{sec:droplet-specs})
+size for it, and the architecture is straightforward to migrate to
+a managed database or a Kubernetes deployment later.
+
+Figure~\ref{fig:docker-services} shows the resulting topology on the
+production host: the four containers sit on a shared Docker bridge
+network, only the frontend publishes a port to the public internet,
+and each stateful service writes to its own named volume.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{Docker Compose services diagram (frontend, backend, db, n8n)}
-  \caption{Docker Compose services}
+  \includegraphics[height=0.7\textheight,keepaspectratio]{arch-docker.png}
+  \caption{Docker Compose services on the production host}
   \label{fig:docker-services}
 \end{figure}
 
 \section{Database Design}
 
 \subsection{Entity-Relationship Diagram}
+\label{sec:er-diagram}
 
-Figure~\ref{fig:er} presents the full entity-relationship diagram of
-the Cheebo database. The central \texttt{User} entity branches into
-\texttt{Store}, \texttt{SellerApplication}, and \texttt{Order},
-while \texttt{Product} links to \texttt{Store}, \texttt{Category},
-and the AI verification status fields.
+Figure~\ref{fig:er} presents the entity-relationship diagram of the
+Cheebo database. The schema is organised around the \texttt{User}
+entity, which acts as the entry point for three independent branches:
+authentication (\texttt{Session}, \texttt{Account},
+\texttt{Verification}), commerce (\texttt{Order} and through it
+\texttt{OrderItems}), and storefront ownership
+(\texttt{SellerApplication} and \texttt{Store}). Each \texttt{Store}
+in turn owns its own subtree of \texttt{Product}, \texttt{ProductImage},
+\texttt{ProductTag} and \texttt{StoreStatusLog} records, while the
+\texttt{Category}/\texttt{Subcategory} hierarchy lives orthogonally and
+is referenced by every product.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[10cm]{Full ER diagram (User, Store, Product, Order, SellerApplication…)}
-  \caption{Entity-Relationship diagram}
+  \includegraphics[width=\textwidth,keepaspectratio]{er-diagram.png}
+  \caption{Entity-Relationship diagram of the Cheebo database}
   \label{fig:er}
 \end{figure}
 
 \subsection{Prisma Schema Overview}
-% TODO
+
+The Prisma schema is split into eighteen files under
+\texttt{backend/prisma/schema/}, one per logical entity, plus an
+\texttt{enums/} folder gathering every enumeration in a single place.
+This split takes advantage of the \texttt{multi-file schema} preview
+feature introduced in Prisma~5 and keeps each file under one screen,
+which makes diff review on pull requests far easier than a single
+multi-thousand-line schema.
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Authentication} (\texttt{user.prisma},
+        \texttt{auth.prisma}) --- four models: \texttt{User},
+        \texttt{Session}, \texttt{Account}, \texttt{Verification}.
+        The non-\texttt{User} tables are managed entirely by
+        Better-Auth and are exposed to Prisma read-only.
+  \item \textbf{Storefront} (\texttt{store.prisma},
+        \texttt{store-status-log.prisma},
+        \texttt{store-template.prisma}) --- the \texttt{Store} model
+        carries a JSON \texttt{customization} column that holds the
+        Craft.js editor state, plus the four sale fields
+        (\texttt{saleEnabled}, \texttt{saleDiscountPercent},
+        \texttt{saleLabel}, \texttt{saleEndsAt}).
+  \item \textbf{Product catalogue} (\texttt{product.prisma},
+        \texttt{product-image.prisma}, \texttt{product-tag.prisma},
+        \texttt{category.prisma}, \texttt{subcategory.prisma}) ---
+        five models capturing the catalogue, with two-level
+        category taxonomy and many-to-many tags via an implicit
+        join table.
+  \item \textbf{Commerce} (\texttt{order.prisma},
+        \texttt{order-items.prisma}) --- two models with the unit
+        price persisted on each line so that subsequent price
+        changes never alter historical orders.
+  \item \textbf{Curation} (\texttt{featured.prisma}) --- two
+        models (\texttt{FeaturedStore}, \texttt{FeaturedProduct})
+        with a \texttt{position} integer driving the landing-page
+        ordering.
+  \item \textbf{Workflow} (\texttt{seller-application.prisma},
+        \texttt{notification.prisma}, \texttt{setting.prisma})
+        --- application reviews, in-app notifications, and
+        platform-wide settings respectively.
+\end{itemize}
+
+The complete schema, including indexes and cascade rules, is
+reproduced in Appendix~\ref{app:prisma-schema}.
 
 \subsection{Explanation of Key Relationships}
-% TODO
+
+A handful of relationships carry most of the load and deserve a
+dedicated note.
+
+\paragraph{User $\rightarrow$ Store $\rightarrow$ Product (1:N:N).}
+A \texttt{User} with the \texttt{SELLER} role can own one store on
+the free tier and several on the premium tier; each store owns an
+unbounded number of products. The chain is materialised by two
+foreign keys (\texttt{Store.userId}, \texttt{Product.storeId})
+both indexed. The cascading-delete rule on \texttt{Product} ensures
+that suspending or deleting a store cleanly removes the products it
+contained.
+
+\paragraph{User $\leftrightarrow$ SellerApplication (1:0..1).}
+A user has at most one open seller application at any time. The
+\texttt{userId} column is \texttt{@unique}, which prevents duplicate
+submissions at the database level rather than at the service layer.
+The \texttt{Cascade} delete rule on the FK ensures that deleting a
+user automatically purges the application row.
+
+\paragraph{Order $\rightarrow$ Store and Order $\rightarrow$ OrderItems.}
+A single multi-store checkout creates \textbf{one \texttt{Order} per
+store} (so the seller has a clean per-store view) but a single
+shopping flow for the customer. Each \texttt{OrderItems} row carries
+the unit price that was visible at checkout time --- this is the
+discounted price when the store had an active sale, computed by the
+\texttt{Product} service before the order is persisted. Subsequent
+price changes never rewrite history.
+
+\paragraph{Product $\leftrightarrow$ ProductTag (M:N).}
+Prisma's \emph{implicit} many-to-many relation is used here: Prisma
+manages an internal join table \texttt{\_ProductTags} that does not
+appear in the schema file, which keeps the model lean while still
+allowing efficient queries by tag for the recommendation engine.
+
+\paragraph{Verification flags on Store and Product.}
+Both entities carry two independent boolean flags:
+\texttt{aiReviewed} (set automatically by the n8n verification
+workflow) and \texttt{adminReviewed} (set when an administrator
+manually overrides the AI verdict). This dual-flag design preserves
+the audit trail of who --- machine or human --- approved a piece of
+content, and lets the moderation queue filter on
+\texttt{aiReviewed = false AND adminReviewed = false} to find
+genuinely pending items.
+
+\paragraph{Sale fields on Store.}
+The four sale fields live on \texttt{Store} rather than on a
+separate \texttt{Sale} entity. This denormalisation is deliberate:
+sales are always store-wide, only one is active at a time, and the
+fields are read on every product query. A separate join would have
+added a query without buying any expressive power.
 
 \section{API Design}
 
 \subsection{REST API Design Principles}
-% TODO
+
+The Cheebo backend exposes a single \textbf{REST API} over JSON
+that the React SPA consumes through a typed Axios client. Six
+principles guided every route declaration:
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Resource-oriented URLs.} Routes name nouns
+        (\texttt{/store}, \texttt{/product}, \texttt{/order})
+        and use sub-paths for actions on a specific resource
+        (\texttt{/store/:id/sale},
+        \texttt{/store/:id/ai-redesign}). Verbs in URLs are
+        avoided.
+  \item \textbf{HTTP verb semantics.} \texttt{GET} for safe
+        reads, \texttt{POST} for creation, \texttt{PATCH} for
+        partial updates, \texttt{PUT} for full replacements,
+        \texttt{DELETE} for removal. Status codes follow the
+        same convention --- \texttt{201 Created} on
+        \texttt{POST}, \texttt{204 No Content} on
+        \texttt{DELETE}, \texttt{400} for validation errors,
+        \texttt{401} for unauthenticated access, \texttt{403}
+        for role violations.
+  \item \textbf{Validated DTOs.} Every body- or query-bearing
+        endpoint declares a \texttt{class-validator} DTO with
+        \texttt{forbidNonWhitelisted: true}, so any extra field
+        in the payload is rejected at the framework layer
+        before the controller handler executes.
+  \item \textbf{Role-based access control.} Protected routes
+        are decorated with \texttt{@UseGuards(AuthGuard,
+        RolesGuard)} and the \texttt{@Roles(\ldots)} decorator
+        listing the allowed roles. Anonymous endpoints (catalogue
+        browsing, store page) carry \texttt{@Public()}.
+  \item \textbf{Cursor- and page-based pagination.} List
+        endpoints accept \texttt{page} and \texttt{limit} query
+        parameters and always return a uniform
+        \texttt{PaginatedResult<T>} envelope
+        (\texttt{\{ data, total, page, limit \}}).
+  \item \textbf{Stable error contract.} Failures are
+        serialised as
+        \texttt{\{ statusCode, message, error \}} so that the
+        frontend's \texttt{getApiError} helper can handle both
+        single-string and array-of-strings messages from
+        validation pipes without branching on the endpoint.
+\end{enumerate}
+
+OpenAPI documentation is generated automatically by the
+\texttt{@nestjs/swagger} module and served at
+\texttt{/api/docs} when the \texttt{SWAGGER\_PATH} environment
+variable is set, which is useful in development and during
+defence preparation but disabled in production.
 
 \subsection{Endpoint Structure}
 
+Table~\ref{tab:api} lists representative endpoints grouped by
+module. The complete list of around one hundred routes is
+reproduced in Appendix~\ref{app:api-reference}.
+
 \begin{table}[H]
   \centering
-  \caption{Main REST API endpoints}
+  \caption{Main REST API endpoints, grouped by module}
   \begin{tabularx}{\textwidth}{llX}
     \toprule
     \textbf{Method} & \textbf{Route} & \textbf{Description} \\
     \midrule
-    POST  & /auth/sign-up        & Register a new user \\
-    POST  & /auth/sign-in        & Log in \\
-    GET   & /store               & List stores \\
-    POST  & /store               & Create a store \\
-    GET   & /product             & List products \\
-    POST  & /product             & Create a product \\
-    GET   & /order/my            & Get my orders \\
-    POST  & /seller-application  & Submit a seller application \\
+    \multicolumn{3}{l}{\textit{Authentication (Better-Auth, mounted under /api/auth)}} \\
+    POST  & /auth/sign-up                & Register a new user, send verification email \\
+    POST  & /auth/sign-in                & Authenticate and issue session cookie \\
+    POST  & /auth/sign-out               & Invalidate the current session \\
+    GET   & /auth/verify-email           & Confirm an email verification token \\
+    \midrule
+    \multicolumn{3}{l}{\textit{Seller application}} \\
+    POST  & /seller-application          & Submit a new application \\
+    GET   & /seller-application/my       & Read my own application \\
+    GET   & /seller-application          & (admin) List every application \\
+    PATCH & /seller-application/:id      & (admin) Approve, reject, or request info \\
+    \midrule
+    \multicolumn{3}{l}{\textit{Store}} \\
+    GET   & /store                       & List public stores (paginated, searchable) \\
+    GET   & /store/by-slug/:slug         & Resolve a store by its public slug \\
+    POST  & /store                       & Create a store (triggers AI verification) \\
+    PATCH & /store/:id/customization     & Save Craft.js storefront configuration \\
+    PATCH & /store/:id/sale              & Activate, edit or disable the store-wide sale \\
+    POST  & /store/:id/ai-redesign       & Request an AI-generated full redesign \\
+    PATCH & /store/:id/status            & (admin) Suspend, reactivate or delete \\
+    \midrule
+    \multicolumn{3}{l}{\textit{Product}} \\
+    GET   & /product                     & List products (filters, sort, pagination) \\
+    GET   & /product/by-store/:id/cards  & Lightweight product cards for storefront \\
+    GET   & /product/recommended         & Tag-based recommendations \\
+    GET   & /product/search              & Full-text search across catalogue \\
+    POST  & /product                     & Create a product (triggers AI verification) \\
+    PATCH & /product/:id/verify          & (admin) Override AI verdict \\
+    \midrule
+    \multicolumn{3}{l}{\textit{Order}} \\
+    POST  & /order                       & Place an order (multi-store checkout) \\
+    GET   & /order/my                    & Read the current user's order history \\
+    GET   & /order                       & (seller) Orders containing my products \\
+    GET   & /order/dashboard             & (admin) Browse all orders \\
+    \midrule
+    \multicolumn{3}{l}{\textit{Featured content}} \\
+    GET   & /home/featured               & Featured stores and products on landing \\
+    PUT   & /home/featured/stores        & (admin) Curate featured stores \\
+    PUT   & /home/featured/products      & (admin) Curate featured products \\
+    \midrule
+    \multicolumn{3}{l}{\textit{AI integration}} \\
+    POST  & /chat                        & (admin) Forward message to DB chat workflow \\
+    POST  & /n8n/verify-callback         & Internal: n8n posts back the AI verdict \\
     \bottomrule
   \end{tabularx}
   \label{tab:api}
@@ -1653,20 +2033,53 @@ and the AI verification status fields.
 
 \subsection{Authentication Flow (Better-Auth)}
 
-Authentication is handled entirely by the Better-Auth library.
-Figure~\ref{fig:auth-flow} details the session creation flow: after
-successful credential validation, Better-Auth issues an HTTP-only
-session cookie that is verified on every subsequent protected request
-via the \texttt{AuthGuard}.
+Authentication is handled entirely by the \textbf{Better-Auth}
+library, integrated into NestJS through a thin adapter module.
+Better-Auth was preferred over rolling a custom Passport
+strategy because it ships with email/password, email
+verification, session persistence in the database, and
+cookie-based session transport out of the box --- everything
+Cheebo needs without writing any cryptography. Sessions are
+opaque DB-backed tokens (not JWTs), which makes server-side
+revocation a one-line update on the \texttt{Session} table.
+
+Figure~\ref{fig:auth-flow} details the three-stage flow:
+registration (creates the \texttt{User} row, sends the
+verification email, returns a session cookie marked
+\emph{pending verification}), email verification (flips
+\texttt{emailVerified=true}), and login (validates credentials
+and issues a fresh session). Every subsequent protected
+request carries the \texttt{better-auth.session\_token} cookie,
+which the NestJS \texttt{AuthGuard} validates against the
+\texttt{Session} table on each call.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[6cm]{Sequence diagram — Better-Auth flow (JWT + session)}
-  \caption{Better-Auth authentication flow}
+  \includegraphics[width=\textwidth]{seq-auth.png}
+  \caption{Better-Auth authentication flow (registration, verification, login)}
   \label{fig:auth-flow}
 \end{figure}
 
 \section{N8N Workflow Design}
+
+Cheebo's AI features are carried by three independent n8n workflows
+deployed on the same engine. Each one is exposed as an HTTP webhook
+that the NestJS backend invokes; their JSON definitions live in
+\texttt{n8n-workflows/} in the repository and are reproduced in
+Appendix~\ref{app:n8n-workflows}. The three workflows differ in
+their trigger, integration pattern, and downstream model:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{AI verification} --- fired automatically when a
+        seller creates a store or a product, asynchronous response
+        through a callback endpoint.
+  \item \textbf{Database chat assistant} --- triggered by an
+        administrator's chat message, conversational
+        request/response.
+  \item \textbf{AI storefront redesign} --- triggered explicitly
+        by a seller from the Craft.js editor, synchronous response
+        returning a \texttt{StoreCustomization} JSON object.
+\end{itemize}
 
 \subsection{AI Verification Workflow}
 
@@ -1678,7 +2091,7 @@ rules, and posts the verdict back to the \texttt{/callback} endpoint.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — product/store AI verification}
+  \includegraphics[width=\textwidth,keepaspectratio]{n8n-verify.png}
   \caption{N8N workflow --- AI verification}
   \label{fig:n8n-verify}
 \end{figure}
@@ -1692,7 +2105,7 @@ against the MariaDB instance, and returns a formatted response.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{N8N workflow screenshot/diagram — database chat assistant}
+  \includegraphics[width=\textwidth,keepaspectratio]{n8n-chat.png}
   \caption{N8N workflow --- Database chat assistant}
   \label{fig:n8n-chat}
 \end{figure}
@@ -1715,31 +2128,128 @@ produces the design; and a \textbf{Parse \& Sanitise} Code node that
 validates hex colour values, clamps numeric fields, and applies safe
 defaults for any missing properties. The sanitised object is returned
 synchronously to the backend, which persists it and streams it back to
-the editor. Figure~\ref{fig:seq-ai-redesign-design} shows the
-interaction sequence at the design level.
+the editor.
+
+Figure~\ref{fig:n8n-redesign} shows the workflow as it appears in the
+n8n editor, with the webhook trigger on the left, the Build Prompt
+Code node, the AI Agent connected to the Groq chat model, the Parse \&
+Sanitise Code node, and the Respond to Webhook node on the right.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\linewidth]{diagrams/seq-ai-redesign.png}
+  \includegraphics[width=\textwidth,keepaspectratio]{n8n-redesign.png}
+  \caption{N8N workflow --- AI storefront redesign}
+  \label{fig:n8n-redesign}
+\end{figure}
+
+Figure~\ref{fig:seq-ai-redesign-design} complements the workflow
+screenshot with the end-to-end interaction sequence between seller,
+backend, n8n and the LLM provider at the design level.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{seq-ai-redesign.png}
   \caption{AI storefront redesign --- interaction sequence}
   \label{fig:seq-ai-redesign-design}
 \end{figure}
 
 \section{Class Diagram}
 
-Figure~\ref{fig:class-diagram} presents the UML class diagram of
-the main domain entities. It highlights the inheritance hierarchy
-between \texttt{User}, \texttt{Seller}, and \texttt{Administrator},
-the composition relationship between \texttt{Store} and
-\texttt{Product}, and the aggregation between \texttt{Order} and
-\texttt{OrderItem}.
+Figure~\ref{fig:class-diagram} presents the UML class diagram of the
+main domain entities. Where the ER diagram of
+Section~\ref{sec:er-diagram} focused on tables, foreign keys and
+cardinalities, the class diagram emphasises the \emph{behaviour}
+attached to each entity --- the methods invoked by the service layer
+during use case execution --- and the \emph{enumerations} that
+constrain the state of every long-lived object.
+
+Three structural relationships dominate the model:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{User-driven aggregation.} The \texttt{User} class
+        plays the role of the application's principal aggregate. It
+        has a 1:0..1 association with \texttt{SellerApplication}, a
+        1:N composition with \texttt{Store} (one user, multiple
+        stores on the premium tier), and a 1:N association with
+        \texttt{Order} as a customer.
+  \item \textbf{Store/Product composition.} \texttt{Store} composes
+        \texttt{Product} (filled diamond): products cannot exist
+        independently of their store, and cascading deletes are
+        enforced at both the Prisma and database levels. The same
+        composition links \texttt{Product} to its
+        \texttt{ProductImage} children.
+  \item \textbf{Order/OrderItems aggregation.} \texttt{Order}
+        aggregates \texttt{OrderItems} (open diamond): order lines
+        always belong to exactly one order, but the
+        \texttt{Product} they reference has an independent
+        lifecycle from the order. This is what allows historical
+        orders to keep displaying a product that has since been
+        deleted from a store.
+\end{itemize}
+
+Four enumerations (\texttt{UserRole}, \texttt{StoreStatus},
+\texttt{OrderStatus}, \texttt{VerificationStatus}) constrain the
+state machines of their owning entities. Methods shown on each
+class correspond directly to service-layer operations exposed by
+the matching NestJS module --- \texttt{Store.suspend(reason)}
+maps to \texttt{StoreService.suspend()}, \texttt{Product.\allowbreak%
+computeSalePrice()} maps to the helper used by every product
+query, and so on.
+
+Figure~\ref{fig:class-diagram} renders the resulting model.
+Aggregate roots (\texttt{User}, \texttt{Store}, \texttt{Order})
+appear with their associations and the multiplicities that govern
+them; supporting classes (\texttt{ProductImage},
+\texttt{ProductTag}, \texttt{OrderItems}) sit alongside the entity
+they belong to; and the four enumerations are linked to their
+owning classes through dashed dependency arrows.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[10cm]{UML class diagram — main domain entities}
-  \caption{Class diagram}
+  \includegraphics[height=0.82\textheight,keepaspectratio]{class-diagram.png}
+  \caption{UML class diagram of the main domain entities}
   \label{fig:class-diagram}
 \end{figure}
+
+\begin{keytakeaways}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item The system is a three-tier architecture --- React SPA,
+        NestJS API, MariaDB --- with n8n as an external automation
+        layer reached only through webhooks.
+  \item The NestJS backend is composed of around twenty feature
+        modules grouped into six functional clusters
+        (cross-cutting, user, storefront, catalogue, commerce,
+        AI), each mapping one-to-one to a functional requirement
+        domain.
+  \item The Prisma schema is split into eighteen files for
+        reviewability, and uses the JSON \texttt{customization}
+        column on \texttt{Store} to persist the Craft.js editor
+        state without proliferating tables.
+  \item The REST API follows resource-oriented design, validates
+        every payload with \texttt{class-validator} DTOs and
+        enforces RBAC through the \texttt{@Roles()} decorator.
+  \item Three independent n8n workflows --- verification, DB
+        chat, storefront redesign --- isolate prompt and provider
+        choices from the backend.
+\end{itemize}
+\end{keytakeaways}
+
+\section*{Chapter Conclusion}
+\addcontentsline{toc}{section}{Chapter Conclusion}
+
+This chapter translated the requirements of Chapter~\ref{chap:requirements}
+into a concrete, implementable design. The three-tier layout
+established a clear boundary between presentation, business logic
+and data, while the n8n layer added an orthogonal AI dimension
+without polluting the core. The NestJS module catalogue, the React
+SPA layout, the Docker Compose topology and the Prisma schema were
+each presented at a level of detail that lets a reader
+\emph{reconstruct} the system from the diagrams alone. The REST
+API design principles and the endpoint catalogue defined the
+contract between frontend and backend, and the three n8n workflows
+formalised the design of every AI feature. The class diagram in
+the final section bound all of these views together by showing the
+behavioural model that the next chapter actually implements.
 
 % ============================================================
 %  CHAPTER 4
@@ -2269,6 +2779,7 @@ that SSH-deploys the composed stack once all three complete.
 \section{Production Environment}
 
 \subsection{DigitalOcean Droplet Specifications}
+\label{sec:droplet-specs}
 
 The production workload runs on a single DigitalOcean droplet provisioned by
 Terraform with the following specifications:
@@ -2360,16 +2871,19 @@ internet via the domain \texttt{nadimjebali.engineer}.
 \appendix
 
 \chapter{Complete Prisma Schema}
+\label{app:prisma-schema}
 
 \begin{lstlisting}[caption={Prisma schema --- excerpt}]
 % TODO: paste the contents of backend/prisma/schema/ here
 \end{lstlisting}
 
 \chapter{API Endpoints Reference}
+\label{app:api-reference}
 
 % TODO: full table of all endpoints
 
 \chapter{N8N Workflow JSON Exports}
+\label{app:n8n-workflows}
 
 \begin{lstlisting}[language=,caption={N8N workflow --- AI verification (JSON)}]
 % TODO: paste the JSON exported from N8N

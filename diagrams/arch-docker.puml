@@ -1,0 +1,69 @@
+@startuml arch-docker
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 8
+
+skinparam node {
+  BackgroundColor #DBEAFE
+  BorderColor #1E40AF
+  BorderThickness 2
+  FontStyle bold
+  FontColor #1E40AF
+}
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #1E40AF
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+skinparam database {
+  BackgroundColor #FEF3C7
+  BorderColor #D97706
+  BorderThickness 2
+}
+skinparam cloud {
+  BackgroundColor #F1F5F9
+  BorderColor #475569
+  BorderThickness 1.5
+}
+skinparam folder {
+  BackgroundColor #F0FDF4
+  BorderColor #16A34A
+  BorderThickness 1.5
+}
+
+cloud "Internet" as Net
+
+node "Docker host (DigitalOcean Droplet)" as Host {
+
+  node "Docker bridge network" as Bridge {
+
+    component "frontend\n(Nginx + React static)\nimage: cheebo-frontend\nport: 80" as FE
+    component "backend\n(NestJS API)\nimage: cheebo-backend\ninternal: 3000" as BE
+    database "db\n(MariaDB 11)\ninternal: 3306" as DB
+    component "n8n\n(Workflow engine)\nport: 5678" as N8N
+
+  }
+
+  folder "Volumes" {
+    [db_data\n(MariaDB files)]   as VolDB
+    [uploads\n(stores + products)] as VolUp
+    [n8n_data\n(workflows + creds)] as VolN8n
+  }
+}
+
+Net --> FE  : :80 HTTP
+Net --> N8N : :5678 (webhooks)
+
+FE  --> BE  : reverse-proxy /api
+BE  --> DB  : Prisma over TCP
+BE  --> N8N : webhook calls
+
+DB   ..> VolDB  : persist
+BE   ..> VolUp  : read/write uploads
+N8N  ..> VolN8n : persist workflows
+
+@enduml

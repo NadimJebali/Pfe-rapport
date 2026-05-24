@@ -1,0 +1,104 @@
+@startuml arch-nestjs
+!pragma layout elk
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 11
+skinparam backgroundColor #FFFFFF
+
+skinparam package {
+  BackgroundColor #F0FDF4
+  BorderColor #16A34A
+  BorderThickness 2
+  FontStyle bold
+  FontColor #15803D
+}
+skinparam component {
+  BackgroundColor #DCFCE7
+  BorderColor #16A34A
+  BorderThickness 1.5
+  FontColor #1E293B
+}
+
+package "Cross-cutting" as Cross #DBEAFE {
+  [PrismaModule]     as Prisma
+  [AuthModule]       as Auth
+  [NotificationModule] as Notif
+  [SettingsModule]   as Settings
+}
+
+package "User & Application" as UserApp {
+  [UserModule]              as User
+  [SellerApplicationModule] as SellerApp
+}
+
+package "Storefront" as Storefront {
+  [StoreModule]          as Store
+  [StoreStatusLogModule] as StoreLog
+  [ProductModule]        as Product
+  [ProductImageModule]   as ProdImg
+  [ProductTagModule]     as ProdTag
+}
+
+package "Catalogue" as Catalogue {
+  [CategoryModule]    as Cat
+  [SubCategoryModule] as SubCat
+}
+
+package "Commerce" as Commerce {
+  [OrderModule]      as Order
+  [OrderItemsModule] as OrderItems
+}
+
+package "Discovery & Analytics" as Discovery {
+  [HomeModule]      as Home
+  [AnalyticsModule] as Analytics
+}
+
+package "AI integration" as AI #EDE9FE {
+  [ChatModule] as Chat
+  [N8nModule]  as N8N
+}
+
+' Cross-cutting dependencies
+User      ..> Prisma
+Store     ..> Prisma
+Product   ..> Prisma
+Order     ..> Prisma
+Auth      ..> Prisma
+
+User      ..> Auth
+Store     ..> Auth
+Product   ..> Auth
+Order     ..> Auth
+Chat      ..> Auth
+
+' Storefront relationships
+Store     --> StoreLog
+Store     --> Product
+Product   --> ProdImg
+Product   --> ProdTag
+Product   --> SubCat
+SubCat    --> Cat
+
+' Commerce
+Order     --> OrderItems
+Order     --> Product
+Order     --> Notif
+
+' Application flow
+SellerApp --> User
+SellerApp --> Notif
+
+' Featured / discovery
+Home      --> Store
+Home      --> Product
+Analytics --> Order
+Analytics --> Store
+
+' AI flows
+Product   --> N8N : verify
+Store     --> N8N : verify
+Store     --> N8N : redesign
+Chat      --> N8N : DB chat
+
+@enduml

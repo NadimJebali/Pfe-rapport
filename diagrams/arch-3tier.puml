@@ -1,0 +1,55 @@
+@startuml arch-3tier
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 10
+
+skinparam rectangle {
+  BorderThickness 2
+  FontStyle bold
+  FontColor #1E293B
+}
+skinparam database {
+  BackgroundColor #FEF3C7
+  BorderColor #D97706
+  BorderThickness 2
+  FontColor #1E293B
+}
+skinparam cloud {
+  BackgroundColor #EDE9FE
+  BorderColor #7C3AED
+  BorderThickness 2
+}
+
+actor "Browser\n(end user)" as User #FFFFFF
+
+rectangle "Presentation Tier" as Tier1 #DBEAFE {
+  rectangle "React 19 SPA\n+ Vite + TailwindCSS v4\n+ Zustand + TanStack Query" as FE #FFFFFF
+  rectangle "Nginx\n(static + reverse proxy)" as NGINX #F1F5F9
+}
+
+rectangle "Application Tier" as Tier2 #DCFCE7 {
+  rectangle "NestJS 11 API\n(modular, Prisma ORM, Better-Auth)" as BE #FFFFFF
+  rectangle "Multer\nfile uploads" as MULTER #F0FDF4
+  rectangle "Nodemailer\nSMTP email" as MAIL #F0FDF4
+}
+
+database "MariaDB 11\nRelational store" as DB
+
+cloud "n8n\nAutomation layer\n(AI verify / chat / redesign)" as N8N
+cloud "Groq / Gemini\nLLM provider" as LLM
+
+User      --> NGINX  : HTTPS
+NGINX     --> FE     : serves SPA
+NGINX     ..> BE     : reverse-proxies /api
+FE        --> BE     : REST + cookies
+BE        --> DB     : Prisma queries
+BE        --> MULTER : multipart/form-data
+BE        --> MAIL   : SMTP
+BE        <--> N8N   : webhooks (verify, chat, redesign)
+N8N       --> LLM    : prompt + response
+N8N       ..> DB     : SQL (chat assistant)
+
+@enduml
