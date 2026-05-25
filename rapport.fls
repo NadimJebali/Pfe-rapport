@@ -3,7 +3,7 @@ INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT rapport.tex
+INPUT /home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex
 OUTPUT rapport.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
@@ -381,7 +381,18 @@ INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtk10.tfm
 INPUT ./diagrams/seq-auth.png
 INPUT ./diagrams/seq-auth.png
 INPUT ./diagrams/seq-auth.png
-INPUT ./diagrams/seq-ai-redesign.png
+INPUT ./images/n8n-verify.png
+INPUT ./images/n8n-verify.png
+INPUT ./images/n8n-verify.png
+INPUT ./images/n8n-verify.png
+INPUT ./images/n8n-chat.png
+INPUT ./images/n8n-chat.png
+INPUT ./images/n8n-chat.png
+INPUT ./images/n8n-chat.png
+INPUT ./images/n8n-redesign.png
+INPUT ./images/n8n-redesign.png
+INPUT ./images/n8n-redesign.png
+INPUT ./images/n8n-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
@@ -394,6 +405,7 @@ INPUT ./diagrams/seq-ai-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
 INPUT ./diagrams/seq-ai-redesign.png
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt10.tfm
 INPUT rapport.aux
 INPUT ./rapport.out
 INPUT ./rapport.out

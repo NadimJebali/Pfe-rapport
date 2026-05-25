@@ -7,6 +7,11 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{57}{table.caption.30}%
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Testing stack used in Cheebo}}{89}{table.caption.62}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Backend unit test suites — domain services (write paths)}}{91}{table.caption.64}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{92}{table.caption.65}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Backend controller integration tests}}{93}{table.caption.66}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{94}{table.caption.67}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

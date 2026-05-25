@@ -2656,6 +2656,289 @@ verification queues) for operational insights.
   \label{fig:ai-chat}
 \end{figure}
 
+\section{Tests and Validation}
+\label{sec:tests}
+
+Cheebo ships with an automated test suite that runs on every push to
+\texttt{main} as a gate before the Docker images are built and
+deployed. The suite follows a layered strategy: pure-logic unit tests
+at the bottom, service-level unit tests with a mocked Prisma client in
+the middle, and controller-level integration tests at the top that
+boot a real NestJS application and exercise the full HTTP pipeline
+(\texttt{ValidationPipe}, guards, decorators) through
+\texttt{supertest}. The frontend uses Vitest with React Testing
+Library to cover Zustand stores and presentational components in a
+jsdom environment.
+
+The whole suite runs in under five seconds on commodity hardware,
+which keeps the feedback loop short enough to be useful during
+development and cheap enough to run on every CI build. No production
+database is required: services are tested against in-memory mocks of
+\texttt{PrismaService}, and HTTP-layer tests stub the guards that
+transitively import the ESM-only \texttt{better-auth} package.
+
+\subsection{Testing Stack and Tooling}
+
+Table~\ref{tab:test-stack} summarises the libraries used and the
+responsibility of each. The backend stack is Jest~30 with
+\texttt{ts-jest} for TypeScript compilation; the frontend uses Vitest
+to reuse the same Vite resolver, plugin chain (\texttt{@vitejs/plugin-react},
+Tailwind), and path alias configuration as the development server,
+removing the need to maintain a separate test build pipeline.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{3.5cm}|>{\raggedright\arraybackslash}p{6.5cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Layer} & \textbf{Tool} & \textbf{Responsibility} \\
+\hline
+Backend test runner & Jest~30 + ts-jest & Runs all \texttt{*.spec.ts} files, transforms TypeScript on the fly. \\
+\hline
+Backend HTTP integration & \texttt{@nestjs/testing} + \texttt{supertest} & Boots a real Nest application around individual controllers; \texttt{supertest} drives it over an in-process HTTP transport. \\
+\hline
+Backend mocking & \texttt{jest.fn()}, \texttt{jest.mock()} & Replaces \texttt{PrismaService}, \texttt{NotificationService}, the SMTP mailer, and the auth guards with deterministic stand-ins. \\
+\hline
+Frontend test runner & Vitest~4 & Runs all \texttt{*.test.ts(x)} files using the same Vite plugin chain as the development server. \\
+\hline
+Frontend DOM environment & jsdom~29 & Provides a synthetic browser \texttt{window} so React components can be mounted and queried. \\
+\hline
+Frontend component testing & React Testing Library + \texttt{@testing-library/
+jest-dom} & Mounts components, queries the DOM by accessible role/text, asserts on rendered output. \\
+\hline
+\end{tabular}
+\caption{Testing stack used in Cheebo}
+\label{tab:test-stack}
+\end{table}
+
+\subsection{Test Pyramid for Cheebo}
+
+The tests are structured along the classical pyramid: a wide base of
+fast unit tests, a thinner middle of service-level tests that combine
+multiple collaborators, and a narrow top of integration tests that
+exercise the wired-up HTTP stack. Figure~\ref{fig:test-pyramid}
+illustrates how the existing tests distribute across these layers.
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.85\textwidth}
+  \centering
+  \texttt{\begin{tabular}{c}
+    \textbf{Integration (36 tests)} \\
+    \footnotesize Nest app + ValidationPipe + supertest \\
+    \footnotesize ProductController, StoreController, OrderController \\[4pt]
+    \hline\\[-6pt]
+    \textbf{Service unit tests (66 tests)} \\
+    \footnotesize Real service code, mocked Prisma \\
+    \footnotesize Product, Store, Order, SellerApplication, \\
+    \footnotesize Notification, Analytics, Home \\[4pt]
+    \hline\\[-6pt]
+    \textbf{Pure-logic + frontend (27 tests)} \\
+    \footnotesize No I/O, no framework wiring \\
+    \footnotesize \texttt{findViolation}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
+  \end{tabular}}
+  \end{minipage}
+  \caption{Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}
+  \label{fig:test-pyramid}
+\end{figure}
+
+\subsection{Backend Unit Tests}
+
+Backend unit tests live next to the code they exercise as
+\texttt{*.spec.ts} files. Each test suite injects an in-memory mock
+of \texttt{PrismaService} into the real service under test via the
+NestJS \texttt{TestingModule}, allowing the test to drive arbitrary
+return values and observe the exact arguments passed to Prisma.
+Tables~\ref{tab:backend-units-domain} and~\ref{tab:backend-units-readside} list the modules covered and the
+business rules each suite validates.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.8cm}|c|>{\raggedright\arraybackslash}p{6.8cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Suite} & \textbf{Tests} & \textbf{Behaviour under test} \\
+\hline
+\texttt{limits} & 10 & Premium customization gating: free-palette colours allowed, premium-only fields rejected, equal values pass (existing premium customizations preserved on plan downgrade). \\
+\hline
+\texttt{product.service} & 7 & Sale price computation in \texttt{applySalePrices()}: 2-decimal rounding, \texttt{salePrice = null} when sale inactive, expired \texttt{saleEndsAt} ignored, per-store discount across mixed-store result sets, store-ID deduplication. \\
+\hline
+\texttt{store.service} & 11 & Slug generation (base, \texttt{-2} on collision, multi-probe, empty-string fallback, \texttt{excludeId} on rename); store creation conflict; sale update ownership and admin override. \\
+\hline
+\texttt{order.service} & 5 & Status-change email: fires only on real status change, not when DTO omits \texttt{status} or new status equals existing; \texttt{'Customer'} fallback for nameless users. \\
+\hline
+\texttt{seller-application.
+service} & 8 & Application state machine: duplicate-submission conflict, \texttt{APPROVED} promotes user to \texttt{SELLER}, \texttt{REJECTED} / \texttt{MORE\_INFO\_REQUESTED} leave the role alone, per-status notification message correctness. \\
+\hline
+\end{tabular}
+\caption{Backend unit test suites — domain services (write paths)}
+\label{tab:backend-units-domain}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.8cm}|c|>{\raggedright\arraybackslash}p{6.8cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Suite} & \textbf{Tests} & \textbf{Behaviour under test} \\
+\hline
+\texttt{notification.service} & 10 & SSE subject lifecycle, fan-out across admins, \texttt{markRead} ownership guard (scoped by \emph{both} \texttt{id} and \texttt{userId}), \texttt{markAllRead} targets only unread rows. \\
+\hline
+\texttt{analytics.service} & 8 & GroupBy joins with product/store names, \texttt{'Unknown'} fallback for orphaned IDs (deleted product still in \texttt{OrderItems}), \texttt{null \_sum} zero-fill, empty-store seller short-circuit. \\
+\hline
+\texttt{home.service} & 9 & Featured fallback (latest products / latest \texttt{ACTIVE} stores), non-\texttt{ACTIVE} stores filtered from curated list, \texttt{MAX\_PRODUCTS} / \texttt{MAX\_STORES} caps, transactional deletes-then-inserts. \\
+\hline
+\texttt{api-key.guard} & 5 & n8n webhook authentication: matching key passes, mismatched/missing rejected, server with no configured secret rejects all (fail-closed). \\
+\hline
+\end{tabular}
+\caption{Backend unit test suites — read paths, cross-cutting concerns and guards}
+\label{tab:backend-units-readside}
+\end{table}
+
+These tests target the parts of the codebase where a regression would
+be most expensive: money math (sale prices, order totals),
+authorisation (ownership checks, role gating), state machines (seller
+application status, store status), and validation boundaries.
+
+\subsection{Backend Integration Tests}
+
+A second tier of tests boots a real NestJS application around a
+single controller. The global \texttt{ValidationPipe} is enabled with
+the same options used in production (\texttt{whitelist},
+\texttt{forbidNonWhitelisted}, \texttt{transform}), so DTO-level
+validation is exercised end-to-end. The service the controller
+depends on is replaced with a Jest mock, and the \texttt{AuthGuard}
+and \texttt{ApiKeyGuard} are stubbed at the module level. Requests
+are driven through \texttt{supertest}.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.8cm}|c|>{\raggedright\arraybackslash}p{6.8cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Suite} & \textbf{Tests} & \textbf{Behaviour under test} \\
+\hline
+\texttt{product.controller} & 12 & Pagination pass-through; 403 on unauthenticated \texttt{POST}; 400 on empty body, extra field, wrong-type field; 404 propagation; \texttt{ApiKeyGuard} wiring on \texttt{/ai-review}; search query parsing. \\
+\hline
+\texttt{store.controller} & 14 & Creation validation (empty body, malformed URL); \texttt{isAdmin} flag flips between \texttt{SELLER} and \texttt{ADMIN}; \texttt{UpdateSaleDto} bounds enforced (1--90\%, 60-char label); \texttt{ForbiddenException} surfaces as 403. \\
+\hline
+\texttt{order.controller} & 10 & Missing address fields rejected; non-numeric \texttt{totalAmount} rejected; \texttt{/my} requires auth; dashboard scoping by role; route parameter parsed to \texttt{number}. \\
+\hline
+\end{tabular}
+\caption{Backend controller integration tests}
+\label{tab:backend-integration}
+\end{table}
+
+These tests prove that DTO validation, guard wiring, and exception
+mapping behave correctly when the framework is in the loop --- bugs
+that would not surface in pure service unit tests because Nest is not
+exercised there.
+
+\subsection{Frontend Tests (Vitest)}
+
+The frontend test suite focuses on two surfaces with the highest
+business value per line of test code: the Zustand cart store, which
+holds the customer's purchase intent, and the \texttt{ProductCard}
+component, which renders sale prices and stock state across every
+listing in the application.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{3.8cm}|c|>{\raggedright\arraybackslash}p{6.8cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Suite} & \textbf{Tests} & \textbf{Behaviour under test} \\
+\hline
+\texttt{cart.store} & 9 & \texttt{addItem} default and explicit quantity; merge on re-add; \emph{stock cap on merge and update}; \texttt{updateQuantity(0)} removes the line; \texttt{clearCart}; multiple stores coexist in a single cart. \\
+\hline
+\texttt{ProductCard} & 11 & Name and price rendered; no sale badge when \texttt{salePrice} is \texttt{null} or equals \texttt{displayPrice}; discount percentage correctly rounded (19.99 $\to$ 15.99 displays "-20\%"); dual-price layout when on sale; Out-of-Stock overlay; OOS hides the sale badge; default and custom \texttt{href}. \\
+\hline
+\end{tabular}
+\caption{Frontend test suites (Vitest + React Testing Library)}
+\label{tab:frontend-tests}
+\end{table}
+
+\subsection{Continuous Integration}
+
+All tests run as gating jobs in the GitHub Actions workflow before
+the Docker images are built. The pipeline includes two new jobs ---
+\texttt{test-backend} (\texttt{pnpm test} = Jest) and
+\texttt{test-frontend} (\texttt{pnpm test} = Vitest) --- and the
+existing \texttt{build-backend}/\texttt{build-frontend} jobs declare
+\texttt{needs: test-backend} and \texttt{needs: test-frontend}
+respectively. A failing test therefore prevents any Docker image
+from being pushed to Docker Hub, and by extension prevents
+deployment to the DigitalOcean droplet. The mechanics of this gate
+are detailed in Section~\ref{sec:cicd}.
+
+\subsection{What is Not Covered}
+
+The suite deliberately stops short of full end-to-end testing. There
+are no Playwright or Cypress tests that drive a real browser against
+the deployed application, and no integration tests against a real
+MariaDB instance. These were considered out of scope for a four-month
+PFE: a meaningful E2E suite requires fixtures, seeded data, and a
+running stack, which would have consumed time better spent on the
+core feature set. The current strategy --- tight unit coverage on
+business rules plus thin HTTP-layer integration tests --- catches the
+majority of regressions in the parts of the codebase where they
+would do the most damage, at a fraction of the engineering cost.
+
+\begin{keytakeaways}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Cheebo ships 129 tests (109 backend, 20 frontend) running in
+        under five seconds and gating every CI build.
+  \item Backend tests use a three-tier pyramid: pure logic
+        (\texttt{findViolation}, \texttt{ApiKeyGuard}), service-level
+        unit tests with a mocked \texttt{PrismaService}, and
+        controller-level integration tests with the real Nest
+        pipeline.
+  \item Frontend tests use Vitest + React Testing Library to cover
+        the Zustand cart store and \texttt{ProductCard} sale-price
+        rendering.
+  \item Test execution is wired into GitHub Actions: a failing test
+        blocks the Docker image push and deployment, providing a
+        hard regression gate without manual review.
+\end{itemize}
+\end{keytakeaways}
+
+\section*{Chapter Conclusion}
+\addcontentsline{toc}{section}{Chapter Conclusion}
+
+This chapter walked through the implementation of Cheebo across the
+backend, frontend, and AI-integration layers, and then through the
+test suite that validates them. The development environment was set
+up as a \texttt{pnpm} monorepo with NestJS, React + Vite, and three
+n8n workflows orchestrated over webhooks. Authentication and
+role-based access control were enforced by a global \texttt{AuthGuard}
+plus a \texttt{@Roles} decorator; file uploads were handled by Multer;
+transactional emails were sent through Nodemailer. The administrator,
+seller, and customer interfaces were illustrated through annotated
+screenshots covering the principal flows. Finally, the test suite
+was presented as a layered pyramid running on every CI build,
+gating the Docker image push. The next chapter turns to the
+infrastructure that hosts this code in production.
+
 % ============================================================
 %  CHAPTER 5
 % ============================================================
@@ -2750,15 +3033,25 @@ Figure~\ref{fig:terraform} shows the key resource declarations in
 \end{figure}
 
 \section{CI/CD Pipeline with GitHub Actions}
+\label{sec:cicd}
 
 \subsection{Workflow Overview}
 
 The CI/CD pipeline is defined as a single GitHub Actions workflow
 file that runs on every push to the \texttt{main} branch.
-Figure~\ref{fig:cicd} presents the three parallel jobs ---
-\textit{provision} (Terraform), \textit{build-backend}, and
-\textit{build-frontend} --- followed by the \textit{deploy} job
-that SSH-deploys the composed stack once all three complete.
+Figure~\ref{fig:cicd} presents the topology:
+two test jobs --- \textit{test-backend} (Jest) and
+\textit{test-frontend} (Vitest) --- run in parallel and gate the
+corresponding image-build jobs, \textit{build-backend} and
+\textit{build-frontend}, via the \texttt{needs:} dependency.
+A failing test therefore short-circuits the entire pipeline before
+any Docker image is pushed to Docker Hub. The
+\textit{provision} job (Terraform) runs in parallel and applies the
+infrastructure plan against DigitalOcean. The \textit{deploy} job
+runs last and SSH-deploys the composed stack to the droplet once
+the two builds and the provisioning step all complete. The full
+test catalogue gating this pipeline is presented in
+Section~\ref{sec:tests}.
 
 \begin{figure}[H]
   \centering
