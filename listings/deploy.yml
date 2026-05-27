@@ -1,0 +1,332 @@
+name: Build, Push & Deploy
+
+# ── Secrets (Settings > Secrets and variables > Actions > Secrets) ──────────
+#   DOCKERHUB_TOKEN             — Docker Hub access token
+#   DO_SSH_PRIVATE_KEY          — Private SSH key with root access to the droplet
+#   DO_TOKEN                    — DigitalOcean API token (used by Terraform)
+#   DO_SPACES_ACCESS_KEY        — DigitalOcean Spaces access key (Terraform state backend)
+#   DO_SPACES_SECRET_KEY        — DigitalOcean Spaces secret key (Terraform state backend)
+#   DB_PASSWORD                 — MariaDB root password
+#   BETTER_AUTH_SECRET          — Strong random string for auth
+#   ADMIN_PASSWORD              — Initial admin account password
+#   SMTP_PASS                   — SMTP app password
+#   N8N_WEBHOOK_SECRET          — Secret key for n8n webhook header auth
+#   N8N_ENCRYPTION_KEY           — n8n data encryption key (generate with: openssl rand -hex 32)
+#
+# ── Variables (Settings > Secrets and variables > Actions > Variables) ──────
+#   DOCKERHUB_USERNAME          — Docker Hub username
+#   DO_SSH_KEY_FINGERPRINT      — Fingerprint of the SSH key added to your DO account
+#   DB_NAME                     — Database name (e.g. cheebo)
+#   PORT                        — Backend port (e.g. 3000)
+#   ADMIN_NAME / ADMIN_EMAIL
+#   MAX_UPLOAD_FILE_SIZE_MB
+#   ALLOWED_UPLOAD_MIME_TYPES   — e.g. image/jpeg,image/png,image/webp,image/gif
+#   SESSION_EXPIRES_IN / SESSION_UPDATE_AGE / MIN_PASSWORD_LENGTH / EMAIL_VERIFICATION_EXPIRES_IN
+#   SWAGGER_PATH                — Set to empty string to disable in prod
+#   SMTP_HOST / SMTP_USER / SMTP_PORT / SMTP_SECURE / SMTP_FROM
+#   FREE_TIER_MAX_PRODUCTS / PREMIUM_TEMPLATES / PREMIUM_PRICE_TND / PREMIUM_DURATION_DAYS
+#   MAX_FEATURED_PRODUCTS / MAX_FEATURED_STORES
+#   DOMAIN_NAME                 — your domain (e.g. nadimjebali.engineer) — DNS managed via DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-backend:
+    name: Backend Tests (Jest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: backend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm exec prisma generate
+
+      - name: Run tests
+        run: pnpm test
+
+  test-frontend:
+    name: Frontend Tests (Vitest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+  provision:
+    name: Provision Droplet (Terraform)
+    runs-on: ubuntu-latest
+    outputs:
+      droplet_ip: ${{ steps.ip.outputs.ip }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        working-directory: terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+        run: terraform init
+
+      - name: Auto-import existing resources
+        working-directory: terraform
+        env:
+          TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+          TF_VAR_ssh_key_fingerprint: ${{ vars.DO_SSH_KEY_FINGERPRINT }}
+          DO_TOKEN: ${{ secrets.DO_TOKEN }}
+          DROPLET_NAME: ${{ vars.DROPLET_NAME || 'cheebo' }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+        run: |
+          query() { curl -sf -H "Authorization: Bearer $DO_TOKEN" "$1"; }
+
+          VPC_ID=$(query "https://api.digitalocean.com/v2/vpcs?per_page=200" \
+            | python3 -c "import sys,json; v=[x['id'] for x in json.load(sys.stdin).get('vpcs',[]) if x['name']=='cheebo-vpc']; print(v[0] if v else '')")
+          [ -n "$VPC_ID" ] && terraform import -input=false digitalocean_vpc.cheebo "$VPC_ID" || true
+
+          DROPLET_ID=$(query "https://api.digitalocean.com/v2/droplets?per_page=200" \
+            | python3 -c "import sys,json; d=[x['id'] for x in json.load(sys.stdin).get('droplets',[]) if x['name']=='$DROPLET_NAME']; print(d[0] if d else '')")
+          [ -n "$DROPLET_ID" ] && terraform import -input=false digitalocean_droplet.cheebo "$DROPLET_ID" || true
+
+          DOMAIN_NAME="${{ vars.DOMAIN_NAME }}"
+          [ -n "$DOMAIN_NAME" ] && terraform import -input=false 'digitalocean_domain.cheebo[0]' "$DOMAIN_NAME" 2>/dev/null || true
+
+      - name: Terraform Apply
+        working-directory: terraform
+        env:
+          TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+          TF_VAR_ssh_key_fingerprint: ${{ vars.DO_SSH_KEY_FINGERPRINT }}
+          TF_VAR_droplet_name: ${{ vars.DROPLET_NAME || 'cheebo' }}
+          TF_VAR_region: ${{ vars.DO_REGION || 'fra1' }}
+          TF_VAR_droplet_size: ${{ vars.DROPLET_SIZE || 's-2vcpu-2gb' }}
+          TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+        run: terraform apply -auto-approve
+
+      - name: Export droplet IP
+        id: ip
+        working-directory: terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+        run: echo "ip=$(terraform output -raw droplet_ip)" >> $GITHUB_OUTPUT
+
+  build-backend:
+    name: Build & Push Backend
+    runs-on: ubuntu-latest
+    needs: test-backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/cheebo-backend:latest
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
+
+  build-frontend:
+    name: Build & Push Frontend
+    runs-on: ubuntu-latest
+    needs: test-frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/cheebo-frontend:latest
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
+
+  deploy:
+    name: Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    if: github.event.inputs.destroy != 'destroy'
+    needs: [provision, build-backend, build-frontend]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Copy docker-compose.yml to droplet
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ needs.provision.outputs.droplet_ip }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          source: docker-compose.yml
+          target: /app
+
+      - name: Write .env, shut down & redeploy
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
+          DB_NAME: ${{ vars.DB_NAME }}
+          PORT: ${{ vars.PORT }}
+          ADMIN_NAME: ${{ vars.ADMIN_NAME }}
+          ADMIN_EMAIL: ${{ vars.ADMIN_EMAIL }}
+          MAX_UPLOAD_FILE_SIZE_MB: ${{ vars.MAX_UPLOAD_FILE_SIZE_MB }}
+          ALLOWED_UPLOAD_MIME_TYPES: ${{ vars.ALLOWED_UPLOAD_MIME_TYPES }}
+          SESSION_EXPIRES_IN: ${{ vars.SESSION_EXPIRES_IN }}
+          SESSION_UPDATE_AGE: ${{ vars.SESSION_UPDATE_AGE }}
+          MIN_PASSWORD_LENGTH: ${{ vars.MIN_PASSWORD_LENGTH }}
+          EMAIL_VERIFICATION_EXPIRES_IN: ${{ vars.EMAIL_VERIFICATION_EXPIRES_IN }}
+          SWAGGER_PATH: ${{ vars.SWAGGER_PATH }}
+          SMTP_HOST: ${{ vars.SMTP_HOST }}
+          SMTP_USER: ${{ vars.SMTP_USER }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_SECURE: ${{ vars.SMTP_SECURE }}
+          SMTP_FROM: ${{ vars.SMTP_FROM }}
+          FREE_TIER_MAX_PRODUCTS: ${{ vars.FREE_TIER_MAX_PRODUCTS }}
+          FREE_TIER_MAX_STORES: ${{ vars.FREE_TIER_MAX_STORES }}
+          PREMIUM_TEMPLATES: ${{ vars.PREMIUM_TEMPLATES }}
+          PREMIUM_PRICE_TND: ${{ vars.PREMIUM_PRICE_TND }}
+          PREMIUM_DURATION_DAYS: ${{ vars.PREMIUM_DURATION_DAYS }}
+          MAX_FEATURED_PRODUCTS: ${{ vars.MAX_FEATURED_PRODUCTS }}
+          MAX_FEATURED_STORES: ${{ vars.MAX_FEATURED_STORES }}
+          N8N_WEBHOOK_URL: ${{ vars.N8N_WEBHOOK_URL }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          N8N_WEBHOOK_SECRET: ${{ secrets.N8N_WEBHOOK_SECRET }}
+          N8N_ENCRYPTION_KEY: ${{ secrets.N8N_ENCRYPTION_KEY }}
+        with:
+          host: ${{ needs.provision.outputs.droplet_ip }}
+          username: root
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          envs: DOMAIN_NAME,DB_NAME,PORT,ADMIN_NAME,ADMIN_EMAIL,MAX_UPLOAD_FILE_SIZE_MB,ALLOWED_UPLOAD_MIME_TYPES,SESSION_EXPIRES_IN,SESSION_UPDATE_AGE,MIN_PASSWORD_LENGTH,EMAIL_VERIFICATION_EXPIRES_IN,SWAGGER_PATH,SMTP_HOST,SMTP_USER,SMTP_PORT,SMTP_SECURE,SMTP_FROM,FREE_TIER_MAX_PRODUCTS,FREE_TIER_MAX_STORES,PREMIUM_TEMPLATES,PREMIUM_PRICE_TND,PREMIUM_DURATION_DAYS,MAX_FEATURED_PRODUCTS,MAX_FEATURED_STORES,DB_PASSWORD,BETTER_AUTH_SECRET,ADMIN_PASSWORD,SMTP_PASS,N8N_WEBHOOK_SECRET,N8N_ENCRYPTION_KEY
+          script: |
+            # ── Wait for cloud-init to finish (avoids apt lock on new droplets) ──
+            cloud-init status --wait 2>/dev/null || true
+
+            # ── Open n8n port in firewall ──────────────────────────────────
+            ufw allow 5678/tcp || true
+
+            # ── Install Docker if not present ──────────────────────────────
+            if ! command -v docker &>/dev/null; then
+              apt-get update -y
+              apt-get install -y ca-certificates curl gnupg lsb-release
+              install -m 0755 -d /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+              chmod a+r /etc/apt/keyrings/docker.asc
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+                | tee /etc/apt/sources.list.d/docker.list > /dev/null
+              apt-get update -y
+              apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+              systemctl enable docker
+              systemctl start docker
+            fi
+
+            # ── Write .env ─────────────────────────────────────────────────
+            mkdir -p /app
+            cat > /app/.env << EOF
+            DB_PASSWORD=$DB_PASSWORD
+            DB_NAME=$DB_NAME
+            PORT=$PORT
+            BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
+            APP_URL=http://$DOMAIN_NAME
+            ADMIN_NAME=$ADMIN_NAME
+            ADMIN_EMAIL=$ADMIN_EMAIL
+            ADMIN_PASSWORD=$ADMIN_PASSWORD
+            MAX_UPLOAD_FILE_SIZE_MB=$MAX_UPLOAD_FILE_SIZE_MB
+            ALLOWED_UPLOAD_MIME_TYPES=$ALLOWED_UPLOAD_MIME_TYPES
+            SESSION_EXPIRES_IN=$SESSION_EXPIRES_IN
+            SESSION_UPDATE_AGE=$SESSION_UPDATE_AGE
+            MIN_PASSWORD_LENGTH=$MIN_PASSWORD_LENGTH
+            EMAIL_VERIFICATION_EXPIRES_IN=$EMAIL_VERIFICATION_EXPIRES_IN
+            SWAGGER_PATH=$SWAGGER_PATH
+            SMTP_HOST=$SMTP_HOST
+            SMTP_USER=$SMTP_USER
+            SMTP_PORT=$SMTP_PORT
+            SMTP_SECURE=$SMTP_SECURE
+            SMTP_PASS=$SMTP_PASS
+            SMTP_FROM=$SMTP_FROM
+            FREE_TIER_MAX_PRODUCTS=$FREE_TIER_MAX_PRODUCTS
+            FREE_TIER_MAX_STORES=$FREE_TIER_MAX_STORES
+            PREMIUM_TEMPLATES=$PREMIUM_TEMPLATES
+            PREMIUM_PRICE_TND=$PREMIUM_PRICE_TND
+            PREMIUM_DURATION_DAYS=$PREMIUM_DURATION_DAYS
+            MAX_FEATURED_PRODUCTS=$MAX_FEATURED_PRODUCTS
+            MAX_FEATURED_STORES=$MAX_FEATURED_STORES
+            N8N_WEBHOOK_URL=$N8N_WEBHOOK_URL
+            N8N_WEBHOOK_SECRET=$N8N_WEBHOOK_SECRET
+            N8N_ENCRYPTION_KEY=$N8N_ENCRYPTION_KEY
+            DOMAIN_NAME=$DOMAIN_NAME
+            EOF
+            cd /app
+            docker compose down --remove-orphans || true
+            docker compose pull
+            docker compose up -d --force-recreate

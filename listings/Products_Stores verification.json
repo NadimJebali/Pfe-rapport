@@ -1,0 +1,218 @@
+{
+  "name": "Products/Stores verification",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Type: {{ $json.body.type }}\nName: {{ $json.body.name }}\nDescription: {{ $json.body.description }}\nImages: {{ $json.body.images.join(', ') }}",
+        "options": {
+          "systemMessage": "You are a marketplace content moderator. Given a product or store submission, decide if it is appropriate for a general e-commerce platform. Reply ONLY with valid JSON: {\"decision\":\"approved\"|\"flagged\",\"reason\":\"short explanation\"}"
+        }
+      },
+      "id": "5c57f56b-aae1-485a-ac21-c359591dfc23",
+      "name": "AI Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        0,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -144,
+        352
+      ],
+      "id": "fbfda46b-af43-45f3-9382-7e1fb0114023",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Lgn8GBOiIQdPIrUF",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": true }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        736,
+        144
+      ],
+      "id": "71c95f21-32f0-4073-80dc-5a8b1d0c364e",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-20b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        0,
+        384
+      ],
+      "id": "fe8a3d8f-675e-492b-b850-4b70b121649f",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "djIv99vepslhXXeQ",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output ?? $input.first().json.text ?? \"\";\n\nlet parsed;\ntry {\n  // Strip markdown code fences if present\n  const cleaned = raw.replace(/```json?|```/g, \"\").trim();\n  parsed = JSON.parse(cleaned);\n} catch {\n  // If AI didn't return valid JSON, default to flagged\n  parsed = { decision: \"flagged\", reason: \"AI response could not be parsed.\" };\n}\n\n// Validate decision value\nif (![\"approved\", \"flagged\"].includes(parsed.decision)) {\n  parsed.decision = \"flagged\";\n  parsed.reason = parsed.reason ?? \"Unexpected AI response.\";\n}\n\nreturn [{ json: { decision: parsed.decision, reason: parsed.reason } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        144
+      ],
+      "id": "1e7b8874-d3e9-4055-a9d2-9abf6a08e074",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=http://backend:3000/{{ $('Webhook').item.json.body.type }}/{{ $('Webhook').item.json.body.id }}/ai-review",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "cheebo-n8n-secret-change-me"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"decision\": \"{{ $json.decision }}\",\n  \"reason\": \"{{ $json.reason }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        544,
+        144
+      ],
+      "id": "8d787d86-9f59-4e9a-a88b-572da11087e4",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cheebo-ai-verify",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        144
+      ],
+      "id": "0ed38928-c624-4cbc-95dd-47789c76a264",
+      "name": "Webhook",
+      "webhookId": "39dde4c0-bac9-4541-ba35-4ce07eddeff8",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "m0gIyhphvAjucASz",
+          "name": "Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "6a40a963-0657-4280-aced-681dd26c2b18",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e6bfd841957965bed16e456aa118e2933bc95f3cbf7916a02862ee9c4c58cd1"
+  },
+  "id": "ecbBP3nJYa4YPf6S",
+  "tags": []
+}

@@ -1,0 +1,303 @@
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String    @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subcategories Subcategory[]
+}
+model FeaturedProduct {
+  id        Int     @id @default(autoincrement())
+  productId Int     @unique
+  position  Int     @default(0)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model FeaturedStore {
+  id       Int     @id @default(autoincrement())
+  storeId  Int     @unique
+  position Int     @default(0)
+
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+model OrderItems{
+    id         Int      @id @default(autoincrement())
+    orderId    Int
+    productId  Int
+    quantity   Int
+    unitPrice  Float
+    subtotal   Float
+
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    order Order @relation(fields: [orderId], references: [id])
+    product Product @relation(fields: [productId], references: [id])
+}model Order{
+    id         Int      @id @default(autoincrement())
+    city       String
+    state      String
+    country    String
+    zipCode    String
+    streetAddress String
+    notes        String?
+    userId       String
+    storeId      Int
+    status       OrderStatus @default(PENDING)
+    totalAmount  Float
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    user       User         @relation(fields: [userId], references: [id])
+    store      Store        @relation(fields: [storeId], references: [id])
+    orderItems OrderItems[]
+}model ProductImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  alt       String?
+  productId Int
+  createdAt DateTime @default(now())
+
+  product            Product  @relation("ProductImages", fields: [productId], references: [id], onDelete: Cascade)
+  thumbnailOfProduct Product? @relation("ProductThumbnail")
+}
+model Product {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String
+  price         Float
+  displayPrice  Float
+  stock         Int
+  status               ProductStatus      @default(AVAILABLE)
+  isBanned             Boolean            @default(false)
+  verificationStatus   VerificationStatus @default(PENDING)
+  verificationNote     String?
+  aiReviewed           Boolean            @default(false)
+  aiReviewNote         String?
+  adminReviewed        Boolean            @default(false)
+  subcategoryId Int
+  thumbnailId   Int?     @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  storeId       Int
+
+  subcategory Subcategory    @relation(fields: [subcategoryId], references: [id])
+  thumbnail   ProductImage?  @relation("ProductThumbnail", fields: [thumbnailId], references: [id])
+  images      ProductImage[] @relation("ProductImages")
+  tags        ProductTag[]   @relation("ProductTags")
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  orderItems OrderItems[]
+  featuredProduct FeaturedProduct?
+}
+model ProductTag {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[] @relation("ProductTags")
+}
+enum SellerApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  MORE_INFO_REQUESTED
+}
+
+model SellerApplication {
+  id                  Int                     @id @default(autoincrement())
+  userId              String                  @unique
+  status              SellerApplicationStatus @default(PENDING)
+  fullName            String
+  phoneNumber         String
+  homeAddress         String
+  businessDescription String
+  websiteUrl          String?
+  idDocumentUrl       String
+  businessLicenseUrl  String?
+  adminNote           String?
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+model Setting {
+  key   String @id
+  value String @db.Text
+}
+model Store{
+    id            Int           @id @default(autoincrement())
+    name          String
+    slug          String        @unique
+    description   String
+    logoUrl       String?
+    thumbnailUrl  String?
+    currentStatus StoreStatus   @default(PENDING)
+    template      StoreTemplate @default(CLASSIC)
+    customization Json          @default("{}")
+    aiReviewed    Boolean       @default(false)
+    aiReviewNote  String?
+    adminReviewed Boolean       @default(false)
+    saleEnabled           Boolean   @default(false)
+    saleDiscountPercent   Int       @default(0)
+    saleLabel             String    @default("")
+    saleEndsAt            DateTime?
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @updatedAt
+    userId        String
+
+    products   Product[]
+    orders     Order[]
+    statusLogs StoreStatusLog[]
+    featuredStore FeaturedStore?
+
+    user User @relation(fields: [userId], references: [id])
+
+}model StoreStatusLog {
+  id          Int               @id @default(autoincrement())
+  status      StoreStatus       @default(PENDING)
+  reason      StoreStatusReason?
+  title       String
+  description String?
+  isResolved  Boolean           @default(false)
+  resolvedAt  DateTime?
+  createdAt   DateTime          @default(now())
+
+  storeId     Int
+  store       Store             @relation(fields: [storeId], references: [id])
+}enum StoreTemplate {
+  DEFAULT
+  MINIMAL
+  MODERN
+  CLASSIC
+}
+model Subcategory {
+  id         Int      @id @default(autoincrement())
+  name       String
+  categoryId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  products Product[]
+}
+model User{
+    id            String    @id
+    name          String
+    email         String    @unique
+    emailVerified Boolean
+    phone         String?
+    image         String?
+    role          UserRole  @default(CUSTOMER)
+    isBanned      Boolean   @default(false)
+    isPremium         Boolean   @default(false)
+    premiumExpiresAt  DateTime?
+    createdAt         DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+
+    stores        Store[]
+    orders        Order[]
+    accounts      Account[]
+    sessions      Session[]
+    notifications Notification[]
+    sellerApplication SellerApplication?
+}enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}enum ProductStatus {
+  AVAILABLE
+  UNAVAILABLE
+}enum StoreStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  REJECTED
+}enum StoreStatusReason {
+  VIOLATION_OF_TERMS
+  EMAIL_VERIFICATION
+  LEGAL_DOCUMENTS
+  PAYMENT_ISSUES
+  SCAM_SUSPICION
+  STORE_ACTIVATION
+  OTHER
+}enum UserRole {
+  CUSTOMER
+  SELLER
+  ADMIN
+}enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

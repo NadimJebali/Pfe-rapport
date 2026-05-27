@@ -1,0 +1,166 @@
+{
+  "name": "Cheebo – Store AI Redesign",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cheebo-store-redesign",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "9496737f-e59a-4a1a-b55f-ed2d64f50be6",
+      "name": "Webhook1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        32,
+        -48
+      ],
+      "webhookId": "cheebo-store-redesign"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body ?? $input.first().json;\n\nconst storeName        = body.storeName        ?? 'My Store';\nconst storeDescription = body.storeDescription ?? '';\nconst userPrompt       = body.prompt           ?? 'modern and clean';\n\nreturn [{\n  json: {\n    storeName,\n    storeDescription,\n    userPrompt,\n    systemPrompt: `You are an expert e-commerce visual designer.\nYour only job is to output a single valid JSON object that configures the visual design of an online store.\n\nSTRICT OUTPUT RULES:\n- Return ONLY the raw JSON object — no markdown, no backticks, no code fences, no explanation\n- Every field listed below must be present\n- Use only the exact allowed values listed for each field\n- All colors must be 6-digit hex codes (#RRGGBB)\n- imageUrl must always be null\n- socialLinks must always be []\n- announcementBar.link must always be null\n\nSCHEMA:\n{\n  \"version\": 1,\n  \"announcementBar\": {\n    \"enabled\": true | false,\n    \"text\": \"<short promo line max 80 chars, empty string if disabled>\",\n    \"background\": \"<#RRGGBB>\",\n    \"textColor\": \"<#RRGGBB>\",\n    \"link\": null\n  },\n  \"theme\": {\n    \"primaryColor\": \"<#RRGGBB — the store accent color>\",\n    \"radius\": \"sharp\" | \"soft\" | \"round\",\n    \"fontHeading\": \"inter\" | \"playfair\" | \"lora\" | \"space-grotesk\" | \"system\",\n    \"fontBody\":    \"inter\" | \"playfair\" | \"lora\" | \"space-grotesk\" | \"system\"\n  },\n  \"header\": {\n    \"showLogo\": true | false,\n    \"logoSize\": \"sm\" | \"md\" | \"lg\",\n    \"sticky\": true | false,\n    \"background\": \"<#RRGGBB or the exact string transparent>\",\n    \"showBreadcrumbs\": true | false\n  },\n  \"banner\": {\n    \"enabled\": true | false,\n    \"imageUrl\": null,\n    \"overlay\": \"none\" | \"dark\" | \"light\",\n    \"height\": \"short\" | \"medium\" | \"tall\",\n    \"heading\": \"<a short catchy store headline, max 60 characters>\",\n    \"headingFont\": \"inter\" | \"playfair\" | \"lora\" | \"space-grotesk\" | \"system\",\n    \"headingColor\": \"<#RRGGBB>\",\n    \"align\": \"left\" | \"center\" | \"right\"\n  },\n  \"sidebar\": {\n    \"enabled\": true | false,\n    \"width\": \"narrow\" | \"medium\" | \"wide\",\n    \"background\": \"<#RRGGBB>\",\n    \"innerBackground\": \"<#RRGGBB>\",\n    \"textColor\": \"<#RRGGBB>\",\n    \"filterMode\": \"checkbox\" | \"radio\" | \"pills\",\n    \"showCategoryCounts\": true | false,\n    \"showPriceRange\": true | false\n  },\n  \"productGrid\": {\n    \"background\": \"<#RRGGBB or the exact string transparent>\",\n    \"columns\": 2 | 3 | 4,\n    \"cardStyle\": \"flat\" | \"shadow\" | \"border\",\n    \"aspectRatio\": \"1:1\" | \"4:5\" | \"16:9\"\n  },\n  \"footer\": {\n    \"enabled\": true | false,\n    \"background\": \"<#RRGGBB or the exact string transparent>\",\n    \"contentMd\": \"<1–2 sentence footer blurb in plain markdown>\",\n    \"socialLinks\": []\n  }\n}\n\nDESIGN GUIDELINES:\n- Make the design coherent — colors, fonts and shapes should feel like one brand\n- Match the style request: luxury → dark backgrounds, serif fonts, sharp/soft radius;\n  playful → bright colors, round radius, inter/space-grotesk;\n  minimal → transparent backgrounds, clean sans-serif fonts\n- The primary color should appear on buttons and links — pick something bold and readable\n- Heading fonts: playfair and lora suit fashion/luxury; space-grotesk suits tech; inter suits everything else\n- Ensure textColor has good contrast against background and innerBackground in the sidebar\n- Banner heading: write a real one-line store slogan (do not leave it empty unless ultra-minimal style)`\n  }\n}];\n"
+      },
+      "id": "806eb898-14fe-4973-bcdc-91e8300a57f8",
+      "name": "Build Prompt1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Store name: {{ $json.storeName }}\nStore description: {{ $json.storeDescription }}\nStyle request: {{ $json.userPrompt }}\n\nGenerate the full store customization JSON now.",
+        "options": {
+          "systemMessage": "={{ $json.systemPrompt }}"
+        }
+      },
+      "id": "398d2176-5885-4c33-9455-089f43904f84",
+      "name": "AI Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        512,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "temperature": 0.8
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        512,
+        192
+      ],
+      "id": "394f920b-5f09-40cb-a761-7ba7884be5fd",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "djIv99vepslhXXeQ",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json?.output\n         ?? $input.first().json?.text\n         ?? $input.first().json?.message?.content\n         ?? '';\n\n// Strip markdown code fences if the model added them\nconst cleaned = raw\n  .replace(/^```(?:json)?\\s*/i, '')\n  .replace(/\\s*```$/, '')\n  .trim();\n\nlet design;\ntry {\n  design = JSON.parse(cleaned);\n} catch (e) {\n  throw new Error('LLM returned invalid JSON: ' + cleaned.slice(0, 300));\n}\n\n// Enforce hard constraints\ndesign.version                    = 1;\ndesign.banner.imageUrl            = null;\ndesign.footer.socialLinks         = [];\nif (design.announcementBar) design.announcementBar.link = null;\n\n// Clamp columns\nif (![2, 3, 4].includes(design.productGrid?.columns)) {\n  design.productGrid.columns = 3;\n}\n\n// Validate hex colors — fallback to safe default if invalid\nconst hexRe = /^#[0-9A-Fa-f]{6}$/;\nconst fix = (c) => hexRe.test(c) ? c : '#1E40AF';\nconst orTransparent = (c) => c === 'transparent' ? 'transparent' : fix(c);\n\nif (design.announcementBar) {\n  design.announcementBar.background = fix(design.announcementBar.background);\n  design.announcementBar.textColor  = fix(design.announcementBar.textColor);\n}\ndesign.theme.primaryColor        = fix(design.theme.primaryColor);\ndesign.header.background         = orTransparent(design.header.background);\ndesign.banner.headingColor       = fix(design.banner.headingColor);\ndesign.sidebar.background        = fix(design.sidebar.background);\ndesign.sidebar.innerBackground   = fix(design.sidebar.innerBackground);\ndesign.sidebar.textColor         = fix(design.sidebar.textColor);\ndesign.productGrid.background    = orTransparent(design.productGrid.background);\ndesign.footer.background         = orTransparent(design.footer.background);\n\nreturn [{ json: design }];\n"
+      },
+      "id": "0e956c0f-367d-4037-b95c-4db6c70617ba",
+      "name": "Parse & Sanitise JSON1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "9e56f1f1-edf6-4ccb-b5d8-6c80829fa1ad",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        992,
+        -48
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Parse & Sanitise JSON1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Sanitise JSON1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

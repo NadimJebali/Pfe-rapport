@@ -283,17 +283,28 @@ Finally, I thank my family for their encouragement and patience during this work
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-% TODO: English abstract (150-200 words)
+This report presents Cheebo, a multi-vendor e-commerce marketplace
+developed as a final-year project at TEK-UP in partnership with
+NeuralBey. The platform lets independent sellers open and customise
+their own storefronts, manage product catalogues, and fulfil orders,
+while customers browse across vendors from a single interface and
+administrators moderate the marketplace. Its distinguishing feature is
+the integration of Artificial Intelligence for operational tasks:
+automated product and store verification, a natural-language database
+assistant for administrators, and AI-driven storefront redesign, all
+orchestrated as n8n workflows behind webhooks. The system is built as
+a TypeScript monorepo --- a NestJS REST API backed by Prisma and
+MariaDB, and a React single-page application --- and is engineered to
+professional standards, with an automated test suite of 129 tests and
+a complete CI/CD pipeline that containerises the services with Docker,
+provisions infrastructure with Terraform, and deploys to a live
+DigitalOcean environment on every push. The result is a deployed,
+tested, and reproducible marketplace that demonstrates both full-stack
+application development and modern DevOps and AI-integration practice.
 
 \bigskip
 \noindent\textbf{Keywords:} marketplace, multi-vendor, NestJS, React, Prisma,
   Artificial Intelligence, Docker, CI/CD, Terraform.
-
-\bigskip\bigskip
-\noindent\rule{\textwidth}{0.4pt}
-\bigskip
-
-% TODO: English abstract (150-200 words)
 
 % ── Lists ────────────────────────────────────────────────────
 \newpage
@@ -319,7 +330,6 @@ Finally, I thank my family for their encouragement and patience during this work
   \textbf{DNS}    & Domain Name System \\
   \textbf{DTO}    & Data Transfer Object \\
   \textbf{DWMM}   & Web, Mobile and Multimedia Development \\
-  \textbf{JWT}    & JSON Web Token \\
   \textbf{ORM}    & Object-Relational Mapping \\
   \textbf{PFE}    & Final Year Project \\
   \textbf{REST}   & Representational State Transfer \\
@@ -1035,7 +1045,7 @@ explicit in Chapter~3.
         remain visible to visitors; the seller is only prevented from
         \emph{modifying} those premium fields going forward.
   \item A Seller shall be able to activate a store-wide sale by
-        enabling a percentage discount (1--99\,\%), an optional custom
+        enabling a percentage discount (1--90\,\%), an optional custom
         label (e.g.\ \textit{"Summer Sale"}), and an optional expiry
         date. While the sale is active, every product in the store
         shall display its discounted price alongside a red sale badge
@@ -1303,9 +1313,10 @@ Three diagram types are used throughout this report:
         structural blueprint from which the Prisma schema is derived.
 \end{itemize}
 
-All diagrams are authored in Mermaid (\texttt{.mmd} files) and
-rendered to PNG via the Mermaid CLI (\texttt{mmdc}), keeping
-diagrams version-controlled alongside source code.
+All diagrams are authored in PlantUML (\texttt{.puml} files) and
+rendered to PNG via the PlantUML CLI, keeping the diagram sources
+version-controlled alongside the application code under
+\texttt{diagrams/}.
 
 \section{Project Backlog}
 
@@ -2043,7 +2054,9 @@ Cheebo needs without writing any cryptography. Sessions are
 opaque DB-backed tokens (not JWTs), which makes server-side
 revocation a one-line update on the \texttt{Session} table.
 
-Figure~\ref{fig:auth-flow} details the three-stage flow:
+The interaction was already presented as a sequence diagram in
+Chapter~\ref{chap:requirements} (Figure~\ref{fig:seq-auth}); from the
+design standpoint it is a three-stage flow:
 registration (creates the \texttt{User} row, sends the
 verification email, returns a session cookie marked
 \emph{pending verification}), email verification (flips
@@ -2052,13 +2065,6 @@ and issues a fresh session). Every subsequent protected
 request carries the \texttt{better-auth.session\_token} cookie,
 which the NestJS \texttt{AuthGuard} validates against the
 \texttt{Session} table on each call.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{seq-auth.png}
-  \caption{Better-Auth authentication flow (registration, verification, login)}
-  \label{fig:auth-flow}
-\end{figure}
 
 \section{N8N Workflow Design}
 
@@ -2264,10 +2270,78 @@ behavioural model that the next chapter actually implements.
 \section{Development Environment}
 
 \subsection{Hardware and Software}
-% TODO
+
+Development was carried out on a single workstation running
+Ubuntu~22.04 LTS with 16~GB of RAM and an 8-core CPU. This
+configuration is comfortable for running the backend, frontend, and a
+local MariaDB container simultaneously, but is well under the
+requirements of the production droplet (Section~\ref{sec:droplet-specs}).
+The toolchain pinned for the project is summarised in
+Table~\ref{tab:dev-toolchain}: \texttt{Node.js 22 LTS} as the runtime,
+\texttt{pnpm 10} as the package manager (chosen for its
+content-addressable store and workspace support), Docker Engine and
+Docker Compose for the local database and n8n containers, and Git
+backed by GitHub for version control.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{8pt}
+\setlength{\extrarowheight}{3pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{4.5cm}|>{\raggedright\arraybackslash}p{8.5cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Component} & \textbf{Version / role} \\
+\hline
+Operating system & Ubuntu 22.04 LTS (development); the production droplet runs Ubuntu 22.04 as well, keeping behaviour consistent. \\
+\hline
+Node.js & 22 LTS — JavaScript runtime for both the NestJS server and the frontend build tools. \\
+\hline
+pnpm & 10 — package manager, used for both \texttt{backend/} and \texttt{frontend/} workspaces. \\
+\hline
+Docker / Docker Compose & 24+ — local containerisation of MariaDB and n8n; same engine in production. \\
+\hline
+MariaDB & 11 — relational database, run as a container locally and as a Compose service in production. \\
+\hline
+Git + GitHub & Version control and remote; the GitHub Actions runner executes the CI/CD pipeline. \\
+\hline
+\end{tabular}
+\caption{Development toolchain used throughout the project}
+\label{tab:dev-toolchain}
+\end{table}
 
 \subsection{VSCode and Extensions}
-% TODO
+
+Visual Studio Code is used as the primary editor on both the
+frontend and the backend codebases. A small set of extensions is
+relied upon to keep the inner development loop fast and consistent
+across the monorepo:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{ESLint} and \textbf{Prettier} --- linting and
+        formatting on save, sharing the configuration committed to
+        each package (the backend extends the NestJS preset, the
+        frontend uses \texttt{typescript-eslint} + React plugins).
+  \item \textbf{Prisma} --- syntax highlighting and schema
+        formatting for \texttt{backend/prisma/schema/}, plus
+        click-through navigation between models and their usages.
+  \item \textbf{Tailwind CSS IntelliSense} --- class-name
+        autocompletion against the project's
+        \texttt{tailwindcss\_v4} configuration; particularly
+        important given the volume of utility classes in the React
+        components.
+  \item \textbf{Docker} --- inline visualisation of running
+        containers and quick attach for the local MariaDB instance.
+  \item \textbf{GitLens} --- inline blame and history for tracing
+        decisions back to the commit that introduced them.
+\end{itemize}
+
+The repository contains a \texttt{.vscode/settings.json} file
+committed to source control that pins the formatter, enables
+format-on-save, and configures ESLint to auto-fix on save. This
+guarantees that any contributor opening the project produces
+diffs that pass CI without local configuration.
 
 \subsection{pnpm Monorepo Structure}
 
@@ -2287,10 +2361,65 @@ infrastructure-as-code definitions.
 \section{Backend (NestJS)}
 
 \subsection{Project Structure}
-% TODO
+
+The backend follows the conventional NestJS layout: a thin
+\texttt{main.ts} bootstrap that wires the global
+\texttt{ValidationPipe} and Swagger document, a root
+\texttt{AppModule} that imports every feature module, and one
+directory per domain under \texttt{src/}. Each feature directory is
+self-contained and groups its \texttt{*.module.ts},
+\texttt{*.controller.ts}, \texttt{*.service.ts}, a \texttt{dto/}
+folder of request/response DTOs, and --- as detailed in
+Section~\ref{sec:tests} --- its co-located \texttt{*.spec.ts} tests. Cross-cutting
+concerns live under \texttt{src/common/} (guards, pagination DTOs,
+the Multer configuration, customization helpers) and
+\texttt{src/prisma/} (the database client wrapper). The Prisma client
+is code-generated into \texttt{src/generated/prisma/} and imported as
+a normal TypeScript module.
+
+This per-domain split means a change to, say, the order flow touches
+only the \texttt{order/} directory, and the NestJS dependency
+injection container resolves a service's collaborators
+(\texttt{PrismaService}, \texttt{NotificationService}) by their
+injection tokens rather than by file path --- which is exactly what
+makes the services straightforward to unit-test with mocked
+collaborators.
 
 \subsection{Key Modules}
-% TODO: auth, stores, products, orders, AI
+
+The \texttt{AppModule} composes eighteen feature modules. The most
+load-bearing ones are described below; their dependency relationships
+were presented as the module-cluster diagram in Chapter~3.
+
+\begin{itemize}[leftmargin=*,itemsep=3pt]
+  \item \textbf{AuthModule} --- wraps Better-Auth, exposes the
+        session endpoints, and provides the \texttt{AuthGuard} used
+        by every protected route. Session tokens are database-backed
+        rather than stateless JWTs.
+  \item \textbf{StoreModule} --- store CRUD, slug generation,
+        premium-template gating, the store-wide sale feature, the
+        Craft.js customization JSON, and the AI-redesign webhook
+        call. It is the largest single domain in the codebase.
+  \item \textbf{ProductModule} --- product CRUD, the free-tier
+        product cap, sale-price computation
+        (\texttt{applySalePrices}), AI/admin verification flags, and
+        tag-based recommendations.
+  \item \textbf{OrderModule} / \textbf{OrderItemsModule} --- order
+        creation, per-seller dashboard scoping, and transactional
+        order-status emails.
+  \item \textbf{SellerApplicationModule} --- the seller-onboarding
+        state machine that promotes an approved applicant to the
+        \texttt{SELLER} role.
+  \item \textbf{NotificationModule} --- persists notifications,
+        fans out to all admins, and streams live updates to connected
+        clients over Server-Sent Events.
+  \item \textbf{ChatModule} and \textbf{N8nModule} --- the bridge to
+        the n8n automation layer: the database chat assistant and the
+        AI verification/redesign webhooks.
+  \item \textbf{PrismaModule} --- a global module exporting the
+        single \texttt{PrismaService} instance injected everywhere
+        else.
+\end{itemize}
 
 \subsection{Authentication Guards and Role-Based Access Control}
 
@@ -2308,21 +2437,130 @@ role-based access at the route level before the handler executes.
 \end{figure}
 
 \subsection{File Upload System (Multer)}
-% TODO
+
+Image uploads --- store logos, store thumbnails, banner images, and
+product images --- are handled by Multer through a single shared
+factory, \texttt{multerStorage(destination)}, defined in
+\texttt{src/common/multer/}. The factory returns a \texttt{diskStorage}
+configuration that writes files under the configured uploads
+directory, renaming each to a collision-proof
+\texttt{<timestamp>-<random><ext>} name so that two users uploading
+\texttt{logo.png} never overwrite one another.
+
+Two guards are enforced at the Multer layer before a file ever
+reaches a controller:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{MIME-type allow-list} --- only the types in
+        \texttt{ALLOWED\_UPLOAD\_MIME\_TYPES} (default
+        \texttt{jpeg}, \texttt{png}, \texttt{webp}, \texttt{gif})
+        are accepted; anything else is rejected with a
+        \texttt{BadRequestException}.
+  \item \textbf{Size cap} --- a per-file limit of
+        \texttt{MAX\_UPLOAD\_FILE\_SIZE\_MB} (default 5~MB),
+        enforced by Multer's \texttt{limits} option.
+\end{itemize}
+
+Controllers consume the factory through NestJS's
+\texttt{FileInterceptor}, for example on
+\texttt{POST /product/:id/image}. The uploaded file's URL is then
+persisted (as a \texttt{ProductImage} row or on the store record) and
+the static file is served back by the Express static-assets
+middleware configured in \texttt{main.ts}. Because the destination
+directory is a Docker named volume, uploaded media survives container
+re-creation (Section~\ref{sec:droplet-specs}).
 
 \subsection{Email System (Nodemailer)}
-% TODO
+
+Transactional email is sent through a single thin helper,
+\texttt{sendEmail(\{ to, subject, html \})}, in
+\texttt{src/auth/mailer.ts}. It builds a Nodemailer SMTP transport
+from environment variables (\texttt{SMTP\_HOST},
+\texttt{SMTP\_PORT}, \texttt{SMTP\_SECURE}, \texttt{SMTP\_USER},
+\texttt{SMTP\_PASS}, \texttt{SMTP\_FROM}) with conservative
+connection, greeting, and socket timeouts so that a slow mail server
+cannot stall a request thread.
+
+Two flows rely on it. First, Better-Auth uses it for
+\textbf{email-verification} links during registration. Second, the
+\texttt{OrderService} sends an \textbf{order-status email} whenever an
+order transitions to a new status (confirmed, shipped, delivered,
+cancelled, refunded), rendering a small HTML template with the order
+number, store name, and a status-coloured badge. Crucially, these
+emails are dispatched as fire-and-forget promises: a failure to send
+is logged but never propagated to the caller, so a downed SMTP server
+degrades gracefully (the order is still created) rather than failing
+the user's request. This is precisely the behaviour pinned by the
+\texttt{order.service} tests in Section~\ref{sec:tests}.
 
 \section{Frontend (React + Vite)}
 
 \subsection{Project Structure}
-% TODO
+
+The frontend is a React~19 single-page application built with Vite.
+Source is organised by responsibility under \texttt{src/}:
+\texttt{pages/} holds route-level screens (further nested into
+\texttt{dashboard/admin/} and \texttt{dashboard/seller/});
+\texttt{components/} holds reusable presentational components and the
+shadcn/ui primitives under \texttt{components/ui/}; \texttt{routes/}
+holds the route table and the \texttt{RoleRoute} guard;
+\texttt{hooks/} holds the data-fetching hooks that wrap TanStack
+Query; \texttt{stores/} holds the Zustand stores; \texttt{api/} holds
+the Axios client and typed request functions; and \texttt{lib/},
+\texttt{constants/}, and \texttt{types/} hold shared utilities,
+enumerations, and TypeScript types. The \texttt{@/} path alias maps to
+\texttt{src/} in both the Vite config and \texttt{tsconfig}, so imports
+read \texttt{@/components/ProductCard} regardless of nesting depth.
 
 \subsection{Routing and Layouts}
-% TODO
+
+Routing uses \texttt{react-router-dom}~7. The application is wrapped
+in \texttt{main.tsx} by four providers, in order: a
+\texttt{HelmetProvider} for per-page document titles, the TanStack
+\texttt{QueryClientProvider}, a \texttt{BrowserRouter}, and the app's
+own \texttt{useAuthStoreSync} hook that hydrates the auth store from
+the active session on load.
+
+The route table itself lives in \texttt{src/routes/index.tsx}. Public
+routes --- home, store listing, store page, product listing, product
+page, cart, checkout, login, register --- are declared directly.
+Protected routes are nested inside a \texttt{RoleRoute} element that
+takes an \texttt{allowedRoles} list and a \texttt{redirectTo} target:
+the \texttt{/dashboard} and Craft editor routes are gated to
+\texttt{ADMIN} and \texttt{SELLER}, while \texttt{/my-account} and the
+seller-application flow are gated to \texttt{CUSTOMER}. A user whose
+role is not in the allow-list is redirected rather than shown the
+screen, mirroring the backend's \texttt{@Roles()} enforcement on the
+API side so that authorisation is consistent end-to-end.
 
 \subsection{State Management (TanStack Query + Zustand)}
-% TODO
+
+The frontend deliberately separates \emph{server state} from
+\emph{client state}, using a different tool for each.
+
+\textbf{TanStack Query} owns all server state. Every read from the
+API goes through a custom hook in \texttt{src/hooks/}
+(\texttt{useProducts}, \texttt{useStorePage}, \texttt{useMyOrders},
+\texttt{useFeatured}, \texttt{useAdminDashboard},
+\texttt{useNotifications}, and others) that wraps
+\texttt{useQuery}/\texttt{useMutation}. The shared
+\texttt{QueryClient} (in \texttt{src/lib/queryClient.ts}) is
+configured with a one-minute \texttt{staleTime} and a single retry,
+which keeps the UI responsive (cached data is reused across
+navigations) without hammering the API. Mutations invalidate the
+relevant query keys so the cache stays coherent after writes.
+
+\textbf{Zustand} owns the small amount of genuine client state that
+must persist across routes and reloads. The cart store
+(\texttt{src/stores/cart.store.ts}) is the principal example: it holds
+the customer's purchase intent, enforces the per-item stock cap on
+add and update, and is wrapped in Zustand's \texttt{persist}
+middleware so the cart survives a page refresh via
+\texttt{localStorage}. The auth store holds the current user and role
+for the \texttt{RoleRoute} guard. This division --- TanStack Query for
+anything that lives on the server, Zustand for anything that is purely
+the client's --- avoids the common pitfall of duplicating server data
+into a global store and then having to keep the two in sync.
 
 \subsection{Admin Dashboard Panels}
 
@@ -2354,25 +2592,62 @@ and monitor incoming orders.
 
 \section{AI Integration with N8N}
 
+All AI features are implemented as n8n workflows triggered over
+webhooks rather than as in-process calls from NestJS. This keeps the
+LLM-provider credentials, prompt templates, and parsing logic outside
+the application code, where they can be edited visually and re-run
+against historical executions without redeploying the backend. The
+backend's only responsibility is to fire the webhook with a compact
+payload and act on the structured response.
+
 \subsection{AI Product/Store Verification Pipeline}
-% TODO
+
+When a seller submits a new product or store, the corresponding
+service fires the \textbf{cheebo-ai-verify} webhook asynchronously
+(fire-and-forget, so submission never blocks on the AI). The payload
+carries the entity \texttt{type} (\texttt{product} or \texttt{store}),
+its \texttt{id}, \texttt{name}, \texttt{description}, and image URLs.
+The workflow runs an AI Agent that screens the listing against the
+platform's content policy and returns a decision. The workflow then
+calls back into the API --- \texttt{PATCH /product/:id/ai-review} or
+the equivalent store route, authenticated by the
+\texttt{x-api-key} header that the \texttt{ApiKeyGuard} validates ---
+with an \texttt{approved} or \texttt{flagged} decision and a reason.
+
+The backend records the outcome on two distinct flags:
+\texttt{aiReviewed} (set by this pipeline, with the reason stored in
+\texttt{aiReviewNote}) and \texttt{adminReviewed} (set only when a
+human administrator later overrides the decision). Separating the two
+means the admin moderation queue can show \emph{why} the AI flagged a
+listing and still let a human have the final say --- the override
+path is exactly what the \texttt{verify()} and \texttt{aiReview()}
+service tests in Section~\ref{sec:tests} pin down.
 
 \subsection{Database Chat Assistant}
-% TODO
+
+The database chat assistant is an administrator-only tool, surfaced as
+a floating button (\texttt{AiChatFab}) on the admin dashboard. The
+administrator asks operational questions in natural language ---
+\textit{"how many orders shipped this week?"}, \textit{"which stores
+are still pending verification?"} --- and receives an answer grounded
+in live data. The frontend posts the question to the NestJS
+\texttt{ChatModule}, which forwards it to the \textbf{cheebo-ai-chat}
+n8n workflow. There an AI Agent translates the question into a safe,
+read-only database query, executes it, and summarises the result set
+in prose. Because the assistant is mounted only inside the
+role-gated admin dashboard, it is unreachable by customers or
+sellers --- a boundary verified both by the \texttt{RoleRoute} guard
+on the frontend and the \texttt{AuthGuard}/\texttt{@Roles} pairing on
+the backend.
 
 \subsection{N8N Workflow --- AI Storefront Redesign}
 
 The AI Storefront Redesign workflow allows a seller to regenerate their
 entire store visual identity by providing a short natural-language prompt
-from inside the Craft.js editor. The sequence is illustrated in
-Figure~\ref{fig:seq-ai-redesign}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{diagrams/seq-ai-redesign.png}
-  \caption{Sequence diagram --- AI storefront redesign workflow}
-  \label{fig:seq-ai-redesign}
-\end{figure}
+from inside the Craft.js editor. The end-to-end interaction sequence
+between seller, backend, n8n and the LLM provider was presented in the
+design chapter (Figure~\ref{fig:seq-ai-redesign-design}); this section
+describes its implementation.
 
 The seller clicks the \textit{AI Redesign} button in the editor toolbar,
 which opens a dialog prompting for a short description of the desired
@@ -2411,10 +2686,49 @@ directly to the Craft.js editor, giving the seller an immediate live
 preview of the AI-generated design without a page reload.
 
 \subsection{Google Gemini / Groq Integration}
-% TODO
+
+The workflows are model-agnostic by design --- the AI Agent node
+abstracts the provider --- but in the deployed configuration two
+providers are used, chosen per task:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Verification} (\textbf{cheebo-ai-verify}) and the
+        \textbf{database chat assistant} (\textbf{cheebo-ai-chat}) use
+        an \texttt{openai/gpt-oss-20b} agent, with a Google Gemini
+        chat model available as an alternate within the same workflow.
+        These tasks are classification- and reasoning-oriented and do
+        not need a very large model.
+  \item \textbf{Storefront redesign} (\textbf{cheebo-store-redesign})
+        uses Groq's \texttt{llama-3.3-70b-versatile}. The larger model
+        produces more coherent full-page design JSON, and Groq's
+        inference speed keeps the seller's live-preview latency low.
+\end{itemize}
+
+Provider credentials are stored in n8n's encrypted credential store
+(persisted to the \texttt{n8n\_data} volume), never in the
+application's environment or source. Swapping a provider, or
+A/B-testing two models, is a change inside n8n that requires no
+backend redeployment.
 
 \subsection{N8N Workflow Implementation}
-% TODO
+
+Each workflow follows the same skeleton: a \textbf{Webhook} trigger
+(secured with header authentication), an \textbf{AI Agent} bound to a
+chat model, one or more \textbf{Code} nodes for prompt assembly and
+output sanitisation, and a \textbf{Respond to Webhook} node that
+returns the structured result to NestJS. The three workflows ---
+\texttt{Products/Stores verification}, \texttt{Cheebo DB Chat}, and
+\texttt{cheebo-store-redesign} --- are exported as JSON and committed
+to the repository under \texttt{n8n-workflows/}, so the automation
+layer is versioned alongside the application code and can be
+re-imported into a fresh n8n instance. The full JSON exports are
+reproduced in Appendix~\ref{app:n8n-workflows}.
+
+The redesign workflow is the most elaborate of the three and was
+detailed above; the verification and chat workflows are simpler
+two-to-three-node graphs that the sanitisation Code node keeps
+defensive against malformed LLM output --- the same robustness
+principle applied throughout the backend.
 
 \section{Interface Screenshots}
 
@@ -2732,12 +3046,12 @@ illustrates how the existing tests distribute across these layers.
     \footnotesize Nest app + ValidationPipe + supertest \\
     \footnotesize ProductController, StoreController, OrderController \\[4pt]
     \hline\\[-6pt]
-    \textbf{Service unit tests (66 tests)} \\
+    \textbf{Service unit tests (58 tests)} \\
     \footnotesize Real service code, mocked Prisma \\
     \footnotesize Product, Store, Order, SellerApplication, \\
     \footnotesize Notification, Analytics, Home \\[4pt]
     \hline\\[-6pt]
-    \textbf{Pure-logic + frontend (27 tests)} \\
+    \textbf{Pure-logic + frontend (35 tests)} \\
     \footnotesize No I/O, no framework wiring \\
     \footnotesize \texttt{findViolation}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
   \end{tabular}}
@@ -2953,10 +3267,65 @@ infrastructure that hosts this code in production.
 \section{Containerisation with Docker}
 
 \subsection{Dockerfiles (Frontend and Backend)}
-% TODO
+
+Both the backend and the frontend ship as multi-stage Docker images,
+which keeps the final runtime image small by discarding build-time
+dependencies. The complete Dockerfiles are reproduced in
+Appendix~\ref{app:docker-compose}.
+
+The \textbf{backend} image (Figure~\ref{fig:docker-network} context)
+uses a two-stage \texttt{node:20-alpine} build. The \emph{builder}
+stage enables \texttt{pnpm} through Corepack, installs dependencies
+from the frozen lockfile, runs \texttt{prisma generate}, and compiles
+the TypeScript to \texttt{dist/}. The \emph{production} stage copies
+only the compiled output, the generated Prisma client, the
+\texttt{node\_modules}, and the schema --- not the source tree. The
+container's start command first runs \texttt{prisma migrate deploy}
+(applying any pending migrations against the live database) and then
+launches the compiled server, so a fresh deployment self-migrates with
+no manual step.
+
+The \textbf{frontend} image is also two-stage: a
+\texttt{node:20-alpine} builder runs \texttt{pnpm run build} to emit
+the static Vite bundle, and the production stage serves it from
+\texttt{nginx:alpine}. Because the API URL is only known at deploy
+time (it depends on the domain), the build bakes in a placeholder
+token and an \texttt{entrypoint.sh} script rewrites it to the real
+\texttt{VITE\_API\_URL} on container start --- a single image that can
+target any environment without rebuilding. The bundled Nginx config
+serves the SPA with an \texttt{index.html} fallback, reverse-proxies
+\texttt{/api/} to the backend, and gives the
+\texttt{/notification/stream} SSE endpoint special handling
+(buffering and gzip disabled, long read timeout) so live
+notifications are not held back by the proxy.
 
 \subsection{Docker Compose Configuration}
-% TODO
+
+The full stack is orchestrated by a single \texttt{docker-compose.yml}
+(Appendix~\ref{app:docker-compose}) declaring four services and three
+named volumes:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{db} --- \texttt{mariadb:11} with a health-check
+        (\texttt{mariadb-admin ping}) so dependants can wait until the
+        database is genuinely ready, persisted to the \texttt{db\_data}
+        volume.
+  \item \textbf{backend} --- the NestJS image, which
+        \texttt{depends\_on} the database \emph{being healthy}, reads
+        all configuration from environment variables, and mounts the
+        \texttt{uploads} volume for user-uploaded media.
+  \item \textbf{frontend} --- the Nginx image, the only service that
+        publishes a port to the host (\texttt{80:80}).
+  \item \textbf{n8n} --- the automation engine, publishing
+        \texttt{5678} for inbound webhooks and persisting workflows and
+        credentials to \texttt{n8n\_data}.
+\end{itemize}
+
+Every service is set to \texttt{restart: always}, so the stack
+recovers automatically after a host reboot. Configuration is injected
+through a \texttt{.env} file written by the deploy job
+(Section~\ref{sec:cicd}), keeping secrets out of the committed
+Compose file.
 
 \subsection{Multi-Service Networking}
 
@@ -2977,10 +3346,43 @@ backend service over the internal network.
 \section{Infrastructure as Code with Terraform}
 
 \subsection{DigitalOcean Provider}
-% TODO
+
+The entire production environment is described declaratively with
+Terraform, using the official \texttt{digitalocean/digitalocean}
+provider (\texttt{\textasciitilde> 2.0}). A single \texttt{main.tf}
+holds the provider block --- authenticated by a DigitalOcean API
+token passed as the \texttt{do\_token} variable --- and all resource
+declarations. Describing the infrastructure as code means the droplet,
+network, and DNS can be recreated identically from scratch with one
+\texttt{terraform apply}, and any change is reviewable as a diff
+rather than a series of clicks in a web console.
 
 \subsection{VPC, Droplet and Firewall Resources}
-% TODO
+
+Three resources define the compute environment:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{\texttt{digitalocean\_vpc}} --- a private network
+        (\texttt{192.168.1.0/24}) in the target region, isolating the
+        droplet's private interface.
+  \item \textbf{\texttt{digitalocean\_droplet}} --- an
+        \texttt{ubuntu-24-04-x64} droplet of the configured size,
+        attached to the VPC, with the operator's SSH key injected for
+        access.
+  \item \textbf{Firewall (UFW)} --- configured through the droplet's
+        \texttt{user\_data} cloud-init script rather than a separate
+        resource.
+\end{itemize}
+
+The \texttt{user\_data} script is the key to a zero-touch first boot:
+on creation, the droplet installs Docker Engine and the Compose
+plugin from Docker's official APT repository, enables the service,
+and then configures UFW to \emph{deny all inbound by default} while
+allowing only SSH (22), HTTP (80), HTTPS (443), and the n8n webhook
+port (5678). Because this runs as part of provisioning, a freshly
+created droplet is ready to receive the Compose stack without any
+manual server setup --- the CI/CD deploy job only has to copy the
+Compose file and bring the stack up.
 
 \subsection{DNS Management with DigitalOcean}
 
@@ -3061,13 +3463,58 @@ Section~\ref{sec:tests}.
 \end{figure}
 
 \subsection{Build Stage (Docker Build and Push to Docker Hub)}
-% TODO
+
+The \texttt{build-backend} and \texttt{build-frontend} jobs each run
+only after their respective test job passes. Both use Docker Buildx
+with the GitHub Actions cache backend (\texttt{cache-from}/
+\texttt{cache-to} with \texttt{type=gha}), so unchanged layers ---
+notably the \texttt{pnpm install} layer --- are reused across runs,
+cutting build times substantially. Each job logs in to Docker Hub
+with credentials drawn from repository secrets, builds the
+multi-stage image from its package directory, and pushes it tagged
+\texttt{:latest} to the \texttt{sirvinny/cheebo-backend} and
+\texttt{sirvinny/cheebo-frontend} repositories. These are the exact
+images the Compose file references, so the deploy step simply pulls
+the freshly pushed tags.
 
 \subsection{Deployment Stage (SSH and Docker Compose)}
-% TODO
+
+The \texttt{deploy} job runs last, gated on \texttt{needs:
+[provision, build-backend, build-frontend]} so it only fires once the
+infrastructure exists and both images are published. It performs two
+actions over SSH to the droplet (whose IP comes from the
+\texttt{provision} job's Terraform output):
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Copy} the \texttt{docker-compose.yml} to
+        \texttt{/app} on the droplet via \texttt{scp}.
+  \item \textbf{Run} a remote script that waits for cloud-init to
+        finish, writes the \texttt{.env} file from the workflow's
+        environment, then executes \texttt{docker compose pull}
+        followed by \texttt{docker compose up -d
+        --force-recreate}.
+\end{enumerate}
+
+Because the images are pulled fresh and the backend self-applies
+migrations on start, a push to \texttt{main} results in a fully
+updated, migrated production stack with no manual intervention ---
+the deployment is idempotent and repeatable.
 
 \subsection{Environment Secrets Management}
-% TODO
+
+No secret is ever committed to the repository. Sensitive values
+(database password, \texttt{BETTER\_AUTH\_SECRET}, admin password,
+SMTP password, n8n webhook secret and encryption key, DigitalOcean
+and Spaces tokens, the SSH private key) are stored as GitHub Actions
+\textbf{secrets}; non-sensitive configuration (domain, ports, feature
+limits, SMTP host) is stored as GitHub Actions \textbf{variables}.
+The deploy job interpolates both groups into the \texttt{.env} file it
+writes on the droplet at deploy time. Terraform secrets reach the
+\texttt{provision} job the same way, including the Spaces credentials
+used to read and write the remote state backend. This keeps the
+single source of truth for every credential inside GitHub's encrypted
+store, with the droplet's \texttt{.env} as the only materialised copy
+--- created at deploy time and never leaving the host.
 
 \section{Production Environment}
 
@@ -3093,7 +3540,7 @@ Terraform with the following specifications:
 \end{center}
 
 The application is accessed exclusively through the domain name
-\texttt{nadim\-jabali.engineer}.  The raw droplet IP is reserved for SSH
+\texttt{nadimjebali.engineer}.  The raw droplet IP is reserved for SSH
 access by the CI/CD pipeline and is never exposed to end users.  CORS on
 the backend is configured with the domain as the single trusted origin, so
 any attempt to reach the API directly from the IP is rejected by the
@@ -3115,7 +3562,24 @@ internet via the domain \texttt{nadimjebali.engineer}.
 \end{figure}
 
 \subsection{N8N Deployment Alongside the Application}
-% TODO
+
+n8n runs as a fourth container in the same Compose stack rather than
+as an external SaaS dependency. This co-location is deliberate: the
+backend reaches the workflows over the private bridge network at
+\texttt{http://n8n:5678/webhook/\dots}, so verification and chat
+calls never leave the host, and the only n8n port exposed publicly
+(5678) is for \emph{inbound} webhook delivery and the editor UI.
+Workflow definitions and provider credentials are encrypted with
+\texttt{N8N\_ENCRYPTION\_KEY} and persisted to the \texttt{n8n\_data}
+volume, so they survive container re-creation across deployments.
+
+Hosting the automation engine on the same droplet keeps the entire
+platform --- application, database, and AI orchestration --- within a
+single, reproducible Compose deployment and a single monthly hosting
+cost, which suits the scale and budget of a graduation project. The
+trade-off is that n8n shares the droplet's 2~vCPU/2~GB with the rest
+of the stack; for a production launch at scale it would be moved to
+its own instance, but at current load the shared host is comfortable.
 
 % ============================================================
 %  GENERAL CONCLUSION
@@ -3124,20 +3588,134 @@ internet via the domain \texttt{nadimjebali.engineer}.
 \addcontentsline{toc}{chapter}{General Conclusion}
 \markboth{General Conclusion}{}
 
+This project set out to design and build Cheebo, a multi-vendor
+marketplace for the Tunisian market with AI-assisted moderation, as a
+final-year project at TEK-UP in partnership with NeuralBey. The
+preceding chapters traced the work from market context and
+requirements, through system design, to implementation, testing, and
+deployment. This conclusion summarises what was achieved, measures it
+against the original plan, reflects on the challenges met along the
+way, states the limitations that remain, and outlines the directions
+in which the platform could grow.
+
 \section*{Summary of Achievements}
-% TODO
+
+The project delivered a complete, deployed, three-actor marketplace.
+Customers can browse stores and products, search the catalogue, build
+a multi-store cart, and place orders; sellers can apply for an
+account, open a store, manage a product catalogue, run store-wide
+sales, and redesign their storefront visually through a Craft.js
+editor; administrators can moderate stores and products, manage users,
+curate featured content, and query the platform in natural language.
+On top of the functional surface, three cross-cutting capabilities set
+the project apart from a textbook CRUD application:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{AI integration} --- product and store verification,
+        a database chat assistant, and AI storefront redesign, all
+        implemented as versioned n8n workflows behind webhooks.
+  \item \textbf{A real test suite} --- 129 automated tests across
+        backend and frontend, gating every CI build.
+  \item \textbf{A full DevOps pipeline} --- containerised services,
+        infrastructure as code with Terraform, and a GitHub Actions
+        pipeline that tests, builds, provisions, and deploys to a live
+        domain with no manual step.
+\end{itemize}
 
 \section*{Implemented Features vs Initially Planned Features}
-% TODO
+
+The large majority of the Product Backlog defined in
+Chapter~\ref{chap:requirements} was implemented. All \emph{Must-have}
+and \emph{Should-have} stories --- authentication, store and product
+management, the order system, the admin dashboard, AI verification,
+and featured-content curation --- are present in the deployed
+platform. Two \emph{Could-have} items added mid-project, the
+store-wide sale feature and AI storefront redesign, were also
+completed.
+
+The principal gap against the original vision is \textbf{online
+payment}: orders are currently placed on a cash-on-delivery basis
+rather than through an integrated payment gateway. This was a
+conscious scoping decision --- integrating and testing a payment
+provider reliably was judged a poor use of the remaining time
+relative to strengthening the core marketplace and its DevOps and
+test foundations. It is the first item on the future-work list below.
 
 \section*{Challenges Encountered and Solutions Provided}
-% TODO
+
+Several non-trivial problems were solved during development:
+
+\begin{itemize}[leftmargin=*,itemsep=3pt]
+  \item \textbf{Structured output from an LLM.} The AI storefront
+        redesign needs the model to return JSON conforming exactly to
+        the \texttt{StoreCustomization} schema. Raw model output is
+        not reliably valid, so a sanitisation step parses the
+        response, validates every colour with a regex, clamps numeric
+        fields, and falls back to safe defaults --- turning a
+        best-effort model into a dependable component.
+  \item \textbf{Premium gating without data loss on downgrade.} Free
+        accounts must be prevented from editing premium customization
+        fields, yet a seller whose subscription lapses must not lose
+        their existing design. The diff-based \texttt{findViolation}
+        check allows a field to remain at its current value while
+        blocking changes --- behaviour pinned by dedicated unit tests.
+  \item \textbf{Zero-touch, repeatable deployment.} Coordinating
+        Terraform provisioning, image builds, database migrations, and
+        SSH deployment into one idempotent pipeline required the
+        droplet to self-configure via cloud-init and the backend to
+        self-migrate on start, so a push to \texttt{main} converges to
+        a fully updated production stack unattended.
+  \item \textbf{Testing a codebase wired to ESM-only and native
+        dependencies.} Better-Auth (ESM-only) and the Prisma~7 client
+        broke the default Jest setup; module-name mappers and
+        module-level guard stubs were introduced so the suite runs
+        without a live database.
+\end{itemize}
 
 \section*{Current Implementation Limitations}
-% TODO
+
+The platform is a complete prototype, not yet a production launch.
+The main limitations are:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{No online payment} --- orders are cash-on-delivery
+        only.
+  \item \textbf{No HTTPS/TLS termination} --- the deployed site is
+        served over HTTP; a production launch would add a reverse
+        proxy with automatic certificates (e.g.\ Caddy or
+        Nginx + Let's Encrypt).
+  \item \textbf{Single-droplet, shared-host deployment} --- the
+        application, database, and n8n share one 2~vCPU/2~GB droplet,
+        which suits the project's scale but is not horizontally
+        scalable as-is.
+  \item \textbf{No end-to-end test layer} --- the test suite covers
+        units and HTTP-layer integration, but not full
+        browser-driven flows against the deployed stack
+        (Section~\ref{sec:tests}).
+\end{itemize}
 
 \section*{Future Improvements}
-% TODO: Konnect payment, mobile app, LM Studio local AI, recommendation engine, advanced analytics
+
+Natural next steps, roughly in order of value:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Online payment} --- integrate a Tunisian payment
+        gateway such as Konnect to support card and e-wallet
+        checkout alongside cash-on-delivery.
+  \item \textbf{Mobile application} --- a React Native client reusing
+        the existing REST API and authentication.
+  \item \textbf{Self-hosted local AI} --- run the moderation and chat
+        models locally (e.g.\ via LM Studio / Ollama) to remove the
+        dependency on external LLM providers and their per-call cost.
+  \item \textbf{A dedicated recommendation engine} --- evolve the
+        current tag-overlap recommendations into a collaborative- or
+        content-based model trained on order history.
+  \item \textbf{Advanced analytics} --- richer seller and
+        platform dashboards (cohorts, conversion funnels, revenue
+        forecasting) building on the existing analytics service.
+  \item \textbf{Production hardening} --- HTTPS, an end-to-end test
+        suite, and a path to multi-host scaling.
+\end{itemize}
 
 % ============================================================
 %  BIBLIOGRAPHY
@@ -3146,16 +3724,43 @@ internet via the domain \texttt{nadimjebali.engineer}.
 \addcontentsline{toc}{chapter}{Bibliography and Webography}
 \chapter*{Bibliography and Webography}
 
+\subsection*{Methodology and Standards}
+\begin{itemize}
+  \item K. Schwaber and J. Sutherland, \textit{The Scrum Guide}, 2020.
+        \url{https://scrumguides.org}
+  \item R. T. Fielding, \textit{Architectural Styles and the Design of
+        Network-based Software Architectures}, PhD dissertation,
+        University of California, Irvine, 2000 (REST).
+  \item Mozilla Developer Network --- HTTP, REST and web platform
+        reference. \url{https://developer.mozilla.org}
+\end{itemize}
+
+\subsection*{Frameworks and Libraries}
 \begin{itemize}
   \item NestJS Official Documentation --- \url{https://docs.nestjs.com}
   \item React Official Documentation --- \url{https://react.dev}
+  \item Vite Documentation --- \url{https://vite.dev}
   \item Prisma ORM Documentation --- \url{https://www.prisma.io/docs}
   \item TanStack Query Documentation --- \url{https://tanstack.com/query}
+  \item Zustand Documentation --- \url{https://zustand.docs.pmnd.rs}
+  \item Better-Auth Documentation --- \url{https://www.better-auth.com/docs}
+  \item Tailwind CSS Documentation --- \url{https://tailwindcss.com/docs}
+  \item Craft.js Documentation --- \url{https://craft.js.org}
+  \item Jest Documentation --- \url{https://jestjs.io/docs}
+  \item Vitest Documentation --- \url{https://vitest.dev}
+  \item Testing Library Documentation --- \url{https://testing-library.com/docs}
+\end{itemize}
+
+\subsection*{Infrastructure, DevOps and AI}
+\begin{itemize}
+  \item MariaDB Documentation --- \url{https://mariadb.com/kb/en}
   \item Docker Documentation --- \url{https://docs.docker.com}
   \item Terraform Documentation --- \url{https://developer.hashicorp.com/terraform}
   \item N8N Documentation --- \url{https://docs.n8n.io}
   \item GitHub Actions Documentation --- \url{https://docs.github.com/en/actions}
   \item DigitalOcean Developer Docs --- \url{https://docs.digitalocean.com}
+  \item Groq API Documentation --- \url{https://console.groq.com/docs}
+  \item Google Gemini API Documentation --- \url{https://ai.google.dev/gemini-api/docs}
 \end{itemize}
 
 % ============================================================
@@ -3166,32 +3771,145 @@ internet via the domain \texttt{nadimjebali.engineer}.
 \chapter{Complete Prisma Schema}
 \label{app:prisma-schema}
 
-\begin{lstlisting}[caption={Prisma schema --- excerpt}]
-% TODO: paste the contents of backend/prisma/schema/ here
-\end{lstlisting}
+The data model is split across one file per domain under
+\texttt{backend/prisma/schema/}; the files are concatenated below.
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={backend/prisma/schema/ --- concatenated}]{listings/schema.prisma}
 
 \chapter{API Endpoints Reference}
 \label{app:api-reference}
 
-% TODO: full table of all endpoints
+The REST API exposes the routes below, grouped by resource. Routes
+under a dashboard or administrative scope are protected by the
+\texttt{AuthGuard}; the \texttt{/*/ai-review} routes are protected by
+the \texttt{ApiKeyGuard} (n8n callback).
+
+\small
+\setlength{\extrarowheight}{2pt}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.8cm}|>{\raggedright\arraybackslash}p{11cm}|}
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Method} & \textbf{Endpoint} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{cheebolightgray}
+\textbf{Method} & \textbf{Endpoint} \\
+\hline
+\endhead
+\hline
+\endfoot
+POST & \texttt{/store} \\
+GET & \texttt{/store} \\
+GET & \texttt{/store/dashboard} \\
+GET & \texttt{/store/search} \\
+GET & \texttt{/store/store-names} \\
+GET & \texttt{/store/by-slug/:slug} \\
+GET & \texttt{/store/by-slug/:slug/page} \\
+GET & \texttt{/store/by-slug/:slug/customization} \\
+GET & \texttt{/store/:id} \\
+GET & \texttt{/store/:id/page} \\
+PATCH & \texttt{/store/:id} \\
+PATCH & \texttt{/store/:id/sale} \\
+PATCH & \texttt{/store/:id/customization} \\
+PATCH & \texttt{/store/:id/status} \\
+PATCH & \texttt{/store/:id/ai-review} \\
+POST & \texttt{/store/:id/ai-redesign} \\
+POST & \texttt{/store/:id/logo} \\
+POST & \texttt{/store/:id/thumbnail} \\
+POST & \texttt{/store/:id/banner} \\
+DELETE & \texttt{/store/:id} \\
+\hline
+POST & \texttt{/product} \\
+GET & \texttt{/product} \\
+GET & \texttt{/product/dashboard} \\
+GET & \texttt{/product/search} \\
+GET & \texttt{/product/recommended} \\
+GET & \texttt{/product/by-categories} \\
+GET & \texttt{/product/by-category/:categoryId} \\
+GET & \texttt{/product/by-category/:categoryId/subcategory/:subcategoryId} \\
+GET & \texttt{/product/by-store/:storeId} \\
+GET & \texttt{/product/by-store/:storeId/cards} \\
+GET & \texttt{/product/store-categories/:storeId} \\
+GET & \texttt{/product/:id} \\
+PATCH & \texttt{/product/:id} \\
+PATCH & \texttt{/product/:id/ban} \\
+PATCH & \texttt{/product/:id/unban} \\
+PATCH & \texttt{/product/:id/verify} \\
+PATCH & \texttt{/product/:id/ai-review} \\
+POST & \texttt{/product/:id/image} \\
+DELETE & \texttt{/product/:id} \\
+\hline
+POST & \texttt{/order} \\
+GET & \texttt{/order} \\
+GET & \texttt{/order/my} \\
+GET & \texttt{/order/dashboard} \\
+GET & \texttt{/order/:id} \\
+PATCH & \texttt{/order/:id} \\
+DELETE & \texttt{/order/:id} \\
+\hline
+POST & \texttt{/seller-application} \\
+GET & \texttt{/seller-application} \\
+GET & \texttt{/seller-application/my} \\
+PATCH & \texttt{/seller-application/:id/status} \\
+\hline
+GET & \texttt{/home/featured} \\
+GET & \texttt{/home/featured/ids} \\
+PUT & \texttt{/home/featured/products} \\
+PUT & \texttt{/home/featured/stores} \\
+\hline
+GET & \texttt{/analytics} \\
+GET & \texttt{/analytics/store} \\
+\hline
+GET & \texttt{/notification} \\
+GET & \texttt{/notification/unread-count} \\
+PATCH & \texttt{/notification/:id/read} \\
+PATCH & \texttt{/notification/read-all} \\
+\hline
+POST & \texttt{/chat} \\
+\hline
+GET & \texttt{/user} \\
+GET & \texttt{/user/display} \\
+GET & \texttt{/user/premium-status} \\
+GET & \texttt{/user/users-with-emails} \\
+GET & \texttt{/user/:id} \\
+POST & \texttt{/user} \\
+POST & \texttt{/user/upgrade-premium} \\
+POST & \texttt{/user/:id/avatar} \\
+PATCH & \texttt{/user/:id} \\
+PATCH & \texttt{/user/:id/ban} \\
+PATCH & \texttt{/user/:id/unban} \\
+DELETE & \texttt{/user/:id} \\
+\hline
+CRUD & \texttt{/category}, \texttt{/sub-category}, \texttt{/product-tag}, \texttt{/product-image}, \texttt{/store-status-log}, \texttt{/order-items} (full \texttt{POST}/\texttt{GET}/\texttt{PATCH}/\texttt{DELETE} CRUD) \\
+\hline
+GET & \texttt{/settings} \quad PUT \texttt{/settings/name} \quad POST \texttt{/settings/logo} \\
+\hline
+\caption{Cheebo REST API endpoint reference}
+\label{tab:api-endpoints}
+\end{longtable}
+\normalsize
 
 \chapter{N8N Workflow JSON Exports}
 \label{app:n8n-workflows}
 
-\begin{lstlisting}[language=,caption={N8N workflow --- AI verification (JSON)}]
-% TODO: paste the JSON exported from N8N
-\end{lstlisting}
+The three workflows are committed under \texttt{n8n-workflows/} and can
+be re-imported into any n8n instance.
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={Products/Stores verification workflow}]{listings/Products_Stores verification.json}
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={Cheebo DB chat assistant workflow}]{listings/Cheebo DB Chat.json}
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={AI storefront redesign workflow}]{listings/cheebo-store-redesign.json}
 
 \chapter{Docker Compose File}
+\label{app:docker-compose}
 
-\begin{lstlisting}[caption={docker-compose.yml}]
-% TODO: paste the contents of docker-compose.yml
-\end{lstlisting}
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={docker-compose.yml}]{listings/docker-compose.yml}
 
 \chapter{GitHub Actions Workflow}
+\label{app:gha-workflow}
 
-\begin{lstlisting}[caption={.github/workflows/deploy.yml}]
-% TODO: paste the CI/CD workflow content
-\end{lstlisting}
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={.github/workflows/deploy.yml}]{listings/deploy.yml}
 
 \end{document}

@@ -1,0 +1,106 @@
+services:
+  db:
+    image: mariadb:11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mariadb-admin ping -h localhost -p$$MARIADB_ROOT_PASSWORD",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: sirvinny/cheebo-backend:latest
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Database
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      # App
+      PORT: ${PORT}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${APP_URL}
+      FRONTEND_URL: ${APP_URL}
+      # Admin (auto-created on first startup)
+      ADMIN_NAME: ${ADMIN_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      # Upload
+      UPLOAD_DIR: ./uploads
+      MAX_UPLOAD_FILE_SIZE_MB: ${MAX_UPLOAD_FILE_SIZE_MB}
+      ALLOWED_UPLOAD_MIME_TYPES: ${ALLOWED_UPLOAD_MIME_TYPES}
+      # Auth / Session
+      SESSION_EXPIRES_IN: ${SESSION_EXPIRES_IN}
+      SESSION_UPDATE_AGE: ${SESSION_UPDATE_AGE}
+      MIN_PASSWORD_LENGTH: ${MIN_PASSWORD_LENGTH}
+      EMAIL_VERIFICATION_EXPIRES_IN: ${EMAIL_VERIFICATION_EXPIRES_IN}
+      # Swagger (set to empty to disable in prod)
+      SWAGGER_PATH: ${SWAGGER_PATH}
+      # SMTP
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_SECURE: ${SMTP_SECURE}
+      SMTP_PASS: ${SMTP_PASS}
+      SMTP_FROM: ${SMTP_FROM}
+      # Premium feature limits
+      FREE_TIER_MAX_PRODUCTS: ${FREE_TIER_MAX_PRODUCTS}
+      FREE_TIER_MAX_STORES: ${FREE_TIER_MAX_STORES}
+      PREMIUM_TEMPLATES: ${PREMIUM_TEMPLATES}
+      PREMIUM_PRICE_TND: ${PREMIUM_PRICE_TND}
+      PREMIUM_DURATION_DAYS: ${PREMIUM_DURATION_DAYS}
+      # Home page limits
+      MAX_FEATURED_PRODUCTS: ${MAX_FEATURED_PRODUCTS}
+      MAX_FEATURED_STORES: ${MAX_FEATURED_STORES}
+      # AI Chat (n8n webhook)
+      N8N_WEBHOOK_URL: http://n8n:5678/webhook/cheebo-ai-chat
+      N8N_WEBHOOK_SECRET: ${N8N_WEBHOOK_SECRET}
+      # AI Verification (n8n verify webhook)
+      N8N_VERIFY_WEBHOOK_URL: http://n8n:5678/webhook/cheebo-ai-verify
+    volumes:
+      - uploads:/app/uploads
+
+  frontend:
+    image: sirvinny/cheebo-frontend:latest
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${APP_URL}
+      VITE_PREMIUM_PRICE_TND: ${PREMIUM_PRICE_TND}
+      VITE_PREMIUM_DURATION_DAYS: ${PREMIUM_DURATION_DAYS}
+    ports:
+      - "80:80"
+
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      WEBHOOK_URL: http://${DOMAIN_NAME}:5678
+      GENERIC_TIMEZONE: Africa/Tunis
+      N8N_LOG_LEVEL: info
+      N8N_SECURE_COOKIE: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  db_data:
+  uploads:
+  n8n_data:
