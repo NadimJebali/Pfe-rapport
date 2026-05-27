@@ -1,0 +1,19 @@
+# Global options — ACME account email for Let's Encrypt certificate notices.
+{
+	email {$ACME_EMAIL}
+}
+
+# Canonicalise www -> apex so there is a single HTTPS origin, which matches
+# the backend's BETTER_AUTH_URL / trustedOrigins and keeps cookies consistent.
+www.{$DOMAIN_NAME} {
+	redir https://{$DOMAIN_NAME}{uri} permanent
+}
+
+# Public entrypoint. Caddy obtains and renews the TLS certificate
+# automatically (HTTP-01 / TLS-ALPN-01) and terminates HTTPS here, then
+# reverse-proxies to the internal Nginx frontend container, which serves the
+# SPA and forwards /api and the SSE stream to the backend.
+{$DOMAIN_NAME} {
+	encode gzip
+	reverse_proxy frontend:80
+}

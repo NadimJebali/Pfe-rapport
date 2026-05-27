@@ -220,13 +220,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy docker-compose.yml to droplet
+      - name: Copy docker-compose.yml and Caddyfile to droplet
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ needs.provision.outputs.droplet_ip }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          source: docker-compose.yml
+          source: "docker-compose.yml,Caddyfile"
           target: /app
 
       - name: Write .env, shut down & redeploy
@@ -297,7 +297,7 @@ jobs:
             DB_NAME=$DB_NAME
             PORT=$PORT
             BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
-            APP_URL=http://$DOMAIN_NAME
+            APP_URL=https://$DOMAIN_NAME
             ADMIN_NAME=$ADMIN_NAME
             ADMIN_EMAIL=$ADMIN_EMAIL
             ADMIN_PASSWORD=$ADMIN_PASSWORD

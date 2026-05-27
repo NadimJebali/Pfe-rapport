@@ -83,8 +83,23 @@ services:
       VITE_API_URL: ${APP_URL}
       VITE_PREMIUM_PRICE_TND: ${PREMIUM_PRICE_TND}
       VITE_PREMIUM_DURATION_DAYS: ${PREMIUM_DURATION_DAYS}
+    # No host port: the frontend is reached only through the Caddy proxy.
+
+  caddy:
+    image: caddy:2-alpine
+    restart: always
+    depends_on:
+      - frontend
     ports:
       - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      ACME_EMAIL: ${ADMIN_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
 
   n8n:
     image: n8nio/n8n:latest
@@ -104,3 +119,5 @@ volumes:
   db_data:
   uploads:
   n8n_data:
+  caddy_data:
+  caddy_config:

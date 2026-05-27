@@ -1577,9 +1577,12 @@ schema decoupled from the public REST contract.
 
 Figure~\ref{fig:arch-global} shows the three tiers and the auxiliary
 components that orbit them. End users reach the platform exclusively
-through HTTPS to an \textbf{Nginx} reverse proxy, which serves the static
-React bundle and forwards every \texttt{/api/*} request to the
-NestJS API container over the Docker bridge network. The NestJS
+over HTTPS, terminated by a \textbf{Caddy} reverse proxy that obtains
+and renews its TLS certificate automatically from Let's Encrypt. Caddy
+forwards the decrypted traffic to an internal \textbf{Nginx} container,
+which serves the static React bundle and forwards every
+\texttt{/api/*} request to the NestJS API container over the Docker
+bridge network. The NestJS
 application implements the entire business logic --- authentication,
 catalogue management, order processing, moderation --- and persists state
 to a single \textbf{MariaDB 11} instance through the \textbf{Prisma} ORM.
@@ -1761,7 +1764,7 @@ backend.
 \subsection{Docker Compose Services Diagram}
 
 The full application stack is defined in a single
-\texttt{docker-compose.yml} file at the root of the monorepo. Four
+\texttt{docker-compose.yml} file at the root of the monorepo. Five
 services are declared (Figure~\ref{fig:docker-services}):
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -1776,27 +1779,35 @@ services are declared (Figure~\ref{fig:docker-services}):
         volume for stored images.
   \item \textbf{frontend} --- the pre-built
         \texttt{sirvinny/cheebo-frontend:latest} image (Nginx
-        serving the React bundle) with the only published port,
-        \texttt{80:80}.
+        serving the React bundle). It exposes no host port and is
+        reached only through the Caddy proxy.
+  \item \textbf{caddy} --- the official \texttt{caddy:2-alpine}
+        image, the public entrypoint of the whole stack. It is the
+        only service that publishes host ports (\texttt{80} and
+        \texttt{443}), terminates HTTPS with an automatically issued
+        Let's Encrypt certificate, and reverse-proxies to the
+        internal Nginx frontend. Its certificate and state persist in
+        the \texttt{caddy\_data} and \texttt{caddy\_config} volumes.
   \item \textbf{n8n} --- the official \texttt{n8nio/n8n:latest}
         image with a named volume \texttt{n8n\_data} preserving
         workflows and credentials across restarts.
 \end{itemize}
 
 All services share a single Docker bridge network that is created
-implicitly by Compose; only the frontend port is published. The
-backend, database, and n8n are never reachable directly from the
-public internet --- the backend's URL is \texttt{http://backend:3000}
-from inside the bridge network, and the database is reachable as
-\texttt{db:3306}. This single-host topology is intentional: the
-production droplet specifications (Section~\ref{sec:droplet-specs})
-size for it, and the architecture is straightforward to migrate to
-a managed database or a Kubernetes deployment later.
+implicitly by Compose; only Caddy's ports are published. The
+frontend, backend, database, and n8n are never reachable directly
+from the public internet --- the backend's URL is
+\texttt{http://backend:3000} from inside the bridge network, and the
+database is reachable as \texttt{db:3306}. This single-host topology
+is intentional: the production droplet specifications
+(Section~\ref{sec:droplet-specs}) size for it, and the architecture is
+straightforward to migrate to a managed database or a Kubernetes
+deployment later.
 
 Figure~\ref{fig:docker-services} shows the resulting topology on the
-production host: the four containers sit on a shared Docker bridge
-network, only the frontend publishes a port to the public internet,
-and each stateful service writes to its own named volume.
+production host: the containers sit on a shared Docker bridge
+network, only Caddy publishes ports to the public internet, and each
+stateful service writes to its own named volume.
 
 \begin{figure}[H]
   \centering
@@ -3270,11 +3281,11 @@ infrastructure that hosts this code in production.
 
 Both the backend and the frontend ship as multi-stage Docker images,
 which keeps the final runtime image small by discarding build-time
-dependencies. The complete Dockerfiles are reproduced in
-Appendix~\ref{app:docker-compose}.
+dependencies. Both Dockerfiles are reproduced in
+Appendix~\ref{app:dockerfiles}.
 
-The \textbf{backend} image (Figure~\ref{fig:docker-network} context)
-uses a two-stage \texttt{node:20-alpine} build. The \emph{builder}
+The \textbf{backend} image uses a two-stage
+\texttt{node:20-alpine} build. The \emph{builder}
 stage enables \texttt{pnpm} through Corepack, installs dependencies
 from the frozen lockfile, runs \texttt{prisma generate}, and compiles
 the TypeScript to \texttt{dist/}. The \emph{production} stage copies
@@ -3302,7 +3313,7 @@ notifications are not held back by the proxy.
 \subsection{Docker Compose Configuration}
 
 The full stack is orchestrated by a single \texttt{docker-compose.yml}
-(Appendix~\ref{app:docker-compose}) declaring four services and three
+(Appendix~\ref{app:docker-compose}) declaring five services and five
 named volumes:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -3314,8 +3325,13 @@ named volumes:
         \texttt{depends\_on} the database \emph{being healthy}, reads
         all configuration from environment variables, and mounts the
         \texttt{uploads} volume for user-uploaded media.
-  \item \textbf{frontend} --- the Nginx image, the only service that
-        publishes a port to the host (\texttt{80:80}).
+  \item \textbf{frontend} --- the Nginx image serving the React
+        bundle; it exposes no host port and is reached only through
+        the Caddy proxy.
+  \item \textbf{caddy} --- the public entrypoint, the only service
+        that publishes host ports (\texttt{80} and \texttt{443}). It
+        terminates HTTPS and reverse-proxies to the frontend
+        (Section~\ref{sec:tls-caddy}).
   \item \textbf{n8n} --- the automation engine, publishing
         \texttt{5678} for inbound webhooks and persisting workflows and
         credentials to \texttt{n8n\_data}.
@@ -3327,14 +3343,48 @@ through a \texttt{.env} file written by the deploy job
 (Section~\ref{sec:cicd}), keeping secrets out of the committed
 Compose file.
 
+\subsection{TLS Termination with Caddy}
+\label{sec:tls-caddy}
+
+Public traffic does not reach the application containers directly: it
+is fronted by \textbf{Caddy}, a modern reverse proxy whose defining
+feature is \emph{automatic HTTPS}. On first start, Caddy reads the
+domain from its environment, requests a TLS certificate from Let's
+Encrypt over the ACME protocol (the HTTP-01 / TLS-ALPN-01 challenge,
+served on the ports it already owns), installs it, and renews it
+before expiry --- with no certbot cron job, no manual key handling,
+and no application involvement.
+
+The configuration is a short, env-driven \texttt{Caddyfile}
+(Appendix~\ref{app:docker-compose}) with two site blocks: the
+\texttt{www} subdomain issues a permanent redirect to the apex so
+that the platform has a single canonical HTTPS origin, and the apex
+block reverse-proxies the decrypted traffic to the internal Nginx
+frontend on \texttt{frontend:80}. Keeping one canonical origin matters
+beyond aesthetics: it must match the backend's \texttt{BETTER\_AUTH\_URL}
+and \texttt{trustedOrigins} so that session cookies --- now issued with
+the \texttt{Secure} attribute because the origin is \texttt{https} ---
+are accepted consistently. The certificate and ACME account state are
+persisted to the \texttt{caddy\_data} volume, so redeployments reuse
+the existing certificate and never risk hitting Let's Encrypt's
+issuance rate limits.
+
+Introducing Caddy required no change to the application code. Because
+Better-Auth derives the \texttt{Secure} cookie flag from its
+\texttt{baseURL}, the cutover to HTTPS was achieved simply by setting
+\texttt{APP\_URL} to the \texttt{https} origin in the deploy job; this
+value cascades to \texttt{BETTER\_AUTH\_URL}, \texttt{FRONTEND\_URL}
+(the CORS and trusted origin), and the frontend's \texttt{VITE\_API\_URL}.
+
 \subsection{Multi-Service Networking}
 
 All services communicate over a private Docker bridge network,
-meaning the backend, database, and n8n are never directly exposed
-to the public internet. Only the frontend container publishes
-port 80. Figure~\ref{fig:docker-network} shows the network topology
-and how Nginx on the frontend container proxies all API paths to the
-backend service over the internal network.
+meaning the frontend, backend, database, and n8n are never directly
+exposed to the public internet. Only the Caddy proxy publishes ports
+(80 and 443). Figure~\ref{fig:docker-network} shows the network
+topology: Caddy terminates HTTPS and forwards to the internal Nginx
+frontend, which in turn proxies all API paths to the backend service
+over the internal network.
 
 \begin{figure}[H]
   \centering
@@ -3533,7 +3583,7 @@ Terraform with the following specifications:
   Size        & s-2vcpu-2gb (2 vCPUs, 2 GB RAM) \\
   Image       & Ubuntu 24.04 LTS \\
   VPC         & cheebo-vpc (192.168.1.0/24) \\
-  Public URL  & \texttt{http://nadimjebali.engineer} \\
+  Public URL  & \texttt{https://nadimjebali.engineer} \\
   DNS         & Managed by DigitalOcean (Terraform) \\
   \bottomrule
 \end{tabular}
@@ -3549,10 +3599,11 @@ browser's same-origin policy.
 \subsection{Production Service Architecture}
 
 Figure~\ref{fig:production} depicts the production environment as
-deployed on the DigitalOcean droplet. All four Docker Compose
+deployed on the DigitalOcean droplet. All five Docker Compose
 services run on the same host inside a private bridge network;
-only the frontend Nginx container is reachable from the public
-internet via the domain \texttt{nadimjebali.engineer}.
+only the Caddy proxy is reachable from the public internet, serving
+the platform over HTTPS at the domain
+\texttt{https://nadimjebali.engineer}.
 
 \begin{figure}[H]
   \centering
@@ -3680,10 +3731,6 @@ The main limitations are:
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item \textbf{No online payment} --- orders are cash-on-delivery
         only.
-  \item \textbf{No HTTPS/TLS termination} --- the deployed site is
-        served over HTTP; a production launch would add a reverse
-        proxy with automatic certificates (e.g.\ Caddy or
-        Nginx + Let's Encrypt).
   \item \textbf{Single-droplet, shared-host deployment} --- the
         application, database, and n8n share one 2~vCPU/2~GB droplet,
         which suits the project's scale but is not horizontally
@@ -3713,8 +3760,9 @@ Natural next steps, roughly in order of value:
   \item \textbf{Advanced analytics} --- richer seller and
         platform dashboards (cohorts, conversion funnels, revenue
         forecasting) building on the existing analytics service.
-  \item \textbf{Production hardening} --- HTTPS, an end-to-end test
-        suite, and a path to multi-host scaling.
+  \item \textbf{Production hardening} --- an end-to-end test
+        suite and a path to multi-host scaling (the application,
+        database, and n8n currently share a single droplet).
 \end{itemize}
 
 % ============================================================
@@ -3902,10 +3950,19 @@ be re-imported into any n8n instance.
 
 \lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={AI storefront redesign workflow}]{listings/cheebo-store-redesign.json}
 
-\chapter{Docker Compose File}
+\chapter{Dockerfiles}
+\label{app:dockerfiles}
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={backend/Dockerfile}]{listings/backend.Dockerfile}
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={frontend/Dockerfile}]{listings/frontend.Dockerfile}
+
+\chapter{Docker Compose File and Caddyfile}
 \label{app:docker-compose}
 
 \lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={docker-compose.yml}]{listings/docker-compose.yml}
+
+\lstinputlisting[basicstyle=\ttfamily\scriptsize,caption={Caddyfile (TLS reverse proxy)}]{listings/Caddyfile}
 
 \chapter{GitHub Actions Workflow}
 \label{app:gha-workflow}
