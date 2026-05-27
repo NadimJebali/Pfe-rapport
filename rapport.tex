@@ -1112,13 +1112,15 @@ explicit in Chapter~3.
 \subsection{AI Verification}
 
 \begin{enumerate}[label=\textbf{FR-V\arabic*.},leftmargin=*,itemsep=2pt]
-  \item Upon creation, every store and product shall be sent to an
-        n8n workflow (\texttt{cheebo-ai-verify}) that calls a hosted
+  \item Once its images have been uploaded, every store and product
+        shall be submitted to an n8n workflow
+        (\texttt{cheebo-ai-verify}) that screens each image, together
+        with the listing text, using a hosted multimodal
         large-language model.
-  \item The workflow shall return a decision (\textit{approve},
-        \textit{flag}, \textit{reject}) together with a textual
-        rationale, written back to the entity through a callback
-        endpoint.
+  \item The workflow shall return a decision (\textit{approve} or
+        \textit{flag}) with a textual rationale --- flagging the
+        entity if \emph{any} of its images is inappropriate --- written
+        back to the entity through a callback endpoint.
   \item Flagged entities shall be listed in the moderation queue
         for administrative review.
 \end{enumerate}
@@ -1275,14 +1277,20 @@ clears the cart store and redirects to the success page.
 \subsection{Product Verification (AI + Administrator)}
 
 Figure~\ref{fig:seq-verify} shows the dual-track verification
-process. Every product creation is forwarded to the
-\texttt{cheebo-ai-verify} webhook on n8n, which prompts a hosted
-LLM (Gemini or Groq) to apply the marketplace rules. The decision
-flows back to the backend through a callback endpoint and updates
-the \texttt{adminReviewed} column. The \texttt{alt} block at the
-bottom of the diagram captures the two outcomes: automatic
-approval (badge shown to the customer) and flagging (entry in the
-moderation queue, manual override by the Administrator).
+process. Verification is triggered only \emph{after} the seller has
+uploaded the listing's images --- through a dedicated
+\texttt{submit-verification} endpoint --- so the screening always
+operates on files that exist on disk. The backend then fires the
+\texttt{cheebo-ai-verify} webhook on n8n, which downloads each image
+and submits it, with the listing text, to the Gemini vision model;
+the entity is flagged if \emph{any} image violates the marketplace
+rules. The decision flows back through a callback endpoint
+(\texttt{PATCH /\{type\}/:id/ai-review}) and updates the
+\texttt{aiReviewed} flag and \texttt{verificationStatus}. The
+\texttt{alt} block at the bottom of the diagram captures the two
+outcomes: automatic approval (badge shown to the customer) and
+flagging (entry in the moderation queue, manual override by the
+Administrator).
 
 \begin{figure}[H]
   \centering
@@ -2087,9 +2095,10 @@ Appendix~\ref{app:n8n-workflows}. The three workflows differ in
 their trigger, integration pattern, and downstream model:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \textbf{AI verification} --- fired automatically when a
-        seller creates a store or a product, asynchronous response
-        through a callback endpoint.
+  \item \textbf{AI verification} --- fired once a seller has uploaded
+        the images for a new store or product; screens every image
+        with a multimodal model, asynchronous response through a
+        callback endpoint.
   \item \textbf{Database chat assistant} --- triggered by an
         administrator's chat message, conversational
         request/response.
@@ -2101,10 +2110,14 @@ their trigger, integration pattern, and downstream model:
 \subsection{AI Verification Workflow}
 
 Figure~\ref{fig:n8n-verify} shows the n8n workflow responsible for
-automatic store and product verification. Upon creation of a new
-entity, the backend fires a webhook to n8n, which calls the hosted
-LLM (Gemini or Groq), evaluates the content against the marketplace
-rules, and posts the verdict back to the \texttt{/callback} endpoint.
+store and product verification. Once the entity's images have been
+uploaded, the backend fires the \texttt{cheebo-ai-verify} webhook;
+the workflow fans the image list out into one branch per image,
+downloads each file from the backend's \texttt{/uploads} route, and
+submits it together with the listing text to the Gemini vision
+model. The per-image verdicts are then aggregated --- the entity is
+flagged if \emph{any} image is inappropriate --- and the combined
+decision is posted back to the \texttt{/ai-review} callback endpoint.
 
 \begin{figure}[H]
   \centering
@@ -2613,17 +2626,24 @@ payload and act on the structured response.
 
 \subsection{AI Product/Store Verification Pipeline}
 
-When a seller submits a new product or store, the corresponding
-service fires the \textbf{cheebo-ai-verify} webhook asynchronously
-(fire-and-forget, so submission never blocks on the AI). The payload
-carries the entity \texttt{type} (\texttt{product} or \texttt{store}),
-its \texttt{id}, \texttt{name}, \texttt{description}, and image URLs.
-The workflow runs an AI Agent that screens the listing against the
-platform's content policy and returns a decision. The workflow then
-calls back into the API --- \texttt{PATCH /product/:id/ai-review} or
-the equivalent store route, authenticated by the
-\texttt{x-api-key} header that the \texttt{ApiKeyGuard} validates ---
-with an \texttt{approved} or \texttt{flagged} decision and a reason.
+Because a product's (or store's) images are uploaded \emph{after}
+the entity itself is created, verification is not fired at creation
+time --- doing so would screen a listing that has no images yet.
+Instead, once the client has finished uploading the images it calls
+\texttt{POST /\{type\}/:id/submit-verification}, and the
+corresponding service fires the \textbf{cheebo-ai-verify} webhook
+asynchronously (fire-and-forget, so the request never blocks on the
+AI). The payload carries the entity \texttt{type} (\texttt{product}
+or \texttt{store}), its \texttt{id}, \texttt{name},
+\texttt{description}, and the list of image URLs. The workflow
+downloads each image from the backend's \texttt{/uploads} route and
+screens it --- together with the listing text --- with the Gemini
+vision model, flagging the entity if \emph{any} image violates the
+platform's content policy. It then calls back into the API ---
+\texttt{PATCH /product/:id/ai-review} or the equivalent store route,
+authenticated by the \texttt{x-api-key} header that the
+\texttt{ApiKeyGuard} validates --- with an \texttt{approved} or
+\texttt{flagged} decision and a reason.
 
 The backend records the outcome on two distinct flags:
 \texttt{aiReviewed} (set by this pipeline, with the reason stored in
@@ -3536,8 +3556,11 @@ actions over SSH to the droplet (whose IP comes from the
 \texttt{provision} job's Terraform output):
 
 \begin{enumerate}[leftmargin=*,itemsep=2pt]
-  \item \textbf{Copy} the \texttt{docker-compose.yml} to
-        \texttt{/app} on the droplet via \texttt{scp}.
+  \item \textbf{Copy} the \texttt{docker-compose.yml}, the
+        \texttt{Caddyfile}, and the version-controlled
+        \texttt{n8n-workflows/} and \texttt{n8n-credentials/}
+        template directories to \texttt{/app} on the droplet via
+        \texttt{scp}.
   \item \textbf{Run} a remote script that waits for cloud-init to
         finish, writes the \texttt{.env} file from the workflow's
         environment, then executes \texttt{docker compose pull}
@@ -3550,12 +3573,33 @@ migrations on start, a push to \texttt{main} results in a fully
 updated, migrated production stack with no manual intervention ---
 the deployment is idempotent and repeatable.
 
+\subsection{Automated n8n Provisioning}
+
+The same deploy step also provisions the n8n instance, so the AI
+features work on a freshly created droplet with no manual clicking in
+the n8n editor. The workflow definitions and credential
+\emph{templates} are version-controlled under
+\texttt{n8n-workflows/} and \texttt{n8n-credentials/}; the remote
+script renders the templates with \texttt{envsubst}, injecting the
+provider API keys and the database/webhook secrets from the
+environment (an explicit variable allow-list leaves n8n's own
+\texttt{\$json} expressions untouched). A dedicated one-shot
+\texttt{n8n-init} container then imports the credentials and
+workflows and activates them, running to completion \emph{before} the
+main \texttt{n8n} service starts (\texttt{depends\_on} with
+\texttt{service\_completed\_successfully}), which avoids two processes
+writing n8n's database simultaneously. Because the imports upsert by
+identifier, editing a workflow in the repository and redeploying
+updates the live instance --- a GitOps-style flow that keeps the
+entire AI layer reproducible.
+
 \subsection{Environment Secrets Management}
 
 No secret is ever committed to the repository. Sensitive values
 (database password, \texttt{BETTER\_AUTH\_SECRET}, admin password,
-SMTP password, n8n webhook secret and encryption key, DigitalOcean
-and Spaces tokens, the SSH private key) are stored as GitHub Actions
+SMTP password, n8n webhook secret and encryption key, the Gemini and
+Groq API keys, DigitalOcean and Spaces tokens, the SSH private key)
+are stored as GitHub Actions
 \textbf{secrets}; non-sensitive configuration (domain, ports, feature
 limits, SMTP host) is stored as GitHub Actions \textbf{variables}.
 The deploy job interpolates both groups into the \texttt{.env} file it
@@ -3944,11 +3988,11 @@ GET & \texttt{/settings} \quad PUT \texttt{/settings/name} \quad POST \texttt{/s
 The three workflows are committed under \texttt{n8n-workflows/} and can
 be re-imported into any n8n instance.
 
-\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={Products/Stores verification workflow}]{listings/Products_Stores verification.json}
+\lstinputlisting[basicstyle=\ttfamily\tiny,breaklines=true,caption={Products/Stores verification workflow}]{listings/Products_Stores verification.json}
 
-\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={Cheebo DB chat assistant workflow}]{listings/Cheebo DB Chat.json}
+\lstinputlisting[basicstyle=\ttfamily\tiny,breaklines=true,caption={Cheebo DB chat assistant workflow}]{listings/Cheebo DB Chat.json}
 
-\lstinputlisting[basicstyle=\ttfamily\scriptsize,breaklines=true,caption={AI storefront redesign workflow}]{listings/cheebo-store-redesign.json}
+\lstinputlisting[basicstyle=\ttfamily\tiny,breaklines=true,caption={AI storefront redesign workflow}]{listings/cheebo-store-redesign.json}
 
 \chapter{Dockerfiles}
 \label{app:dockerfiles}

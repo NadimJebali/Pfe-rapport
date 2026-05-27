@@ -45,6 +45,7 @@ node "Docker host (DigitalOcean Droplet)" as Host {
     component "backend\n(NestJS API)\nimage: cheebo-backend\ninternal: 3000" as BE
     database "db\n(MariaDB 11)\ninternal: 3306" as DB
     component "n8n\n(Workflow engine)\nport: 5678" as N8N
+    component "n8n-init\n(one-shot seeder)\nimports workflows + creds" as N8NI
 
   }
 
@@ -65,5 +66,7 @@ BE  --> N8N : webhook calls
 DB   ..> VolDB  : persist
 BE   ..> VolUp  : read/write uploads
 N8N  ..> VolN8n : persist workflows
+N8NI ..> VolN8n : import + activate\nworkflows & credentials
+N8NI --> N8N    : runs to completion first\n(depends_on)
 
 @enduml

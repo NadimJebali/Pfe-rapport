@@ -87,246 +87,247 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces Sequence: product verification (AI and administrator)}}{40}{figure.caption.16}\protected@file@percent }
 \newlabel{fig:seq-verify}{{2.7}{40}{Sequence: product verification (AI and administrator)}{figure.caption.16}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.6}Modelling Language}{40}{section.2.6}\protected@file@percent }
-\gdef \LT@i {\LT@entry 
-    {1}{75.39595pt}\LT@entry 
-    {1}{38.0073pt}\LT@entry 
-    {1}{228.6411pt}\LT@entry 
-    {1}{52.23367pt}\LT@entry 
-    {1}{32.31683pt}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.7}Project Backlog}{41}{section.2.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Scrum Team}{41}{subsection.2.7.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}MoSCoW Priority Legend}{41}{subsection.2.7.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces MoSCoW priority and complexity legend}}{41}{table.caption.17}\protected@file@percent }
 \newlabel{tab:moscow}{{2.2}{41}{MoSCoW priority and complexity legend}{table.caption.17}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7.3}Product Backlog}{41}{subsection.2.7.3}\protected@file@percent }
+\gdef \LT@i {\LT@entry 
+    {1}{75.39595pt}\LT@entry 
+    {1}{38.0073pt}\LT@entry 
+    {1}{228.6411pt}\LT@entry 
+    {1}{52.23367pt}\LT@entry 
+    {1}{32.31683pt}}
 \newlabel{tab:backlog}{{2.7.3}{45}{Product Backlog}{table.2.3}{}}
 \@writefile{toc}{\contentsline {section}{Chapter Conclusion}{45}{table.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Design and Architecture}{46}{chapter.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Design and Architecture}{47}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Global Architecture}{46}{section.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}3-Tier Architecture Overview}{46}{subsection.3.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Global system architecture (three tiers + n8n automation layer)}}{47}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:arch-global}{{3.1}{47}{Global system architecture (three tiers + n8n automation layer)}{figure.caption.18}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}N8N as an Automation Layer}{47}{subsection.3.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Detailed Technical Architecture}{48}{section.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}NestJS Modular Architecture}{48}{subsection.3.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Cross-cutting modules.}{48}{paragraph*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Feature modules grouped by domain.}{48}{paragraph*.20}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces NestJS modular architecture: groups of feature modules and their dependencies}}{50}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:arch-nest}{{3.2}{50}{NestJS modular architecture: groups of feature modules and their dependencies}{figure.caption.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}React SPA Architecture}{51}{subsection.3.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Docker Compose Services Diagram}{51}{subsection.3.2.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Docker Compose services on the production host}}{53}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:docker-services}{{3.3}{53}{Docker Compose services on the production host}{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Database Design}{53}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Entity-Relationship Diagram}{53}{subsection.3.3.1}\protected@file@percent }
-\newlabel{sec:er-diagram}{{3.3.1}{53}{Entity-Relationship Diagram}{subsection.3.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity-Relationship diagram of the Cheebo database}}{54}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:er}{{3.4}{54}{Entity-Relationship diagram of the Cheebo database}{figure.caption.23}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Prisma Schema Overview}{54}{subsection.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Explanation of Key Relationships}{55}{subsection.3.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{User $\rightarrow $ Store $\rightarrow $ Product (1:N:N).}{55}{paragraph*.24}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{User $\leftrightarrow $ SellerApplication (1:0..1).}{55}{paragraph*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Order $\rightarrow $ Store and Order $\rightarrow $ OrderItems.}{55}{paragraph*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Product $\leftrightarrow $ ProductTag (M:N).}{55}{paragraph*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Verification flags on Store and Product.}{56}{paragraph*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Sale fields on Store.}{56}{paragraph*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}API Design}{56}{section.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}REST API Design Principles}{56}{subsection.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Endpoint Structure}{57}{subsection.3.4.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{58}{table.caption.30}\protected@file@percent }
-\newlabel{tab:api}{{3.1}{58}{Main REST API endpoints, grouped by module}{table.caption.30}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Authentication Flow (Better-Auth)}{59}{subsection.3.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}N8N Workflow Design}{59}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}AI Verification Workflow}{59}{subsection.3.5.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces N8N workflow --- AI verification}}{60}{figure.caption.31}\protected@file@percent }
-\newlabel{fig:n8n-verify}{{3.5}{60}{N8N workflow --- AI verification}{figure.caption.31}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Database Chat Assistant Workflow}{60}{subsection.3.5.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow --- Database chat assistant}}{60}{figure.caption.32}\protected@file@percent }
-\newlabel{fig:n8n-chat}{{3.6}{60}{N8N workflow --- Database chat assistant}{figure.caption.32}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}AI Storefront Redesign Workflow}{60}{subsection.3.5.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow --- AI storefront redesign}}{61}{figure.caption.33}\protected@file@percent }
-\newlabel{fig:n8n-redesign}{{3.7}{61}{N8N workflow --- AI storefront redesign}{figure.caption.33}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces AI storefront redesign --- interaction sequence}}{62}{figure.caption.34}\protected@file@percent }
-\newlabel{fig:seq-ai-redesign-design}{{3.8}{62}{AI storefront redesign --- interaction sequence}{figure.caption.34}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Class Diagram}{62}{section.3.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces UML class diagram of the main domain entities}}{64}{figure.caption.35}\protected@file@percent }
-\newlabel{fig:class-diagram}{{3.9}{64}{UML class diagram of the main domain entities}{figure.caption.35}{}}
-\@writefile{toc}{\contentsline {section}{Chapter Conclusion}{65}{figure.caption.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Development and Implementation}{66}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Global Architecture}{47}{section.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}3-Tier Architecture Overview}{47}{subsection.3.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Global system architecture (three tiers + n8n automation layer)}}{48}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:arch-global}{{3.1}{48}{Global system architecture (three tiers + n8n automation layer)}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}N8N as an Automation Layer}{48}{subsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Detailed Technical Architecture}{49}{section.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}NestJS Modular Architecture}{49}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-cutting modules.}{49}{paragraph*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature modules grouped by domain.}{49}{paragraph*.20}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces NestJS modular architecture: groups of feature modules and their dependencies}}{51}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:arch-nest}{{3.2}{51}{NestJS modular architecture: groups of feature modules and their dependencies}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}React SPA Architecture}{52}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Docker Compose Services Diagram}{52}{subsection.3.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Docker Compose services on the production host}}{54}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:docker-services}{{3.3}{54}{Docker Compose services on the production host}{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Database Design}{54}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Entity-Relationship Diagram}{54}{subsection.3.3.1}\protected@file@percent }
+\newlabel{sec:er-diagram}{{3.3.1}{54}{Entity-Relationship Diagram}{subsection.3.3.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity-Relationship diagram of the Cheebo database}}{55}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:er}{{3.4}{55}{Entity-Relationship diagram of the Cheebo database}{figure.caption.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Prisma Schema Overview}{55}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Explanation of Key Relationships}{56}{subsection.3.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{User $\rightarrow $ Store $\rightarrow $ Product (1:N:N).}{56}{paragraph*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{User $\leftrightarrow $ SellerApplication (1:0..1).}{56}{paragraph*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Order $\rightarrow $ Store and Order $\rightarrow $ OrderItems.}{56}{paragraph*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Product $\leftrightarrow $ ProductTag (M:N).}{56}{paragraph*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Verification flags on Store and Product.}{57}{paragraph*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sale fields on Store.}{57}{paragraph*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}API Design}{57}{section.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}REST API Design Principles}{57}{subsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Endpoint Structure}{58}{subsection.3.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{59}{table.caption.30}\protected@file@percent }
+\newlabel{tab:api}{{3.1}{59}{Main REST API endpoints, grouped by module}{table.caption.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Authentication Flow (Better-Auth)}{60}{subsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}N8N Workflow Design}{60}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}AI Verification Workflow}{60}{subsection.3.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces N8N workflow --- AI verification}}{61}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:n8n-verify}{{3.5}{61}{N8N workflow --- AI verification}{figure.caption.31}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Database Chat Assistant Workflow}{61}{subsection.3.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow --- Database chat assistant}}{61}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:n8n-chat}{{3.6}{61}{N8N workflow --- Database chat assistant}{figure.caption.32}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}AI Storefront Redesign Workflow}{61}{subsection.3.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow --- AI storefront redesign}}{62}{figure.caption.33}\protected@file@percent }
+\newlabel{fig:n8n-redesign}{{3.7}{62}{N8N workflow --- AI storefront redesign}{figure.caption.33}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.8}{\ignorespaces AI storefront redesign --- interaction sequence}}{63}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:seq-ai-redesign-design}{{3.8}{63}{AI storefront redesign --- interaction sequence}{figure.caption.34}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Class Diagram}{63}{section.3.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.9}{\ignorespaces UML class diagram of the main domain entities}}{65}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:class-diagram}{{3.9}{65}{UML class diagram of the main domain entities}{figure.caption.35}{}}
+\@writefile{toc}{\contentsline {section}{Chapter Conclusion}{66}{figure.caption.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Development and Implementation}{67}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Development Environment}{66}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Hardware and Software}{66}{subsection.4.1.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Development toolchain used throughout the project}}{67}{table.caption.36}\protected@file@percent }
-\newlabel{tab:dev-toolchain}{{4.1}{67}{Development toolchain used throughout the project}{table.caption.36}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}VSCode and Extensions}{67}{subsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}pnpm Monorepo Structure}{68}{subsection.4.1.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{68}{figure.caption.37}\protected@file@percent }
-\newlabel{fig:monorepo}{{4.1}{68}{Cheebo monorepo structure}{figure.caption.37}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Backend (NestJS)}{68}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Project Structure}{68}{subsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Key Modules}{69}{subsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Authentication Guards and Role-Based Access Control}{69}{subsection.4.2.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{70}{figure.caption.38}\protected@file@percent }
-\newlabel{fig:rbac}{{4.2}{70}{Role-based access control implementation}{figure.caption.38}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}File Upload System (Multer)}{70}{subsection.4.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Email System (Nodemailer)}{70}{subsection.4.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Frontend (React + Vite)}{71}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Project Structure}{71}{subsection.4.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Routing and Layouts}{71}{subsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}State Management (TanStack Query + Zustand)}{72}{subsection.4.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Admin Dashboard Panels}{72}{subsection.4.3.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{73}{figure.caption.39}\protected@file@percent }
-\newlabel{fig:admin-dashboard}{{4.3}{73}{Admin dashboard}{figure.caption.39}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.5}Store and Product Management Interface}{73}{subsection.4.3.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{74}{figure.caption.40}\protected@file@percent }
-\newlabel{fig:seller-dashboard}{{4.4}{74}{Store and product management interface}{figure.caption.40}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}AI Integration with N8N}{74}{section.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}AI Product/Store Verification Pipeline}{74}{subsection.4.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Database Chat Assistant}{75}{subsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}N8N Workflow --- AI Storefront Redesign}{75}{subsection.4.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}Google Gemini / Groq Integration}{76}{subsection.4.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.5}N8N Workflow Implementation}{76}{subsection.4.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Interface Screenshots}{77}{section.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Customer Experience}{77}{subsection.4.5.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{77}{figure.caption.41}\protected@file@percent }
-\newlabel{fig:landing}{{4.5}{77}{Landing page}{figure.caption.41}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Stores listing page}}{78}{figure.caption.42}\protected@file@percent }
-\newlabel{fig:stores-listing}{{4.6}{78}{Stores listing page}{figure.caption.42}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Product browse page}}{79}{figure.caption.43}\protected@file@percent }
-\newlabel{fig:product-browse}{{4.7}{79}{Product browse page}{figure.caption.43}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Product detail page}}{80}{figure.caption.44}\protected@file@percent }
-\newlabel{fig:product-detail}{{4.8}{80}{Product detail page}{figure.caption.44}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Global search dialog}}{80}{figure.caption.45}\protected@file@percent }
-\newlabel{fig:search}{{4.9}{80}{Global search dialog}{figure.caption.45}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Checkout page}}{81}{figure.caption.46}\protected@file@percent }
-\newlabel{fig:checkout}{{4.10}{81}{Checkout page}{figure.caption.46}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Seller Dashboard}{81}{subsection.4.5.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Store dashboard}}{82}{figure.caption.47}\protected@file@percent }
-\newlabel{fig:store-dashboard}{{4.11}{82}{Store dashboard}{figure.caption.47}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces WYSIWYG storefront editor}}{83}{figure.caption.48}\protected@file@percent }
-\newlabel{fig:craft-editor}{{4.12}{83}{WYSIWYG storefront editor}{figure.caption.48}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces AI Redesign dialog}}{83}{figure.caption.49}\protected@file@percent }
-\newlabel{fig:ai-redesign}{{4.13}{83}{AI Redesign dialog}{figure.caption.49}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Store-wide sale configuration panel}}{84}{figure.caption.50}\protected@file@percent }
-\newlabel{fig:sale-panel}{{4.14}{84}{Store-wide sale configuration panel}{figure.caption.50}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Product management}}{85}{figure.caption.51}\protected@file@percent }
-\newlabel{fig:product-mgmt}{{4.15}{85}{Product management}{figure.caption.51}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.16}{\ignorespaces Analytics page}}{86}{figure.caption.52}\protected@file@percent }
-\newlabel{fig:analytics}{{4.16}{86}{Analytics page}{figure.caption.52}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Administrator Tools}{86}{subsection.4.5.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.17}{\ignorespaces Admin dashboard overview}}{87}{figure.caption.53}\protected@file@percent }
-\newlabel{fig:admin-overview}{{4.17}{87}{Admin dashboard overview}{figure.caption.53}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.18}{\ignorespaces Seller applications panel}}{88}{figure.caption.54}\protected@file@percent }
-\newlabel{fig:seller-apps}{{4.18}{88}{Seller applications panel}{figure.caption.54}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.19}{\ignorespaces AI verification panel}}{89}{figure.caption.55}\protected@file@percent }
-\newlabel{fig:ai-panel}{{4.19}{89}{AI verification panel}{figure.caption.55}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.20}{\ignorespaces Users panel}}{90}{figure.caption.56}\protected@file@percent }
-\newlabel{fig:users-panel}{{4.20}{90}{Users panel}{figure.caption.56}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.21}{\ignorespaces Stores moderation panel}}{91}{figure.caption.57}\protected@file@percent }
-\newlabel{fig:stores-mod}{{4.21}{91}{Stores moderation panel}{figure.caption.57}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.22}{\ignorespaces Categories panel}}{92}{figure.caption.58}\protected@file@percent }
-\newlabel{fig:categories-panel}{{4.22}{92}{Categories panel}{figure.caption.58}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.23}{\ignorespaces Featured content curation panel}}{93}{figure.caption.59}\protected@file@percent }
-\newlabel{fig:home-curate}{{4.23}{93}{Featured content curation panel}{figure.caption.59}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}AI Assistant}{93}{subsection.4.5.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.24}{\ignorespaces AI chat assistant}}{94}{figure.caption.60}\protected@file@percent }
-\newlabel{fig:ai-chat}{{4.24}{94}{AI chat assistant}{figure.caption.60}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Tests and Validation}{94}{section.4.6}\protected@file@percent }
-\newlabel{sec:tests}{{4.6}{94}{Tests and Validation}{section.4.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Testing Stack and Tooling}{94}{subsection.4.6.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Testing stack used in Cheebo}}{95}{table.caption.61}\protected@file@percent }
-\newlabel{tab:test-stack}{{4.2}{95}{Testing stack used in Cheebo}{table.caption.61}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Test Pyramid for Cheebo}{95}{subsection.4.6.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}}{96}{figure.caption.62}\protected@file@percent }
-\newlabel{fig:test-pyramid}{{4.25}{96}{Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}{figure.caption.62}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Backend Unit Tests}{96}{subsection.4.6.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — domain services (write paths)}}{97}{table.caption.63}\protected@file@percent }
-\newlabel{tab:backend-units-domain}{{4.3}{97}{Backend unit test suites — domain services (write paths)}{table.caption.63}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{98}{table.caption.64}\protected@file@percent }
-\newlabel{tab:backend-units-readside}{{4.4}{98}{Backend unit test suites — read paths, cross-cutting concerns and guards}{table.caption.64}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Backend Integration Tests}{98}{subsection.4.6.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Backend controller integration tests}}{99}{table.caption.65}\protected@file@percent }
-\newlabel{tab:backend-integration}{{4.5}{99}{Backend controller integration tests}{table.caption.65}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.5}Frontend Tests (Vitest)}{99}{subsection.4.6.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{100}{table.caption.66}\protected@file@percent }
-\newlabel{tab:frontend-tests}{{4.6}{100}{Frontend test suites (Vitest + React Testing Library)}{table.caption.66}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.6}Continuous Integration}{100}{subsection.4.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.7}What is Not Covered}{100}{subsection.4.6.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{Chapter Conclusion}{101}{subsection.4.6.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Infrastructure and Deployment}{102}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Development Environment}{67}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Hardware and Software}{67}{subsection.4.1.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Development toolchain used throughout the project}}{68}{table.caption.36}\protected@file@percent }
+\newlabel{tab:dev-toolchain}{{4.1}{68}{Development toolchain used throughout the project}{table.caption.36}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}VSCode and Extensions}{68}{subsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}pnpm Monorepo Structure}{69}{subsection.4.1.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{69}{figure.caption.37}\protected@file@percent }
+\newlabel{fig:monorepo}{{4.1}{69}{Cheebo monorepo structure}{figure.caption.37}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Backend (NestJS)}{69}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Project Structure}{69}{subsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Key Modules}{70}{subsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Authentication Guards and Role-Based Access Control}{70}{subsection.4.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{71}{figure.caption.38}\protected@file@percent }
+\newlabel{fig:rbac}{{4.2}{71}{Role-based access control implementation}{figure.caption.38}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}File Upload System (Multer)}{71}{subsection.4.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Email System (Nodemailer)}{71}{subsection.4.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Frontend (React + Vite)}{72}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Project Structure}{72}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Routing and Layouts}{72}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}State Management (TanStack Query + Zustand)}{73}{subsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Admin Dashboard Panels}{73}{subsection.4.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{74}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:admin-dashboard}{{4.3}{74}{Admin dashboard}{figure.caption.39}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.5}Store and Product Management Interface}{74}{subsection.4.3.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{75}{figure.caption.40}\protected@file@percent }
+\newlabel{fig:seller-dashboard}{{4.4}{75}{Store and product management interface}{figure.caption.40}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}AI Integration with N8N}{75}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}AI Product/Store Verification Pipeline}{75}{subsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Database Chat Assistant}{76}{subsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}N8N Workflow --- AI Storefront Redesign}{76}{subsection.4.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}Google Gemini / Groq Integration}{77}{subsection.4.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.5}N8N Workflow Implementation}{77}{subsection.4.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Interface Screenshots}{78}{section.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Customer Experience}{78}{subsection.4.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{78}{figure.caption.41}\protected@file@percent }
+\newlabel{fig:landing}{{4.5}{78}{Landing page}{figure.caption.41}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Stores listing page}}{79}{figure.caption.42}\protected@file@percent }
+\newlabel{fig:stores-listing}{{4.6}{79}{Stores listing page}{figure.caption.42}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces Product browse page}}{80}{figure.caption.43}\protected@file@percent }
+\newlabel{fig:product-browse}{{4.7}{80}{Product browse page}{figure.caption.43}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces Product detail page}}{81}{figure.caption.44}\protected@file@percent }
+\newlabel{fig:product-detail}{{4.8}{81}{Product detail page}{figure.caption.44}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Global search dialog}}{81}{figure.caption.45}\protected@file@percent }
+\newlabel{fig:search}{{4.9}{81}{Global search dialog}{figure.caption.45}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces Checkout page}}{82}{figure.caption.46}\protected@file@percent }
+\newlabel{fig:checkout}{{4.10}{82}{Checkout page}{figure.caption.46}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Seller Dashboard}{82}{subsection.4.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces Store dashboard}}{83}{figure.caption.47}\protected@file@percent }
+\newlabel{fig:store-dashboard}{{4.11}{83}{Store dashboard}{figure.caption.47}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces WYSIWYG storefront editor}}{84}{figure.caption.48}\protected@file@percent }
+\newlabel{fig:craft-editor}{{4.12}{84}{WYSIWYG storefront editor}{figure.caption.48}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces AI Redesign dialog}}{84}{figure.caption.49}\protected@file@percent }
+\newlabel{fig:ai-redesign}{{4.13}{84}{AI Redesign dialog}{figure.caption.49}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Store-wide sale configuration panel}}{85}{figure.caption.50}\protected@file@percent }
+\newlabel{fig:sale-panel}{{4.14}{85}{Store-wide sale configuration panel}{figure.caption.50}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.15}{\ignorespaces Product management}}{86}{figure.caption.51}\protected@file@percent }
+\newlabel{fig:product-mgmt}{{4.15}{86}{Product management}{figure.caption.51}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.16}{\ignorespaces Analytics page}}{87}{figure.caption.52}\protected@file@percent }
+\newlabel{fig:analytics}{{4.16}{87}{Analytics page}{figure.caption.52}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Administrator Tools}{87}{subsection.4.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.17}{\ignorespaces Admin dashboard overview}}{88}{figure.caption.53}\protected@file@percent }
+\newlabel{fig:admin-overview}{{4.17}{88}{Admin dashboard overview}{figure.caption.53}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.18}{\ignorespaces Seller applications panel}}{89}{figure.caption.54}\protected@file@percent }
+\newlabel{fig:seller-apps}{{4.18}{89}{Seller applications panel}{figure.caption.54}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.19}{\ignorespaces AI verification panel}}{90}{figure.caption.55}\protected@file@percent }
+\newlabel{fig:ai-panel}{{4.19}{90}{AI verification panel}{figure.caption.55}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.20}{\ignorespaces Users panel}}{91}{figure.caption.56}\protected@file@percent }
+\newlabel{fig:users-panel}{{4.20}{91}{Users panel}{figure.caption.56}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.21}{\ignorespaces Stores moderation panel}}{92}{figure.caption.57}\protected@file@percent }
+\newlabel{fig:stores-mod}{{4.21}{92}{Stores moderation panel}{figure.caption.57}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.22}{\ignorespaces Categories panel}}{93}{figure.caption.58}\protected@file@percent }
+\newlabel{fig:categories-panel}{{4.22}{93}{Categories panel}{figure.caption.58}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.23}{\ignorespaces Featured content curation panel}}{94}{figure.caption.59}\protected@file@percent }
+\newlabel{fig:home-curate}{{4.23}{94}{Featured content curation panel}{figure.caption.59}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}AI Assistant}{94}{subsection.4.5.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.24}{\ignorespaces AI chat assistant}}{95}{figure.caption.60}\protected@file@percent }
+\newlabel{fig:ai-chat}{{4.24}{95}{AI chat assistant}{figure.caption.60}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Tests and Validation}{95}{section.4.6}\protected@file@percent }
+\newlabel{sec:tests}{{4.6}{95}{Tests and Validation}{section.4.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Testing Stack and Tooling}{95}{subsection.4.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Testing stack used in Cheebo}}{96}{table.caption.61}\protected@file@percent }
+\newlabel{tab:test-stack}{{4.2}{96}{Testing stack used in Cheebo}{table.caption.61}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Test Pyramid for Cheebo}{96}{subsection.4.6.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}}{97}{figure.caption.62}\protected@file@percent }
+\newlabel{fig:test-pyramid}{{4.25}{97}{Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}{figure.caption.62}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Backend Unit Tests}{97}{subsection.4.6.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — domain services (write paths)}}{98}{table.caption.63}\protected@file@percent }
+\newlabel{tab:backend-units-domain}{{4.3}{98}{Backend unit test suites — domain services (write paths)}{table.caption.63}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{99}{table.caption.64}\protected@file@percent }
+\newlabel{tab:backend-units-readside}{{4.4}{99}{Backend unit test suites — read paths, cross-cutting concerns and guards}{table.caption.64}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Backend Integration Tests}{99}{subsection.4.6.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Backend controller integration tests}}{100}{table.caption.65}\protected@file@percent }
+\newlabel{tab:backend-integration}{{4.5}{100}{Backend controller integration tests}{table.caption.65}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.5}Frontend Tests (Vitest)}{100}{subsection.4.6.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{101}{table.caption.66}\protected@file@percent }
+\newlabel{tab:frontend-tests}{{4.6}{101}{Frontend test suites (Vitest + React Testing Library)}{table.caption.66}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.6}Continuous Integration}{101}{subsection.4.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.7}What is Not Covered}{101}{subsection.4.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{Chapter Conclusion}{102}{subsection.4.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Infrastructure and Deployment}{103}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Containerisation with Docker}{102}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Dockerfiles (Frontend and Backend)}{102}{subsection.5.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Docker Compose Configuration}{102}{subsection.5.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}TLS Termination with Caddy}{103}{subsection.5.1.3}\protected@file@percent }
-\newlabel{sec:tls-caddy}{{5.1.3}{103}{TLS Termination with Caddy}{subsection.5.1.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Multi-Service Networking}{104}{subsection.5.1.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{104}{figure.caption.67}\protected@file@percent }
-\newlabel{fig:docker-network}{{5.1}{104}{Docker Compose network architecture}{figure.caption.67}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Infrastructure as Code with Terraform}{104}{section.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}DigitalOcean Provider}{104}{subsection.5.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}VPC, Droplet and Firewall Resources}{104}{subsection.5.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}DNS Management with DigitalOcean}{105}{subsection.5.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Remote State Management with DigitalOcean Spaces}{106}{subsection.5.2.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{106}{figure.caption.68}\protected@file@percent }
-\newlabel{fig:terraform}{{5.2}{106}{Terraform resources}{figure.caption.68}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{106}{section.5.3}\protected@file@percent }
-\newlabel{sec:cicd}{{5.3}{106}{CI/CD Pipeline with GitHub Actions}{section.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{106}{subsection.5.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{107}{figure.caption.69}\protected@file@percent }
-\newlabel{fig:cicd}{{5.3}{107}{GitHub Actions CI/CD pipeline}{figure.caption.69}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{107}{subsection.5.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{107}{subsection.5.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Environment Secrets Management}{108}{subsection.5.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Production Environment}{108}{section.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}DigitalOcean Droplet Specifications}{108}{subsection.5.4.1}\protected@file@percent }
-\newlabel{sec:droplet-specs}{{5.4.1}{108}{DigitalOcean Droplet Specifications}{subsection.5.4.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Production Service Architecture}{109}{subsection.5.4.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{109}{figure.caption.70}\protected@file@percent }
-\newlabel{fig:production}{{5.4}{109}{Production architecture}{figure.caption.70}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}N8N Deployment Alongside the Application}{109}{subsection.5.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{General Conclusion}{110}{chapter*.71}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Bibliography and Webography}{113}{chapter*.71}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Complete Prisma Schema}{115}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Containerisation with Docker}{103}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Dockerfiles (Frontend and Backend)}{103}{subsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Docker Compose Configuration}{103}{subsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}TLS Termination with Caddy}{104}{subsection.5.1.3}\protected@file@percent }
+\newlabel{sec:tls-caddy}{{5.1.3}{104}{TLS Termination with Caddy}{subsection.5.1.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Multi-Service Networking}{105}{subsection.5.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{105}{figure.caption.67}\protected@file@percent }
+\newlabel{fig:docker-network}{{5.1}{105}{Docker Compose network architecture}{figure.caption.67}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Infrastructure as Code with Terraform}{105}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}DigitalOcean Provider}{105}{subsection.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}VPC, Droplet and Firewall Resources}{105}{subsection.5.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}DNS Management with DigitalOcean}{106}{subsection.5.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Remote State Management with DigitalOcean Spaces}{107}{subsection.5.2.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{107}{figure.caption.68}\protected@file@percent }
+\newlabel{fig:terraform}{{5.2}{107}{Terraform resources}{figure.caption.68}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{107}{section.5.3}\protected@file@percent }
+\newlabel{sec:cicd}{{5.3}{107}{CI/CD Pipeline with GitHub Actions}{section.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{107}{subsection.5.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{108}{figure.caption.69}\protected@file@percent }
+\newlabel{fig:cicd}{{5.3}{108}{GitHub Actions CI/CD pipeline}{figure.caption.69}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{108}{subsection.5.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{108}{subsection.5.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Automated n8n Provisioning}{109}{subsection.5.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Environment Secrets Management}{109}{subsection.5.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Production Environment}{109}{section.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}DigitalOcean Droplet Specifications}{109}{subsection.5.4.1}\protected@file@percent }
+\newlabel{sec:droplet-specs}{{5.4.1}{109}{DigitalOcean Droplet Specifications}{subsection.5.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Production Service Architecture}{110}{subsection.5.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{110}{figure.caption.70}\protected@file@percent }
+\newlabel{fig:production}{{5.4}{110}{Production architecture}{figure.caption.70}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}N8N Deployment Alongside the Application}{111}{subsection.5.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{General Conclusion}{112}{chapter*.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography and Webography}{115}{chapter*.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Complete Prisma Schema}{117}{appendix.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:prisma-schema}{{A}{115}{Complete Prisma Schema}{appendix.A}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {A.1}{\ignorespaces backend/prisma/schema/ --- concatenated}}{115}{lstlisting.A.1}\protected@file@percent }
+\newlabel{app:prisma-schema}{{A}{117}{Complete Prisma Schema}{appendix.A}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {A.1}{\ignorespaces backend/prisma/schema/ --- concatenated}}{117}{lstlisting.A.1}\protected@file@percent }
 \gdef \LT@ii {\LT@entry 
     {1}{64.01503pt}\LT@entry 
     {1}{325.3803pt}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}API Endpoints Reference}{121}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}API Endpoints Reference}{123}{appendix.B}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:api-reference}{{B}{121}{API Endpoints Reference}{appendix.B}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{123}{table.B.1}\protected@file@percent }
-\newlabel{tab:api-endpoints}{{B.1}{123}{Cheebo REST API endpoint reference}{table.B.1}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {C}N8N Workflow JSON Exports}{124}{appendix.C}\protected@file@percent }
+\newlabel{app:api-reference}{{B}{123}{API Endpoints Reference}{appendix.B}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{125}{table.B.1}\protected@file@percent }
+\newlabel{tab:api-endpoints}{{B.1}{125}{Cheebo REST API endpoint reference}{table.B.1}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {C}N8N Workflow JSON Exports}{126}{appendix.C}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:n8n-workflows}{{C}{124}{N8N Workflow JSON Exports}{appendix.C}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.1}{\ignorespaces Products/Stores verification workflow}}{124}{lstlisting.C.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.2}{\ignorespaces Cheebo DB chat assistant workflow}}{128}{lstlisting.C.2}\protected@file@percent }
+\newlabel{app:n8n-workflows}{{C}{126}{N8N Workflow JSON Exports}{appendix.C}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.1}{\ignorespaces Products/Stores verification workflow}}{126}{lstlisting.C.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {C.2}{\ignorespaces Cheebo DB chat assistant workflow}}{129}{lstlisting.C.2}\protected@file@percent }
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {C.3}{\ignorespaces AI storefront redesign workflow}}{132}{lstlisting.C.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {D}Dockerfiles}{137}{appendix.D}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {D}Dockerfiles}{136}{appendix.D}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:dockerfiles}{{D}{137}{Dockerfiles}{appendix.D}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {D.1}{\ignorespaces backend/Dockerfile}}{137}{lstlisting.D.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {D.2}{\ignorespaces frontend/Dockerfile}}{137}{lstlisting.D.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {E}Docker Compose File and Caddyfile}{139}{appendix.E}\protected@file@percent }
+\newlabel{app:dockerfiles}{{D}{136}{Dockerfiles}{appendix.D}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {D.1}{\ignorespaces backend/Dockerfile}}{136}{lstlisting.D.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {D.2}{\ignorespaces frontend/Dockerfile}}{136}{lstlisting.D.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {E}Docker Compose File and Caddyfile}{138}{appendix.E}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:docker-compose}{{E}{139}{Docker Compose File and Caddyfile}{appendix.E}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {E.1}{\ignorespaces docker-compose.yml}}{139}{lstlisting.E.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {E.2}{\ignorespaces Caddyfile (TLS reverse proxy)}}{141}{lstlisting.E.2}\protected@file@percent }
+\newlabel{app:docker-compose}{{E}{138}{Docker Compose File and Caddyfile}{appendix.E}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {E.1}{\ignorespaces docker-compose.yml}}{138}{lstlisting.E.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {E.2}{\ignorespaces Caddyfile (TLS reverse proxy)}}{140}{lstlisting.E.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {chapter}{\numberline {F}GitHub Actions Workflow}{142}{appendix.F}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{app:gha-workflow}{{F}{142}{GitHub Actions Workflow}{appendix.F}{}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {F.1}{\ignorespaces .github/workflows/deploy.yml}}{142}{lstlisting.F.1}\protected@file@percent }
-\gdef \@abspage@last{149}
+\gdef \@abspage@last{151}

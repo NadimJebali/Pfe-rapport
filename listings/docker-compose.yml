@@ -71,6 +71,8 @@ services:
       N8N_WEBHOOK_SECRET: ${N8N_WEBHOOK_SECRET}
       # AI Verification (n8n verify webhook)
       N8N_VERIFY_WEBHOOK_URL: http://n8n:5678/webhook/cheebo-ai-verify
+      # AI Store Redesign (n8n redesign webhook)
+      N8N_REDESIGN_WEBHOOK_URL: http://n8n:5678/webhook/cheebo-store-redesign
     volumes:
       - uploads:/app/uploads
 
@@ -101,9 +103,35 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+  # One-shot bootstrapper: imports the version-controlled credentials and
+  # workflows into n8n's data volume and activates them, then exits. Runs to
+  # completion *before* the main n8n service starts, so there is never a second
+  # process writing n8n's SQLite database at the same time. Re-runs on every
+  # deploy and upserts by ID, so editing a workflow/credential in the repo and
+  # redeploying updates the live instance (GitOps-style).
+  n8n-init:
+    image: n8nio/n8n:latest
+    restart: "no"
+    environment:
+      # MUST match the main n8n service, or imported credentials won't decrypt.
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      # Rendered (secrets substituted) by the deploy job before `compose up`.
+      - ./.n8n-import/credentials:/credentials:ro
+      - ./.n8n-import/workflows:/workflows:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "n8n import:credentials --separate --input=/credentials &&
+       n8n import:workflow   --separate --input=/workflows &&
+       n8n update:workflow   --all --active=true"
+
   n8n:
     image: n8nio/n8n:latest
     restart: always
+    depends_on:
+      n8n-init:
+        condition: service_completed_successfully
     ports:
       - "5678:5678"
     environment:

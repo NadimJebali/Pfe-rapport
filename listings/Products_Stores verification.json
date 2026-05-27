@@ -3,20 +3,86 @@
   "nodes": [
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Type: {{ $json.body.type }}\nName: {{ $json.body.name }}\nDescription: {{ $json.body.description }}\nImages: {{ $json.body.images.join(', ') }}",
+        "httpMethod": "POST",
+        "path": "cheebo-ai-verify",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -400,
+        200
+      ],
+      "id": "0ed38928-c624-4cbc-95dd-47789c76a264",
+      "name": "Webhook",
+      "webhookId": "39dde4c0-bac9-4541-ba35-4ce07eddeff8",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "m0gIyhphvAjucASz",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn the images array into one item per image so each is screened.\nconst b = $json.body ?? {};\nconst images = Array.isArray(b.images) ? b.images : [];\nreturn images.map((path) => ({ json: { imagePath: path }, pairedItem: { item: 0 } }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        200
+      ],
+      "id": "a0000000-1111-2222-3333-444455556666",
+      "name": "Split Images"
+    },
+    {
+      "parameters": {
+        "url": "=http://backend:3000{{ $json.imagePath }}",
         "options": {
-          "systemMessage": "You are a marketplace content moderator. Given a product or store submission, decide if it is appropriate for a general e-commerce platform. Reply ONLY with valid JSON: {\"decision\":\"approved\"|\"flagged\",\"reason\":\"short explanation\"}"
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
         }
       },
-      "id": "5c57f56b-aae1-485a-ac21-c359591dfc23",
-      "name": "AI Agent1",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.7,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
       "position": [
-        0,
-        144
-      ]
+        40,
+        200
+      ],
+      "id": "b1a2c3d4-1111-2222-3333-444455556666",
+      "name": "Download Image"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Decide whether this marketplace submission is appropriate for a general-audience e-commerce platform. Judge BOTH the attached image and the text below.\nType: {{ $('Webhook').item.json.body.type }}\nName: {{ $('Webhook').item.json.body.name }}\nDescription: {{ $('Webhook').item.json.body.description }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a strict marketplace content moderator. Flag the submission if the IMAGE or the text shows nudity or sexual content, weapons, illegal drugs, hate symbols, graphic violence, or anything else inappropriate for a general-audience e-commerce marketplace -- even when the name and description look innocent. Base your decision primarily on what the image actually shows. Reply ONLY with valid minified JSON in exactly this shape: {\"decision\":\"approved\"|\"flagged\",\"reason\":\"short explanation\"}. No markdown, no code fences, no extra text."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        260,
+        200
+      ],
+      "id": "c2b3d4e5-2222-3333-4444-555566667777",
+      "name": "Moderate"
     },
     {
       "parameters": {
@@ -25,8 +91,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1.1,
       "position": [
-        -144,
-        352
+        260,
+        420
       ],
       "id": "fbfda46b-af43-45f3-9382-7e1fb0114023",
       "name": "Google Gemini Chat Model1",
@@ -39,51 +105,16 @@
     },
     {
       "parameters": {
-        "respondWith": "json",
-        "responseBody": "={ \"ok\": true }",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        736,
-        144
-      ],
-      "id": "71c95f21-32f0-4073-80dc-5a8b1d0c364e",
-      "name": "Respond to Webhook1"
-    },
-    {
-      "parameters": {
-        "model": "openai/gpt-oss-20b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
-      "typeVersion": 1,
-      "position": [
-        0,
-        384
-      ],
-      "id": "fe8a3d8f-675e-492b-b850-4b70b121649f",
-      "name": "Groq Chat Model1",
-      "credentials": {
-        "groqApi": {
-          "id": "djIv99vepslhXXeQ",
-          "name": "Groq account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const raw = $input.first().json.output ?? $input.first().json.text ?? \"\";\n\nlet parsed;\ntry {\n  // Strip markdown code fences if present\n  const cleaned = raw.replace(/```json?|```/g, \"\").trim();\n  parsed = JSON.parse(cleaned);\n} catch {\n  // If AI didn't return valid JSON, default to flagged\n  parsed = { decision: \"flagged\", reason: \"AI response could not be parsed.\" };\n}\n\n// Validate decision value\nif (![\"approved\", \"flagged\"].includes(parsed.decision)) {\n  parsed.decision = \"flagged\";\n  parsed.reason = parsed.reason ?? \"Unexpected AI response.\";\n}\n\nreturn [{ json: { decision: parsed.decision, reason: parsed.reason } }];"
+        "jsCode": "// Aggregate the per-image decisions: flag the submission if ANY image is flagged.\nconst items = $input.all();\nlet decision = \"approved\";\nconst reasons = [];\nfor (const it of items) {\n  const raw = it.json.output ?? it.json.text ?? \"\";\n  let parsed;\n  try {\n    const cleaned = raw.replace(/```json?|```/g, \"\").trim();\n    parsed = JSON.parse(cleaned);\n  } catch {\n    parsed = { decision: \"flagged\", reason: \"AI response could not be parsed.\" };\n  }\n  if (![\"approved\", \"flagged\"].includes(parsed.decision)) {\n    parsed.decision = \"flagged\";\n    parsed.reason = parsed.reason ?? \"Unexpected AI response.\";\n  }\n  if (parsed.decision === \"flagged\") {\n    decision = \"flagged\";\n    if (parsed.reason) reasons.push(parsed.reason);\n  }\n}\nconst reason = decision === \"flagged\" ? reasons.join(\" | \") : \"All images passed AI screening.\";\nreturn [{ json: { decision, reason }, pairedItem: { item: 0 } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        320,
-        144
+        480,
+        200
       ],
       "id": "1e7b8874-d3e9-4055-a9d2-9abf6a08e074",
-      "name": "Code in JavaScript1"
+      "name": "Combine Results"
     },
     {
       "parameters": {
@@ -94,7 +125,7 @@
           "parameters": [
             {
               "name": "x-api-key",
-              "value": "cheebo-n8n-secret-change-me"
+              "value": "${N8N_WEBHOOK_SECRET}"
             }
           ]
         },
@@ -106,44 +137,57 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        544,
-        144
+        700,
+        200
       ],
       "id": "8d787d86-9f59-4e9a-a88b-572da11087e4",
       "name": "HTTP Request1"
     },
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "cheebo-ai-verify",
-        "authentication": "headerAuth",
-        "responseMode": "responseNode",
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": true }",
         "options": {}
       },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
       "position": [
-        -288,
-        144
+        920,
+        200
       ],
-      "id": "0ed38928-c624-4cbc-95dd-47789c76a264",
-      "name": "Webhook",
-      "webhookId": "39dde4c0-bac9-4541-ba35-4ce07eddeff8",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "m0gIyhphvAjucASz",
-          "name": "Header Auth account"
-        }
-      }
+      "id": "71c95f21-32f0-4073-80dc-5a8b1d0c364e",
+      "name": "Respond to Webhook1"
     }
   ],
   "pinData": {},
   "connections": {
-    "AI Agent1": {
+    "Webhook": {
       "main": [
         [
           {
-            "node": "Code in JavaScript1",
+            "node": "Split Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Images": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Moderate",
             "type": "main",
             "index": 0
           }
@@ -154,14 +198,25 @@
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent1",
+            "node": "Moderate",
             "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript1": {
+    "Moderate": {
+      "main": [
+        [
+          {
+            "node": "Combine Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Results": {
       "main": [
         [
           {
@@ -177,22 +232,6 @@
         [
           {
             "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Groq Chat Model1": {
-      "ai_languageModel": [
-        []
-      ]
-    },
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "AI Agent1",
             "type": "main",
             "index": 0
           }

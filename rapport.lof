@@ -10,46 +10,46 @@
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Sequence: order placement}}{39}{figure.caption.15}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Sequence: product verification (AI and administrator)}}{40}{figure.caption.16}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Global system architecture (three tiers + n8n automation layer)}}{47}{figure.caption.18}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces NestJS modular architecture: groups of feature modules and their dependencies}}{50}{figure.caption.21}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Docker Compose services on the production host}}{53}{figure.caption.22}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity-Relationship diagram of the Cheebo database}}{54}{figure.caption.23}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces N8N workflow --- AI verification}}{60}{figure.caption.31}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow --- Database chat assistant}}{60}{figure.caption.32}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow --- AI storefront redesign}}{61}{figure.caption.33}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces AI storefront redesign --- interaction sequence}}{62}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces UML class diagram of the main domain entities}}{64}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Global system architecture (three tiers + n8n automation layer)}}{48}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces NestJS modular architecture: groups of feature modules and their dependencies}}{51}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Docker Compose services on the production host}}{54}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Entity-Relationship diagram of the Cheebo database}}{55}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces N8N workflow --- AI verification}}{61}{figure.caption.31}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces N8N workflow --- Database chat assistant}}{61}{figure.caption.32}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces N8N workflow --- AI storefront redesign}}{62}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces AI storefront redesign --- interaction sequence}}{63}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces UML class diagram of the main domain entities}}{65}{figure.caption.35}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{68}{figure.caption.37}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{70}{figure.caption.38}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{73}{figure.caption.39}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{74}{figure.caption.40}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{77}{figure.caption.41}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Stores listing page}}{78}{figure.caption.42}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Product browse page}}{79}{figure.caption.43}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Product detail page}}{80}{figure.caption.44}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Global search dialog}}{80}{figure.caption.45}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Checkout page}}{81}{figure.caption.46}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Store dashboard}}{82}{figure.caption.47}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces WYSIWYG storefront editor}}{83}{figure.caption.48}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces AI Redesign dialog}}{83}{figure.caption.49}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Store-wide sale configuration panel}}{84}{figure.caption.50}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Product management}}{85}{figure.caption.51}%
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Analytics page}}{86}{figure.caption.52}%
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Admin dashboard overview}}{87}{figure.caption.53}%
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Seller applications panel}}{88}{figure.caption.54}%
-\contentsline {figure}{\numberline {4.19}{\ignorespaces AI verification panel}}{89}{figure.caption.55}%
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Users panel}}{90}{figure.caption.56}%
-\contentsline {figure}{\numberline {4.21}{\ignorespaces Stores moderation panel}}{91}{figure.caption.57}%
-\contentsline {figure}{\numberline {4.22}{\ignorespaces Categories panel}}{92}{figure.caption.58}%
-\contentsline {figure}{\numberline {4.23}{\ignorespaces Featured content curation panel}}{93}{figure.caption.59}%
-\contentsline {figure}{\numberline {4.24}{\ignorespaces AI chat assistant}}{94}{figure.caption.60}%
-\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}}{96}{figure.caption.62}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{69}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{71}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{74}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{75}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{78}{figure.caption.41}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Stores listing page}}{79}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Product browse page}}{80}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Product detail page}}{81}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Global search dialog}}{81}{figure.caption.45}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Checkout page}}{82}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Store dashboard}}{83}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces WYSIWYG storefront editor}}{84}{figure.caption.48}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces AI Redesign dialog}}{84}{figure.caption.49}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Store-wide sale configuration panel}}{85}{figure.caption.50}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Product management}}{86}{figure.caption.51}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Analytics page}}{87}{figure.caption.52}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Admin dashboard overview}}{88}{figure.caption.53}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Seller applications panel}}{89}{figure.caption.54}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces AI verification panel}}{90}{figure.caption.55}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Users panel}}{91}{figure.caption.56}%
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Stores moderation panel}}{92}{figure.caption.57}%
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Categories panel}}{93}{figure.caption.58}%
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Featured content curation panel}}{94}{figure.caption.59}%
+\contentsline {figure}{\numberline {4.24}{\ignorespaces AI chat assistant}}{95}{figure.caption.60}%
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}}{97}{figure.caption.62}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{104}{figure.caption.67}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{106}{figure.caption.68}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{107}{figure.caption.69}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{109}{figure.caption.70}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{105}{figure.caption.67}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{107}{figure.caption.68}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{108}{figure.caption.69}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{110}{figure.caption.70}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

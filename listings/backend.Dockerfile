@@ -1,4 +1,4 @@
-# ── Build stage ────────────────────────────────────────────────
+# -- Build stage ------------------------------------------------
 FROM node:20-alpine AS builder
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -11,7 +11,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN npx prisma generate && pnpm run build
 
-# ── Production stage ──────────────────────────────────────────
+# -- Production stage ------------------------------------------
 FROM node:20-alpine
 
 WORKDIR /app

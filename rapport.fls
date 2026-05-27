@@ -208,8 +208,14 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-OUTPUT rapport.out
+INPUT ./rapport.out
+INPUT ./rapport.out
+INPUT rapport.out
+INPUT rapport.out
 OUTPUT rapport.pdf
+INPUT ./rapport.out
+INPUT ./rapport.out
+OUTPUT rapport.out
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm
@@ -253,11 +259,20 @@ INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
-OUTPUT rapport.toc
-OUTPUT rapport.lof
-OUTPUT rapport.lot
+INPUT ./rapport.toc
+INPUT ./rapport.toc
+INPUT rapport.toc
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr10.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri10.tfm
+OUTPUT rapport.toc
+INPUT ./rapport.lof
+INPUT ./rapport.lof
+INPUT rapport.lof
+OUTPUT rapport.lof
+INPUT ./rapport.lot
+INPUT ./rapport.lot
+INPUT rapport.lot
+OUTPUT rapport.lot
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
@@ -391,16 +406,27 @@ INPUT listings/schema.prisma
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr8.tfm
 INPUT ./listings/Products_Stores verification.json
 INPUT ./listings/Products_Stores verification.json
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt8.tfm
 INPUT listings/Products_Stores verification.json
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT ./listings/Cheebo DB Chat.json
 INPUT ./listings/Cheebo DB Chat.json
 INPUT listings/Cheebo DB Chat.json
 INPUT ./listings/cheebo-store-redesign.json
 INPUT ./listings/cheebo-store-redesign.json
 INPUT listings/cheebo-store-redesign.json
+INPUT ./listings/backend.Dockerfile
+INPUT ./listings/backend.Dockerfile
+INPUT listings/backend.Dockerfile
+INPUT ./listings/frontend.Dockerfile
+INPUT ./listings/frontend.Dockerfile
+INPUT listings/frontend.Dockerfile
 INPUT ./listings/docker-compose.yml
 INPUT ./listings/docker-compose.yml
 INPUT listings/docker-compose.yml
+INPUT ./listings/Caddyfile
+INPUT ./listings/Caddyfile
+INPUT listings/Caddyfile
 INPUT ./listings/deploy.yml
 INPUT ./listings/deploy.yml
 INPUT listings/deploy.yml

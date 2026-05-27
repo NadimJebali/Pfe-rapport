@@ -1,4 +1,4 @@
-# ── Build stage ────────────────────────────────────────────────
+# -- Build stage ------------------------------------------------
 FROM node:20-alpine AS builder
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -14,7 +14,7 @@ ENV VITE_API_URL=__VITE_API_URL_PLACEHOLDER__
 
 RUN pnpm run build
 
-# ── Production stage ──────────────────────────────────────────
+# -- Production stage ------------------------------------------
 FROM nginx:alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html

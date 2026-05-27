@@ -1,4 +1,4 @@
-# Global options — ACME account email for Let's Encrypt certificate notices.
+# Global options -- ACME account email for Let's Encrypt certificate notices.
 {
 	email {$ACME_EMAIL}
 }
