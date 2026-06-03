@@ -70,7 +70,7 @@ alt Auto-approved
 else Flagged / borderline
   BE --> A : Visible in admin moderation queue
   A -> FE : Open moderation panel
-  FE -> BE : GET /verification/pending
+  FE -> BE : GET /{type}/dashboard?verificationStatus=PENDING
   A -> FE : Approve / reject
   FE -> BE : PATCH /{type}/{id}/verify
   BE -> PM : applyAdminOverride()

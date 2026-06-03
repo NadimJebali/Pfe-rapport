@@ -33,7 +33,7 @@ S  -> FE : Click "AI Redesign" in editor toolbar
 FE --> S : Open redesign dialog (prompt input)
 S  -> FE : Enter prompt + confirm
 FE -> BE : POST /store/:id/ai-redesign\n{ prompt, storeName, storeDescription }
-BE -> BE : AuthGuard + SellerGuard
+BE -> BE : AuthGuard + ownership check
 BE -> N8N : POST /webhook/cheebo-store-redesign\n{ prompt, storeName, storeDescription, storeId }
 
 note over N8N, LLM

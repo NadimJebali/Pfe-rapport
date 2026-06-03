@@ -35,7 +35,6 @@ C  -> FE : Click "Checkout"
 FE -> Z  : getCartItems()
 Z  --> FE : items[]
 FE -> BE : POST /order { items, shippingInfo }
-BE -> BE : AuthGuard.canActivate(req)
 BE -> OM : createOrder(userId, items)
 note right of OM
   unitPrice = salePrice ?? displayPrice
