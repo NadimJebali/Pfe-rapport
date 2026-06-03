@@ -196,9 +196,6 @@ INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr12.tfm
-INPUT ./rapport.aux
-INPUT ./rapport.aux
-INPUT rapport.aux
 OUTPUT rapport.aux
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
