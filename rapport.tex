@@ -2738,12 +2738,14 @@ abstracts the provider --- but in the deployed configuration two
 providers are used, chosen per task:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \textbf{Verification} (\textbf{cheebo-ai-verify}) and the
-        \textbf{database chat assistant} (\textbf{cheebo-ai-chat}) use
-        an \texttt{openai/gpt-oss-20b} agent, with a Google Gemini
-        chat model available as an alternate within the same workflow.
-        These tasks are classification- and reasoning-oriented and do
-        not need a very large model.
+  \item \textbf{Verification} (\textbf{cheebo-ai-verify}) uses a Google
+        Gemini model, whose vision capability is required to moderate the
+        uploaded images against the listing text. The \textbf{database
+        chat assistant} (\textbf{cheebo-ai-chat}) uses a Groq
+        \texttt{openai/gpt-oss-20b} agent with a Gemini chat model
+        available as an alternate within the same workflow. These tasks
+        are classification- and reasoning-oriented and do not need a very
+        large model.
   \item \textbf{Storefront redesign} (\textbf{cheebo-store-redesign})
         uses Groq's \texttt{llama-3.3-70b-versatile}. The larger model
         produces more coherent full-page design JSON, and Groq's
