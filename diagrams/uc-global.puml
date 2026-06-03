@@ -1,9 +1,13 @@
 @startuml uc-global
-!pragma layout elk
 
 skinparam defaultFontName Helvetica
 skinparam defaultFontSize 11
 skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 14
+skinparam ranksep 70
 
 skinparam actor {
   BackgroundColor #FFFFFF
@@ -13,7 +17,7 @@ skinparam actor {
   FontSize 12
 }
 skinparam usecase {
-  BorderThickness 1.5
+  BorderThickness 1.2
   FontColor #1E293B
   FontSize 11
 }
@@ -28,10 +32,14 @@ skinparam rectangle {
 
 left to right direction
 
-' ── Primary actors (LEFT) ──
+' ── Primary actors (LEFT) ───────────────────────────────────
 actor Customer      as Customer
 actor Seller        as Seller
 actor Administrator as Admin
+
+' Role generalisation: a Seller is a Customer whose application was approved,
+' so it inherits every Customer ability and only adds the seller-specific ones.
+Customer <|-- Seller
 
 rectangle "Cheebo Marketplace" {
 
@@ -97,11 +105,11 @@ rectangle "Cheebo Marketplace" {
   }
 }
 
-' ── Secondary actors (RIGHT) ──
+' ── Secondary actors (RIGHT) ────────────────────────────────
 actor "AI Verification\n(n8n + LLM)" as AI   #EDE9FE
 actor "Email Service\n(Nodemailer)"  as MAIL #FEF9C3
 
-' ── Customer ──
+' ── Customer associations ───────────────────────────────────
 Customer --> A1
 Customer --> C1
 Customer --> C3
@@ -112,8 +120,7 @@ Customer --> C7
 Customer --> C10
 Customer --> C11
 
-' ── Seller ──
-Seller --> A1
+' ── Seller associations (Customer abilities inherited) ──────
 Seller --> S1
 Seller --> S2
 Seller --> S3
@@ -124,7 +131,7 @@ Seller --> S7
 Seller --> S8
 Seller --> S9
 
-' ── Administrator ──
+' ── Administrator associations ──────────────────────────────
 Admin --> A1
 Admin --> D1
 Admin --> D3
@@ -139,14 +146,9 @@ Admin --> D11
 Admin --> D12
 Admin --> D13
 
-' ── Secondary actor connections (RIGHT) ──
-V1 --> AI
-V4 --> AI
-V5 --> AI
-C9 --> MAIL
-
-' ── Include / extend / triggers ──
+' ── Include / extend / triggers ─────────────────────────────
 A1  .> A2  : <<include>>
+A1  .> A3  : <<extend>>
 C1  .> C2  : <<extend>>
 C7  .> C8  : <<include>>
 C8  .> C9  : <<include>>
@@ -158,7 +160,6 @@ S4  .> S4b : <<include>>
 S9  .> S8  : <<requires>>
 D1  .> D2  : <<include>>
 D8  .> D6  : <<extend>>
-
 C11 .> D1  : <<triggers>>
 S1  .> V1  : <<triggers>>
 S4  .> V1  : <<triggers>>
@@ -166,5 +167,11 @@ V1  .> V2  : <<include>>
 V3  .> D9  : <<auto-flag>>
 D13 .> V4  : <<uses>>
 S3c .> V5  : <<uses>>
+
+' ── Secondary-actor wiring ──────────────────────────────────
+V1 --> AI
+V4 --> AI
+V5 --> AI
+C9 --> MAIL
 
 @enduml
