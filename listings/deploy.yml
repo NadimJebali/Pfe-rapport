@@ -1,34 +1,34 @@
 name: Build, Push & Deploy
 
-# -- Secrets (Settings > Secrets and variables > Actions > Secrets) ----------
-#   DOCKERHUB_TOKEN             -- Docker Hub access token
-#   DO_SSH_PRIVATE_KEY          -- Private SSH key with root access to the droplet
-#   DO_TOKEN                    -- DigitalOcean API token (used by Terraform)
-#   DO_SPACES_ACCESS_KEY        -- DigitalOcean Spaces access key (Terraform state backend)
-#   DO_SPACES_SECRET_KEY        -- DigitalOcean Spaces secret key (Terraform state backend)
-#   DB_PASSWORD                 -- MariaDB root password
-#   BETTER_AUTH_SECRET          -- Strong random string for auth
-#   ADMIN_PASSWORD              -- Initial admin account password
-#   SMTP_PASS                   -- SMTP app password
-#   N8N_WEBHOOK_SECRET          -- Secret key for n8n webhook header auth
-#   N8N_ENCRYPTION_KEY           -- n8n data encryption key (generate with: openssl rand -hex 32)
-#   GEMINI_API_KEY              -- Google Gemini (PaLM) API key for n8n AI nodes
-#   GROQ_API_KEY                -- Groq API key for n8n AI nodes
+# ── Secrets (Settings > Secrets and variables > Actions > Secrets) ──────────
+#   DOCKERHUB_TOKEN             — Docker Hub access token
+#   DO_SSH_PRIVATE_KEY          — Private SSH key with root access to the droplet
+#   DO_TOKEN                    — DigitalOcean API token (used by Terraform)
+#   DO_SPACES_ACCESS_KEY        — DigitalOcean Spaces access key (Terraform state backend)
+#   DO_SPACES_SECRET_KEY        — DigitalOcean Spaces secret key (Terraform state backend)
+#   DB_PASSWORD                 — MariaDB root password
+#   BETTER_AUTH_SECRET          — Strong random string for auth
+#   ADMIN_PASSWORD              — Initial admin account password
+#   SMTP_PASS                   — SMTP app password
+#   N8N_WEBHOOK_SECRET          — Secret key for n8n webhook header auth
+#   N8N_ENCRYPTION_KEY           — n8n data encryption key (generate with: openssl rand -hex 32)
+#   GEMINI_API_KEY              — Google Gemini (PaLM) API key for n8n AI nodes
+#   GROQ_API_KEY                — Groq API key for n8n AI nodes
 #
-# -- Variables (Settings > Secrets and variables > Actions > Variables) ------
-#   DOCKERHUB_USERNAME          -- Docker Hub username
-#   DO_SSH_KEY_FINGERPRINT      -- Fingerprint of the SSH key added to your DO account
-#   DB_NAME                     -- Database name (e.g. cheebo)
-#   PORT                        -- Backend port (e.g. 3000)
+# ── Variables (Settings > Secrets and variables > Actions > Variables) ──────
+#   DOCKERHUB_USERNAME          — Docker Hub username
+#   DO_SSH_KEY_FINGERPRINT      — Fingerprint of the SSH key added to your DO account
+#   DB_NAME                     — Database name (e.g. cheebo)
+#   PORT                        — Backend port (e.g. 3000)
 #   ADMIN_NAME / ADMIN_EMAIL
 #   MAX_UPLOAD_FILE_SIZE_MB
-#   ALLOWED_UPLOAD_MIME_TYPES   -- e.g. image/jpeg,image/png,image/webp,image/gif
+#   ALLOWED_UPLOAD_MIME_TYPES   — e.g. image/jpeg,image/png,image/webp,image/gif
 #   SESSION_EXPIRES_IN / SESSION_UPDATE_AGE / MIN_PASSWORD_LENGTH / EMAIL_VERIFICATION_EXPIRES_IN
-#   SWAGGER_PATH                -- Set to empty string to disable in prod
+#   SWAGGER_PATH                — Set to empty string to disable in prod
 #   SMTP_HOST / SMTP_USER / SMTP_PORT / SMTP_SECURE / SMTP_FROM
 #   FREE_TIER_MAX_PRODUCTS / PREMIUM_TEMPLATES / PREMIUM_PRICE_TND / PREMIUM_DURATION_DAYS
 #   MAX_FEATURED_PRODUCTS / MAX_FEATURED_STORES
-#   DOMAIN_NAME                 -- your domain (e.g. nadimjebali.engineer) -- DNS managed via DigitalOcean
+#   DOMAIN_NAME                 — your domain (e.g. nadimjebali.engineer) — DNS managed via DigitalOcean
 
 on:
   push:
@@ -73,11 +73,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Backend Tests (Jest)"
+            echo "## 🧪 Backend Tests (Jest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.test.outcome == 'success' && ' passed' || ' failed' }} |"
+            echo "| Result | ${{ steps.test.outcome == 'success' && '✅ passed' || '❌ failed' }} |"
             echo "| Commit | \`${{ github.sha }}\` |"
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -114,11 +114,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Frontend Tests (Vitest)"
+            echo "## 🧪 Frontend Tests (Vitest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.test.outcome == 'success' && ' passed' || ' failed' }} |"
+            echo "| Result | ${{ steps.test.outcome == 'success' && '✅ passed' || '❌ failed' }} |"
             echo "| Commit | \`${{ github.sha }}\` |"
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -192,11 +192,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Provision Droplet (Terraform)"
+            echo "## 🌍 Provision Droplet (Terraform)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.apply.outcome == 'success' && ' applied' || ' failed' }} |"
+            echo "| Result | ${{ steps.apply.outcome == 'success' && '✅ applied' || '❌ failed' }} |"
             echo "| Droplet IP | \`${{ steps.ip.outputs.ip }}\` |"
             echo "| Region | ${{ vars.DO_REGION || 'fra1' }} |"
             echo "| Size | ${{ vars.DROPLET_SIZE || 's-2vcpu-2gb' }} |"
@@ -225,7 +225,9 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/cheebo-backend:latest
+          tags: |
+            ${{ vars.DOCKERHUB_USERNAME }}/cheebo-backend:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/cheebo-backend:${{ github.sha }}
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
 
@@ -233,11 +235,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Build & Push Backend"
+            echo "## 📦 Build & Push Backend"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.build.outcome == 'success' && ' pushed' || ' failed' }} |"
+            echo "| Result | ${{ steps.build.outcome == 'success' && '✅ pushed' || '❌ failed' }} |"
             echo "| Image | \`${{ vars.DOCKERHUB_USERNAME }}/cheebo-backend:latest\` |"
             echo "| Digest | \`${{ steps.build.outputs.digest }}\` |"
             echo "| Commit | \`${{ github.sha }}\` |"
@@ -266,7 +268,9 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/cheebo-frontend:latest
+          tags: |
+            ${{ vars.DOCKERHUB_USERNAME }}/cheebo-frontend:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/cheebo-frontend:${{ github.sha }}
           cache-from: type=gha,scope=frontend
           cache-to: type=gha,mode=max,scope=frontend
 
@@ -274,11 +278,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Build & Push Frontend"
+            echo "## 📦 Build & Push Frontend"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.build.outcome == 'success' && ' pushed' || ' failed' }} |"
+            echo "| Result | ${{ steps.build.outcome == 'success' && '✅ pushed' || '❌ failed' }} |"
             echo "| Image | \`${{ vars.DOCKERHUB_USERNAME }}/cheebo-frontend:latest\` |"
             echo "| Digest | \`${{ steps.build.outputs.digest }}\` |"
             echo "| Commit | \`${{ github.sha }}\` |"
@@ -331,6 +335,12 @@ jobs:
           MAX_FEATURED_PRODUCTS: ${{ vars.MAX_FEATURED_PRODUCTS }}
           MAX_FEATURED_STORES: ${{ vars.MAX_FEATURED_STORES }}
           N8N_WEBHOOK_URL: ${{ vars.N8N_WEBHOOK_URL }}
+          # Pin the deployed images to this commit so a rollback is just a
+          # redeploy with an older IMAGE_TAG. Defaults to latest if unset.
+          IMAGE_TAG: ${{ github.sha }}
+          # Least-privilege DB app user (see docker-compose.yml).
+          DB_APP_USER: ${{ vars.DB_APP_USER }}
+          DB_APP_PASSWORD: ${{ secrets.DB_APP_PASSWORD }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
@@ -343,15 +353,15 @@ jobs:
           host: ${{ needs.provision.outputs.droplet_ip }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DOMAIN_NAME,DB_NAME,PORT,ADMIN_NAME,ADMIN_EMAIL,MAX_UPLOAD_FILE_SIZE_MB,ALLOWED_UPLOAD_MIME_TYPES,SESSION_EXPIRES_IN,SESSION_UPDATE_AGE,MIN_PASSWORD_LENGTH,EMAIL_VERIFICATION_EXPIRES_IN,SWAGGER_PATH,SMTP_HOST,SMTP_USER,SMTP_PORT,SMTP_SECURE,SMTP_FROM,FREE_TIER_MAX_PRODUCTS,FREE_TIER_MAX_STORES,PREMIUM_TEMPLATES,PREMIUM_PRICE_TND,PREMIUM_DURATION_DAYS,MAX_FEATURED_PRODUCTS,MAX_FEATURED_STORES,DB_PASSWORD,BETTER_AUTH_SECRET,ADMIN_PASSWORD,SMTP_PASS,N8N_WEBHOOK_SECRET,N8N_ENCRYPTION_KEY,GEMINI_API_KEY,GROQ_API_KEY
+          envs: DOMAIN_NAME,DB_NAME,PORT,ADMIN_NAME,ADMIN_EMAIL,MAX_UPLOAD_FILE_SIZE_MB,ALLOWED_UPLOAD_MIME_TYPES,SESSION_EXPIRES_IN,SESSION_UPDATE_AGE,MIN_PASSWORD_LENGTH,EMAIL_VERIFICATION_EXPIRES_IN,SWAGGER_PATH,SMTP_HOST,SMTP_USER,SMTP_PORT,SMTP_SECURE,SMTP_FROM,FREE_TIER_MAX_PRODUCTS,FREE_TIER_MAX_STORES,PREMIUM_TEMPLATES,PREMIUM_PRICE_TND,PREMIUM_DURATION_DAYS,MAX_FEATURED_PRODUCTS,MAX_FEATURED_STORES,DB_PASSWORD,BETTER_AUTH_SECRET,ADMIN_PASSWORD,SMTP_PASS,N8N_WEBHOOK_SECRET,N8N_ENCRYPTION_KEY,GEMINI_API_KEY,GROQ_API_KEY,IMAGE_TAG,DB_APP_USER,DB_APP_PASSWORD
           script: |
-            # -- Wait for cloud-init to finish (avoids apt lock on new droplets) --
+            # ── Wait for cloud-init to finish (avoids apt lock on new droplets) ──
             cloud-init status --wait 2>/dev/null || true
 
-            # -- Open n8n port in firewall ----------------------------------
+            # ── Open n8n port in firewall ──────────────────────────────────
             ufw allow 5678/tcp || true
 
-            # -- Install Docker if not present ------------------------------
+            # ── Install Docker if not present ──────────────────────────────
             if ! command -v docker &>/dev/null; then
               apt-get update -y
               apt-get install -y ca-certificates curl gnupg lsb-release
@@ -366,10 +376,13 @@ jobs:
               systemctl start docker
             fi
 
-            # -- Write .env -------------------------------------------------
+            # ── Write .env ─────────────────────────────────────────────────
             mkdir -p /app
             cat > /app/.env << EOF
+            IMAGE_TAG=$IMAGE_TAG
             DB_PASSWORD=$DB_PASSWORD
+            DB_APP_USER=$DB_APP_USER
+            DB_APP_PASSWORD=$DB_APP_PASSWORD
             DB_NAME=$DB_NAME
             PORT=$PORT
             BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
@@ -403,10 +416,10 @@ jobs:
             DOMAIN_NAME=$DOMAIN_NAME
             EOF
 
-            # -- Render n8n credential & workflow templates -----------------
+            # ── Render n8n credential & workflow templates ─────────────────
             # Injects secrets into the committed templates. envsubst is given an
             # explicit variable allow-list so n8n expressions ($json, $fromAI,
-            # $('Webhook'), ...) inside the workflows are left untouched.
+            # $('Webhook'), …) inside the workflows are left untouched.
             command -v envsubst >/dev/null 2>&1 || { apt-get update -y && apt-get install -y gettext-base; }
             N8N_SUBST_VARS='${GEMINI_API_KEY} ${GROQ_API_KEY} ${DB_NAME} ${DB_PASSWORD} ${N8N_WEBHOOK_SECRET}'
             rm -rf /app/.n8n-import
@@ -427,11 +440,11 @@ jobs:
         if: always()
         run: |
           {
-            echo "##  Deploy to DigitalOcean"
+            echo "## 🚀 Deploy to DigitalOcean"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
-            echo "| Result | ${{ steps.deploy.outcome == 'success' && ' deployed' || ' failed' }} |"
+            echo "| Result | ${{ steps.deploy.outcome == 'success' && '✅ deployed' || '❌ failed' }} |"
             echo "| Droplet IP | \`${{ needs.provision.outputs.droplet_ip }}\` |"
             echo "| URL | https://${{ vars.DOMAIN_NAME }} |"
           } >> "$GITHUB_STEP_SUMMARY"

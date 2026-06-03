@@ -295,7 +295,7 @@ assistant for administrators, and AI-driven storefront redesign, all
 orchestrated as n8n workflows behind webhooks. The system is built as
 a TypeScript monorepo --- a NestJS REST API backed by Prisma and
 MariaDB, and a React single-page application --- and is engineered to
-professional standards, with an automated test suite of 129 tests and
+professional standards, with an automated test suite of 141 tests and
 a complete CI/CD pipeline that containerises the services with Docker,
 provisions infrastructure with Terraform, and deploys to a live
 DigitalOcean environment on every push. The result is a deployed,
@@ -1151,7 +1151,7 @@ deliverable must exhibit beyond pure functionality.
     \textbf{Criterion}  & \textbf{Description} \\
     \midrule
     Performance      & The catalogue and store pages must render in under one second on a desktop connection of 10\,Mbit/s; API endpoints under the median use case must respond in under 300\,ms. \\
-    Security         & All passwords are hashed by Better-Auth; sessions are stored in HTTP-only, \texttt{SameSite=Lax} cookies; uploads are MIME- and size-validated; every protected route is gated by an \texttt{AuthGuard} and the \texttt{@Roles()} decorator. \\
+    Security         & All passwords are hashed by Better-Auth; sessions are stored in HTTP-only, \texttt{SameSite=Lax} cookies; HTTP security headers are set with Helmet; uploads are MIME- and size-validated; every protected route is gated by an \texttt{AuthGuard} and the \texttt{@Roles()} decorator, and mutations additionally enforce object-level ownership in the service layer (a seller may only modify their own store, products and orders). Required secrets are validated at start-up (fail-fast), and the application connects to the database as a least-privilege user rather than root. \\
     Scalability      & The backend is stateless and horizontally scalable behind a load balancer; uploads are written to a Docker volume that can be migrated to object storage with no code change. \\
     Availability     & The production stack runs under Docker Compose with restart policies; CI/CD deployment is zero-downtime through rolling container replacement. \\
     Usability        & The frontend follows the accessible component patterns of Radix UI, is fully responsive, and complies with the WCAG 2.1 AA contrast guidelines for primary text. Public URLs are slug-based and human-readable, improving share-ability and search-engine indexing. \\
@@ -2045,8 +2045,9 @@ reproduced in Appendix~\ref{app:api-reference}.
     \multicolumn{3}{l}{\textit{Order}} \\
     POST  & /order                       & Place an order (multi-store checkout) \\
     GET   & /order/my                    & Read the current user's order history \\
-    GET   & /order                       & (seller) Orders containing my products \\
-    GET   & /order/dashboard             & (admin) Browse all orders \\
+    GET   & /order                       & (admin) List every order \\
+    GET   & /order/dashboard             & (seller) Orders containing my products (admin sees all) \\
+    GET   & /order/:id                   & Order detail — admin, the customer, or the owning store only \\
     \midrule
     \multicolumn{3}{l}{\textit{Featured content}} \\
     GET   & /home/featured               & Featured stores and products on landing \\
@@ -2387,8 +2388,10 @@ infrastructure-as-code definitions.
 \subsection{Project Structure}
 
 The backend follows the conventional NestJS layout: a thin
-\texttt{main.ts} bootstrap that wires the global
-\texttt{ValidationPipe} and Swagger document, a root
+\texttt{main.ts} bootstrap that validates the required environment at
+start-up (fail-fast), applies the Helmet security-header middleware and
+the global \texttt{ValidationPipe}, and mounts the Swagger document only
+outside production, a root
 \texttt{AppModule} that imports every feature module, and one
 directory per domain under \texttt{src/}. Each feature directory is
 self-contained and groups its \texttt{*.module.ts},
@@ -2459,6 +2462,20 @@ role-based access at the route level before the handler executes.
   \caption{Role-based access control implementation}
   \label{fig:rbac}
 \end{figure}
+
+Role gating alone is not sufficient, because two sellers share the
+same \texttt{SELLER} role yet must not be able to edit each other's
+content. Authorization is therefore enforced at two levels. The
+\texttt{AuthGuard} (and \texttt{@Roles()}) establishes \emph{who} the
+caller is and \emph{which role} they hold; the service layer then
+enforces \emph{object-level ownership} before any mutation. Updating or
+deleting a product, uploading a store image, or reading and modifying
+an order all resolve the owning user
+(\texttt{Product\,$\rightarrow$\,Store.userId}; an order's customer or
+owning store) and reject the request with \texttt{403 Forbidden} when
+the caller is neither that owner nor an administrator. This closes the insecure-direct-object-reference
+gap that role checks by themselves leave open, and is pinned by the
+ownership and authorization unit tests of Section~\ref{sec:tests}.
 
 \subsection{File Upload System (Multer)}
 
@@ -3073,11 +3090,11 @@ illustrates how the existing tests distribute across these layers.
   \begin{minipage}{0.85\textwidth}
   \centering
   \texttt{\begin{tabular}{c}
-    \textbf{Integration (36 tests)} \\
+    \textbf{Integration (38 tests)} \\
     \footnotesize Nest app + ValidationPipe + supertest \\
     \footnotesize ProductController, StoreController, OrderController \\[4pt]
     \hline\\[-6pt]
-    \textbf{Service unit tests (58 tests)} \\
+    \textbf{Service unit tests (68 tests)} \\
     \footnotesize Real service code, mocked Prisma \\
     \footnotesize Product, Store, Order, SellerApplication, \\
     \footnotesize Notification, Analytics, Home \\[4pt]
@@ -3087,7 +3104,7 @@ illustrates how the existing tests distribute across these layers.
     \footnotesize \texttt{findViolation}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
   \end{tabular}}
   \end{minipage}
-  \caption{Test pyramid — 129 tests total across backend (Jest) and frontend (Vitest)}
+  \caption{Test pyramid — 141 tests total across backend (Jest) and frontend (Vitest)}
   \label{fig:test-pyramid}
 \end{figure}
 
@@ -3114,11 +3131,11 @@ business rules each suite validates.
 \hline
 \texttt{limits} & 10 & Premium customization gating: free-palette colours allowed, premium-only fields rejected, equal values pass (existing premium customizations preserved on plan downgrade). \\
 \hline
-\texttt{product.service} & 7 & Sale price computation in \texttt{applySalePrices()}: 2-decimal rounding, \texttt{salePrice = null} when sale inactive, expired \texttt{saleEndsAt} ignored, per-store discount across mixed-store result sets, store-ID deduplication. \\
+\texttt{product.service} & 12 & Sale price computation in \texttt{applySalePrices()}: 2-decimal rounding, \texttt{salePrice = null} when sale inactive, expired \texttt{saleEndsAt} ignored, per-store discount across mixed-store result sets, store-ID deduplication. Ownership enforcement: a non-owner seller is rejected with 403 on update/delete, while the owning seller and an admin are allowed. \\
 \hline
 \texttt{store.service} & 11 & Slug generation (base, \texttt{-2} on collision, multi-probe, empty-string fallback, \texttt{excludeId} on rename); store creation conflict; sale update ownership and admin override. \\
 \hline
-\texttt{order.service} & 5 & Status-change email: fires only on real status change, not when DTO omits \texttt{status} or new status equals existing; \texttt{'Customer'} fallback for nameless users. \\
+\texttt{order.service} & 10 & Status-change email: fires only on real status change, not when DTO omits \texttt{status} or new status equals existing; \texttt{'Customer'} fallback for nameless users. Authorization: an order is visible only to an admin, the customer who placed it, or the owning store; managing (update/delete) is restricted to the admin or the store owner, and a non-owner is rejected with 403. \\
 \hline
 \texttt{seller-application.
 service} & 8 & Application state machine: duplicate-submission conflict, \texttt{APPROVED} promotes user to \texttt{SELLER}, \texttt{REJECTED} / \texttt{MORE\_INFO\_REQUESTED} leave the role alone, per-status notification message correctness. \\
@@ -3183,7 +3200,7 @@ are driven through \texttt{supertest}.
 \hline
 \texttt{store.controller} & 14 & Creation validation (empty body, malformed URL); \texttt{isAdmin} flag flips between \texttt{SELLER} and \texttt{ADMIN}; \texttt{UpdateSaleDto} bounds enforced (1--90\%, 60-char label); \texttt{ForbiddenException} surfaces as 403. \\
 \hline
-\texttt{order.controller} & 10 & Missing address fields rejected; non-numeric \texttt{totalAmount} rejected; \texttt{/my} requires auth; dashboard scoping by role; route parameter parsed to \texttt{number}. \\
+\texttt{order.controller} & 12 & Missing address fields rejected; non-numeric \texttt{totalAmount} rejected; \texttt{/my} requires auth; 403 on unauthenticated \texttt{GET}/\texttt{PATCH /order/:id}; dashboard scoping by role; route parameter parsed to \texttt{number}. \\
 \hline
 \end{tabular}
 \caption{Backend controller integration tests}
@@ -3251,7 +3268,7 @@ would do the most damage, at a fraction of the engineering cost.
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item Cheebo ships 129 tests (109 backend, 20 frontend) running in
+  \item Cheebo ships 141 tests (121 backend, 20 frontend) running in
         under five seconds and gating every CI build.
   \item Backend tests use a three-tier pyramid: pure logic
         (\texttt{findViolation}, \texttt{ApiKeyGuard}), service-level
@@ -3340,9 +3357,12 @@ named volumes:
   \item \textbf{db} --- \texttt{mariadb:11} with a health-check
         (\texttt{mariadb-admin ping}) so dependants can wait until the
         database is genuinely ready, persisted to the \texttt{db\_data}
-        volume.
-  \item \textbf{backend} --- the NestJS image, which
-        \texttt{depends\_on} the database \emph{being healthy}, reads
+        volume. A dedicated least-privilege application user
+        (\texttt{DB\_APP\_USER}) is created on first boot and used by the
+        backend, so the application never connects as \texttt{root}.
+  \item \textbf{backend} --- the NestJS image, which runs with
+        \texttt{NODE\_ENV=production} (which, among other things, disables
+        Swagger), \texttt{depends\_on} the database \emph{being healthy}, reads
         all configuration from environment variables, and mounts the
         \texttt{uploads} volume for user-uploaded media.
   \item \textbf{frontend} --- the Nginx image serving the React
@@ -3541,11 +3561,13 @@ with the GitHub Actions cache backend (\texttt{cache-from}/
 notably the \texttt{pnpm install} layer --- are reused across runs,
 cutting build times substantially. Each job logs in to Docker Hub
 with credentials drawn from repository secrets, builds the
-multi-stage image from its package directory, and pushes it tagged
-\texttt{:latest} to the \texttt{sirvinny/cheebo-backend} and
-\texttt{sirvinny/cheebo-frontend} repositories. These are the exact
-images the Compose file references, so the deploy step simply pulls
-the freshly pushed tags.
+multi-stage image from its package directory, and pushes it to the
+\texttt{sirvinny/cheebo-backend} and \texttt{sirvinny/cheebo-frontend}
+repositories under two tags: \texttt{:latest} and an immutable
+commit-SHA tag. The deploy step pins the Compose stack to the SHA tag
+(via an \texttt{IMAGE\_TAG} variable), so every deployment runs an exact,
+identifiable build and a rollback is simply a redeploy of an earlier
+commit's tag.
 
 \subsection{Deployment Stage (SSH and Docker Compose)}
 
@@ -3596,12 +3618,14 @@ entire AI layer reproducible.
 \subsection{Environment Secrets Management}
 
 No secret is ever committed to the repository. Sensitive values
-(database password, \texttt{BETTER\_AUTH\_SECRET}, admin password,
+(database root password, the least-privilege \texttt{DB\_APP\_PASSWORD},
+\texttt{BETTER\_AUTH\_SECRET}, admin password,
 SMTP password, n8n webhook secret and encryption key, the Gemini and
 Groq API keys, DigitalOcean and Spaces tokens, the SSH private key)
 are stored as GitHub Actions
 \textbf{secrets}; non-sensitive configuration (domain, ports, feature
-limits, SMTP host) is stored as GitHub Actions \textbf{variables}.
+limits, SMTP host, the \texttt{DB\_APP\_USER} name) is stored as GitHub
+Actions \textbf{variables}.
 The deploy job interpolates both groups into the \texttt{.env} file it
 writes on the droplet at deploy time. Terraform secrets reach the
 \texttt{provision} job the same way, including the Spaces credentials
@@ -3709,7 +3733,7 @@ the project apart from a textbook CRUD application:
   \item \textbf{AI integration} --- product and store verification,
         a database chat assistant, and AI storefront redesign, all
         implemented as versioned n8n workflows behind webhooks.
-  \item \textbf{A real test suite} --- 129 automated tests across
+  \item \textbf{A real test suite} --- 141 automated tests across
         backend and frontend, gating every CI build.
   \item \textbf{A full DevOps pipeline} --- containerised services,
         infrastructure as code with Terraform, and a GitHub Actions
