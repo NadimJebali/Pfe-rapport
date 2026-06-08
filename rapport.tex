@@ -91,6 +91,15 @@
   frame=single,
   breaklines=true,
   tabsize=2,
+  extendedchars=true,
+  % Non-ASCII glyphs embedded in some listings (deploy.yml etc.) that
+  % pdfLaTeX cannot typeset verbatim — remap them to safe substitutes.
+  literate=%
+    {✅}{{\ding{52}}}1
+    {❌}{{\ding{56}}}1
+    {─}{{-}}1
+    {—}{{-{}-}}2
+    {…}{{...}}3
 }
 
 % ── Tables ───────────────────────────────────────────────────

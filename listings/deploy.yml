@@ -73,7 +73,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 🧪 Backend Tests (Jest)"
+            echo "## Backend Tests (Jest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -114,7 +114,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 🧪 Frontend Tests (Vitest)"
+            echo "## Frontend Tests (Vitest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -192,7 +192,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 🌍 Provision Droplet (Terraform)"
+            echo "## Provision Droplet (Terraform)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -235,7 +235,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 📦 Build & Push Backend"
+            echo "## Build & Push Backend"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -278,7 +278,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 📦 Build & Push Frontend"
+            echo "## Build & Push Frontend"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -440,7 +440,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## 🚀 Deploy to DigitalOcean"
+            echo "## Deploy to DigitalOcean"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"

@@ -3,7 +3,7 @@ INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/vinny/Projects/PFE rapport examples/rapport_cheebo/rapport.tex
+INPUT rapport.tex
 OUTPUT rapport.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/report.cls
@@ -196,6 +196,9 @@ INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmr.fd
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr12.tfm
+INPUT ./rapport.aux
+INPUT ./rapport.aux
+INPUT rapport.aux
 OUTPUT rapport.aux
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -205,8 +208,14 @@ INPUT /usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-OUTPUT rapport.out
+INPUT ./rapport.out
+INPUT ./rapport.out
+INPUT rapport.out
+INPUT rapport.out
 OUTPUT rapport.pdf
+INPUT ./rapport.out
+INPUT ./rapport.out
+OUTPUT rapport.out
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm
@@ -250,11 +259,20 @@ INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
-OUTPUT rapport.toc
-OUTPUT rapport.lof
-OUTPUT rapport.lot
+INPUT ./rapport.toc
+INPUT ./rapport.toc
+INPUT rapport.toc
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr10.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri10.tfm
+OUTPUT rapport.toc
+INPUT ./rapport.lof
+INPUT ./rapport.lof
+INPUT rapport.lof
+OUTPUT rapport.lof
+INPUT ./rapport.lot
+INPUT ./rapport.lot
+INPUT rapport.lot
+OUTPUT rapport.lot
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
 INPUT /usr/share/texmf/tex/latex/lm/ts1lmr.fd
@@ -412,6 +430,7 @@ INPUT listings/Caddyfile
 INPUT ./listings/deploy.yml
 INPUT ./listings/deploy.yml
 INPUT listings/deploy.yml
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm
 INPUT rapport.aux
 INPUT ./rapport.out
 INPUT ./rapport.out
