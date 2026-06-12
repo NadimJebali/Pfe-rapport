@@ -335,15 +335,29 @@ application development and modern DevOps and AI-integration practice.
   \textbf{API}    & Application Programming Interface \\
   \textbf{CD}     & Continuous Deployment \\
   \textbf{CI}     & Continuous Integration \\
+  \textbf{CORS}   & Cross-Origin Resource Sharing \\
+  \textbf{CRUD}   & Create, Read, Update, Delete \\
   \textbf{DB}     & Database \\
   \textbf{DNS}    & Domain Name System \\
   \textbf{DTO}    & Data Transfer Object \\
   \textbf{DWMM}   & Web, Mobile and Multimedia Development \\
+  \textbf{HTTP}   & HyperText Transfer Protocol \\
+  \textbf{HTTPS}  & HyperText Transfer Protocol Secure \\
+  \textbf{JSON}   & JavaScript Object Notation \\
+  \textbf{JWT}    & JSON Web Token \\
+  \textbf{LLM}    & Large Language Model \\
+  \textbf{MIME}   & Multipurpose Internet Mail Extensions \\
+  \textbf{MVP}    & Minimum Viable Product \\
   \textbf{ORM}    & Object-Relational Mapping \\
-  \textbf{PFE}    & Final Year Project \\
+  \textbf{PFE}    & Final Year Project (\textit{Projet de Fin d'\'Etudes}) \\
+  \textbf{RBAC}   & Role-Based Access Control \\
   \textbf{REST}   & Representational State Transfer \\
+  \textbf{SMTP}   & Simple Mail Transfer Protocol \\
   \textbf{SPA}    & Single Page Application \\
+  \textbf{SQL}    & Structured Query Language \\
+  \textbf{SSE}    & Server-Sent Events \\
   \textbf{SSH}    & Secure Shell \\
+  \textbf{TLS}    & Transport Layer Security \\
   \textbf{UML}    & Unified Modeling Language \\
   \textbf{VPC}    & Virtual Private Cloud \\
 \end{tabular}
@@ -535,7 +549,7 @@ From the study above, four gaps emerged:
 
 \subsection{Competitive Analysis}
 
-Table~\ref{tab:competitors} summarises the comparison along the four
+Table~\ref{tab:competitors} summarises the comparison along the five
 criteria that drove the design of Cheebo. A check mark (\ding{51})
 indicates the criterion is fully supported, a cross (\ding{55})
 indicates it is absent, and a tilde (\(\sim\)) indicates partial
@@ -557,9 +571,6 @@ support.
   \end{tabularx}
   \label{tab:competitors}
 \end{table}
-
-\noindent The \texttt{C} column type used above is defined locally as a
-centred variant of \texttt{X}; it is declared once in the preamble.
 
 \section{Proposed Solution}
 
@@ -671,7 +682,8 @@ it shows its limits as soon as the context evolves:
 
 \medskip
 \noindent\textbf{Agile approach --- Core principles.}
-Agility was born from the \textit{Agile Manifesto} (2001), which
+Agility was born from the \textit{Agile Manifesto}
+(2001)~\cite{agilemanifesto}, which
 champions collaboration, adaptability, and the continuous delivery of
 value. Rather than planning the entire project upfront, work is
 organised into \textbf{short cycles called sprints} (one to four
@@ -713,7 +725,7 @@ following reasons:
 
 Scrum is an agile project management framework that helps teams
 organise and supervise their work through values, principles, and
-practices. It encourages teams to learn from experience, self-organise
+practices~\cite{scrumguide}. It encourages teams to learn from experience, self-organise
 while working on a problem, and reflect on their successes and
 failures to continuously improve.
 
@@ -912,7 +924,7 @@ outdated technical foundations --- that Cheebo directly addresses.
 The proposed solution, its key differentiators, and its bounded scope
 were presented. Finally, the Scrum agile methodology was described
 in detail, including its roles, events, and artefacts, and the
-three-milestone sprint plan that organised the ten-week development
+three-milestone sprint plan that organised the six-month development
 was outlined. The following chapter formalises the requirements
 derived from this context.
 
@@ -1381,6 +1393,8 @@ MoSCoW priority and the estimated complexity.
 
 \setlength{\extrarowheight}{3pt}
 \begin{longtable}{|>{\centering\arraybackslash\small}p{2.2cm}|>{\centering\arraybackslash\small}p{0.9cm}|>{\small}p{7.6cm}|>{\centering\arraybackslash\small}p{1.4cm}|>{\centering\arraybackslash\small}p{0.7cm}|}
+  \caption{Product backlog --- user stories with MoSCoW priority and complexity}
+  \label{tab:backlog}\\
   \hline
   \rowcolor{tableHeader}
   \textcolor{white}{\textbf{Feature}} &
@@ -1489,7 +1503,7 @@ MoSCoW priority and the estimated complexity.
   & \cellcolor{moscowMust}\textbf{Must} & \cellcolor{complexLow}\textbf{1} \\\hline
   \cellcolor{featAI}~
   & US24 & As a customer, I want to see an AI-verified badge on trusted products so that I can shop with confidence.
-  & \cellcolor{moscowWont}\textbf{Won't} & \cellcolor{complexLow}\textbf{1} \\\hline
+  & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexLow}\textbf{1} \\\hline
   \cellcolor{featAI}~
   & US35 & As a seller, I want to regenerate my entire storefront design using a natural-language prompt sent to an AI agent so that I can obtain a professionally styled store without manual customisation.
   & \cellcolor{moscowCould}\textbf{Could} & \cellcolor{complexHigh}\textbf{3} \\\hline
@@ -1526,7 +1540,6 @@ MoSCoW priority and the estimated complexity.
   & \cellcolor{moscowShould}\textbf{Should} & \cellcolor{complexMed}\textbf{2} \\
 
 \end{longtable}
-\label{tab:backlog}
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -1600,7 +1613,8 @@ which serves the static React bundle and forwards every
 bridge network. The NestJS
 application implements the entire business logic --- authentication,
 catalogue management, order processing, moderation --- and persists state
-to a single \textbf{MariaDB 11} instance through the \textbf{Prisma} ORM.
+to a single \textbf{MariaDB 11}~\cite{mariadb} instance through the
+\textbf{Prisma} ORM~\cite{prisma}.
 File uploads are handled by \textbf{Multer} and stored on a Docker
 volume; transactional emails are dispatched through \textbf{Nodemailer}
 over SMTP.
@@ -1626,9 +1640,9 @@ which itself calls the LLM providers.
   \label{fig:arch-global}
 \end{figure}
 
-\subsection{N8N as an Automation Layer}
+\subsection{n8n as an Automation Layer}
 
-n8n was introduced as a deliberate architectural choice rather than an
+n8n~\cite{n8n} was introduced as a deliberate architectural choice rather than an
 ad-hoc tool. Three properties made it the right fit for Cheebo's AI
 features:
 
@@ -1664,7 +1678,8 @@ gains.
 
 \subsection{NestJS Modular Architecture}
 
-The backend is structured as a set of \textbf{feature modules}, each
+The backend is structured as a set of \textbf{feature
+modules}~\cite{nestjs}, each
 encapsulating its own controller, service, DTOs, and Prisma queries.
 Every module declares its own \texttt{@Module()} decorator and exports
 the providers consumed by sibling modules; this strict separation is
@@ -1725,8 +1740,9 @@ exchange webhooks with n8n.
 
 \subsection{React SPA Architecture}
 
-The frontend is a \textbf{Single-Page Application} built with React 19
-and bundled by \textbf{Vite}. The codebase under
+The frontend is a \textbf{Single-Page Application} built with
+React~19~\cite{react}
+and bundled by \textbf{Vite}~\cite{vite}. The codebase under
 \texttt{frontend/src/} is split into seven top-level folders, each
 playing a clearly defined role:
 
@@ -1770,7 +1786,7 @@ classic React anti-pattern of duplicating server data into a Redux
 store and then fighting cache invalidation.
 
 The storefront editor itself is a separate sub-architecture built on
-\textbf{Craft.js}: the canvas, the section palette, and the
+\textbf{Craft.js}~\cite{craftjs}: the canvas, the section palette, and the
 inspector panel are wired around a single \texttt{<Editor>} provider,
 and a Zustand store mirrors the Craft editor state so that the
 \textit{Save} button can submit a stable JSON payload to the
@@ -1958,7 +1974,8 @@ added a query without buying any expressive power.
 
 \subsection{REST API Design Principles}
 
-The Cheebo backend exposes a single \textbf{REST API} over JSON
+The Cheebo backend exposes a single \textbf{REST API}~\cite{fielding}
+over JSON
 that the React SPA consumes through a typed Axios client. Six
 principles guided every route declaration:
 
@@ -1977,7 +1994,7 @@ principles guided every route declaration:
         \texttt{POST}, \texttt{204 No Content} on
         \texttt{DELETE}, \texttt{400} for validation errors,
         \texttt{401} for unauthenticated access, \texttt{403}
-        for role violations.
+        for role violations~\cite{mdn}.
   \item \textbf{Validated DTOs.} Every body- or query-bearing
         endpoint declares a \texttt{class-validator} DTO with
         \texttt{forbidNonWhitelisted: true}, so any extra field
@@ -2072,7 +2089,7 @@ reproduced in Appendix~\ref{app:api-reference}.
 \subsection{Authentication Flow (Better-Auth)}
 
 Authentication is handled entirely by the \textbf{Better-Auth}
-library, integrated into NestJS through a thin adapter module.
+library~\cite{betterauth}, integrated into NestJS through a thin adapter module.
 Better-Auth was preferred over rolling a custom Passport
 strategy because it ships with email/password, email
 verification, session persistence in the database, and
@@ -2093,7 +2110,7 @@ request carries the \texttt{better-auth.session\_token} cookie,
 which the NestJS \texttt{AuthGuard} validates against the
 \texttt{Session} table on each call.
 
-\section{N8N Workflow Design}
+\section{n8n Workflow Design}
 
 Cheebo's AI features are carried by three independent n8n workflows
 deployed on the same engine. Each one is exposed as an HTTP webhook
@@ -2130,7 +2147,7 @@ decision is posted back to the \texttt{/ai-review} callback endpoint.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth,keepaspectratio]{n8n-verify.png}
-  \caption{N8N workflow --- AI verification}
+  \caption{n8n workflow --- AI verification}
   \label{fig:n8n-verify}
 \end{figure}
 
@@ -2144,7 +2161,7 @@ against the MariaDB instance, and returns a formatted response.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth,keepaspectratio]{n8n-chat.png}
-  \caption{N8N workflow --- Database chat assistant}
+  \caption{n8n workflow --- Database chat assistant}
   \label{fig:n8n-chat}
 \end{figure}
 
@@ -2176,7 +2193,7 @@ Sanitise Code node, and the Respond to Webhook node on the right.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth,keepaspectratio]{n8n-redesign.png}
-  \caption{N8N workflow --- AI storefront redesign}
+  \caption{n8n workflow --- AI storefront redesign}
   \label{fig:n8n-redesign}
 \end{figure}
 
@@ -2295,8 +2312,12 @@ behavioural model that the next chapter actually implements.
 \chapter{Development and Implementation}
 
 \begin{chapterintro}
-  This chapter details the development environment, backend and frontend
-  implementation decisions, and the AI integration via N8N.
+  This chapter details the development environment, the backend and
+  frontend implementation decisions, and the AI integration via n8n.
+  It then illustrates the resulting platform through interface
+  screenshots organised by role, and closes with the automated test
+  suite --- 141 tests across backend and frontend --- that validates
+  the implementation on every CI build.
 \end{chapterintro}
 
 \section{Development Environment}
@@ -2360,7 +2381,7 @@ across the monorepo:
         click-through navigation between models and their usages.
   \item \textbf{Tailwind CSS IntelliSense} --- class-name
         autocompletion against the project's
-        \texttt{tailwindcss\_v4} configuration; particularly
+        \texttt{tailwindcss\_v4} configuration~\cite{tailwind}; particularly
         important given the volume of utility classes in the React
         components.
   \item \textbf{Docker} --- inline visualisation of running
@@ -2586,7 +2607,7 @@ API side so that authorisation is consistent end-to-end.
 The frontend deliberately separates \emph{server state} from
 \emph{client state}, using a different tool for each.
 
-\textbf{TanStack Query} owns all server state. Every read from the
+\textbf{TanStack Query}~\cite{tanstack} owns all server state. Every read from the
 API goes through a custom hook in \texttt{src/hooks/}
 (\texttt{useProducts}, \texttt{useStorePage}, \texttt{useMyOrders},
 \texttt{useFeatured}, \texttt{useAdminDashboard},
@@ -2598,7 +2619,7 @@ which keeps the UI responsive (cached data is reused across
 navigations) without hammering the API. Mutations invalidate the
 relevant query keys so the cache stays coherent after writes.
 
-\textbf{Zustand} owns the small amount of genuine client state that
+\textbf{Zustand}~\cite{zustand} owns the small amount of genuine client state that
 must persist across routes and reloads. The cart store
 (\texttt{src/stores/cart.store.ts}) is the principal example: it holds
 the customer's purchase intent, enforces the per-item stock cap on
@@ -2638,7 +2659,7 @@ and monitor incoming orders.
   \label{fig:seller-dashboard}
 \end{figure}
 
-\section{AI Integration with N8N}
+\section{AI Integration with n8n}
 
 All AI features are implemented as n8n workflows triggered over
 webhooks rather than as in-process calls from NestJS. This keeps the
@@ -2695,7 +2716,7 @@ sellers --- a boundary verified both by the \texttt{RoleRoute} guard
 on the frontend and the \texttt{AuthGuard}/\texttt{@Roles} pairing on
 the backend.
 
-\subsection{N8N Workflow --- AI Storefront Redesign}
+\subsection{n8n Workflow --- AI Storefront Redesign}
 
 The AI Storefront Redesign workflow allows a seller to regenerate their
 entire store visual identity by providing a short natural-language prompt
@@ -2748,7 +2769,7 @@ providers are used, chosen per task:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item \textbf{Verification} (\textbf{cheebo-ai-verify}) uses a Google
-        Gemini model, whose vision capability is required to moderate the
+        Gemini~\cite{gemini} model, whose vision capability is required to moderate the
         uploaded images against the listing text. The \textbf{database
         chat assistant} (\textbf{cheebo-ai-chat}) uses a Groq
         \texttt{openai/gpt-oss-20b} agent with a Gemini chat model
@@ -2756,7 +2777,7 @@ providers are used, chosen per task:
         are classification- and reasoning-oriented and do not need a very
         large model.
   \item \textbf{Storefront redesign} (\textbf{cheebo-store-redesign})
-        uses Groq's \texttt{llama-3.3-70b-versatile}. The larger model
+        uses Groq's~\cite{groq} \texttt{llama-3.3-70b-versatile}. The larger model
         produces more coherent full-page design JSON, and Groq's
         inference speed keeps the seller's live-preview latency low.
 \end{itemize}
@@ -2767,7 +2788,7 @@ application's environment or source. Swapping a provider, or
 A/B-testing two models, is a change inside n8n that requires no
 backend redeployment.
 
-\subsection{N8N Workflow Implementation}
+\subsection{n8n Workflow Implementation}
 
 Each workflow follows the same skeleton: a \textbf{Webhook} trigger
 (secured with header authentication), an \textbf{AI Agent} bound to a
@@ -3038,7 +3059,7 @@ the middle, and controller-level integration tests at the top that
 boot a real NestJS application and exercise the full HTTP pipeline
 (\texttt{ValidationPipe}, guards, decorators) through
 \texttt{supertest}. The frontend uses Vitest with React Testing
-Library to cover Zustand stores and presentational components in a
+Library~\cite{rtl} to cover Zustand stores and presentational components in a
 jsdom environment.
 
 The whole suite runs in under five seconds on commodity hardware,
@@ -3051,8 +3072,9 @@ transitively import the ESM-only \texttt{better-auth} package.
 \subsection{Testing Stack and Tooling}
 
 Table~\ref{tab:test-stack} summarises the libraries used and the
-responsibility of each. The backend stack is Jest~30 with
-\texttt{ts-jest} for TypeScript compilation; the frontend uses Vitest
+responsibility of each. The backend stack is Jest~30~\cite{jest} with
+\texttt{ts-jest} for TypeScript compilation; the frontend uses
+Vitest~\cite{vitest}
 to reuse the same Vite resolver, plugin chain (\texttt{@vitejs/plugin-react},
 Tailwind), and path alias configuration as the development server,
 removing the need to maintain a separate test build pipeline.
@@ -3267,7 +3289,7 @@ are detailed in Section~\ref{sec:cicd}.
 The suite deliberately stops short of full end-to-end testing. There
 are no Playwright or Cypress tests that drive a real browser against
 the deployed application, and no integration tests against a real
-MariaDB instance. These were considered out of scope for a four-month
+MariaDB instance. These were considered out of scope for a six-month
 PFE: a meaningful E2E suite requires fixtures, seeded data, and a
 running stack, which would have consumed time better spent on the
 core feature set. The current strategy --- tight unit coverage on
@@ -3325,7 +3347,8 @@ infrastructure that hosts this code in production.
 
 \subsection{Dockerfiles (Frontend and Backend)}
 
-Both the backend and the frontend ship as multi-stage Docker images,
+Both the backend and the frontend ship as multi-stage
+Docker~\cite{docker} images,
 which keeps the final runtime image small by discarding build-time
 dependencies. Both Dockerfiles are reproduced in
 Appendix~\ref{app:dockerfiles}.
@@ -3396,7 +3419,7 @@ Compose file.
 \label{sec:tls-caddy}
 
 Public traffic does not reach the application containers directly: it
-is fronted by \textbf{Caddy}, a modern reverse proxy whose defining
+is fronted by \textbf{Caddy}~\cite{caddy}, a modern reverse proxy whose defining
 feature is \emph{automatic HTTPS}. On first start, Caddy reads the
 domain from its environment, requests a TLS certificate from Let's
 Encrypt over the ACME protocol (the HTTP-01 / TLS-ALPN-01 challenge,
@@ -3447,8 +3470,8 @@ over the internal network.
 \subsection{DigitalOcean Provider}
 
 The entire production environment is described declaratively with
-Terraform, using the official \texttt{digitalocean/digitalocean}
-provider (\texttt{\textasciitilde> 2.0}). A single \texttt{main.tf}
+Terraform~\cite{terraform}, using the official \texttt{digitalocean/digitalocean}
+provider~\cite{digitalocean} (\texttt{\textasciitilde> 2.0}). A single \texttt{main.tf}
 holds the provider block --- authenticated by a DigitalOcean API
 token passed as the \texttt{do\_token} variable --- and all resource
 declarations. Describing the infrastructure as code means the droplet,
@@ -3510,13 +3533,6 @@ The domain's nameservers are delegated to DigitalOcean
 is a one-time configuration step.  After that, A-record updates propagate in
 under five minutes thanks to a 300-second TTL.
 
-\begin{keytakeaways}
-  \item DNS is version-controlled alongside infrastructure --- the domain
-        always points to the current droplet IP with no manual update step.
-  \item TTL 300\,s means a full redeploy (destroy old droplet, create new one,
-        update DNS) converges in under ten minutes end-to-end.
-\end{keytakeaways}
-
 \subsection{Remote State Management with DigitalOcean Spaces}
 
 Terraform state is stored remotely in a DigitalOcean Spaces bucket
@@ -3538,7 +3554,8 @@ Figure~\ref{fig:terraform} shows the key resource declarations in
 
 \subsection{Workflow Overview}
 
-The CI/CD pipeline is defined as a single GitHub Actions workflow
+The CI/CD pipeline is defined as a single GitHub
+Actions~\cite{gha} workflow
 file that runs on every push to the \texttt{main} branch.
 Figure~\ref{fig:cicd} presents the topology:
 two test jobs --- \textit{test-backend} (Jest) and
@@ -3689,9 +3706,9 @@ the platform over HTTPS at the domain
   \label{fig:production}
 \end{figure}
 
-\subsection{N8N Deployment Alongside the Application}
+\subsection{n8n Deployment Alongside the Application}
 
-n8n runs as a fourth container in the same Compose stack rather than
+n8n runs as a fifth container in the same Compose stack rather than
 as an external SaaS dependency. This co-location is deliberate: the
 backend reaches the workflows over the private bridge network at
 \texttt{http://n8n:5678/webhook/\dots}, so verification and chat
@@ -3708,6 +3725,43 @@ cost, which suits the scale and budget of a graduation project. The
 trade-off is that n8n shares the droplet's 2~vCPU/2~GB with the rest
 of the stack; for a production launch at scale it would be moved to
 its own instance, but at current load the shared host is comfortable.
+
+\begin{keytakeaways}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item Both applications ship as multi-stage Docker images; the
+        five-service Compose stack exposes only the Caddy proxy,
+        which terminates HTTPS with automatically renewed
+        Let's Encrypt certificates.
+  \item The entire production environment --- VPC, droplet, firewall
+        and DNS --- is declared in Terraform with remote state in
+        DigitalOcean Spaces; the DNS records follow the droplet IP
+        automatically, so a full re-provision converges in under ten
+        minutes end-to-end.
+  \item The GitHub Actions pipeline gates every deployment on the
+        test suite, pins deployments to immutable commit-SHA image
+        tags, and provisions the n8n workflows and credentials on
+        the droplet automatically.
+  \item No secret is ever committed: credentials live in GitHub's
+        encrypted store and materialise only as the droplet's
+        \texttt{.env} file at deploy time.
+\end{itemize}
+\end{keytakeaways}
+
+\section*{Chapter Conclusion}
+\addcontentsline{toc}{section}{Chapter Conclusion}
+
+This chapter presented the infrastructure that carries Cheebo in
+production. The five services were containerised with multi-stage
+Docker builds and orchestrated by a single Compose file, fronted by
+a Caddy proxy that provides automatic HTTPS. Terraform describes the
+entire DigitalOcean environment --- droplet, VPC, firewall rules and
+DNS --- as version-controlled code with shared remote state, and the
+GitHub Actions pipeline chains testing, image builds, provisioning
+and SSH deployment into a single push-to-deploy workflow, including
+the automated provisioning of the n8n AI layer. The platform is
+thereby reproducible from an empty cloud account to a running,
+TLS-secured marketplace with no manual step. The general conclusion
+that follows takes stock of the project as a whole.
 
 % ============================================================
 %  GENERAL CONCLUSION
@@ -3846,47 +3900,47 @@ Natural next steps, roughly in order of value:
 %  BIBLIOGRAPHY
 % ============================================================
 \newpage
+\renewcommand{\bibname}{Bibliography and Webography}
+\begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliography and Webography}
-\chapter*{Bibliography and Webography}
+\markboth{Bibliography and Webography}{}
 
-\subsection*{Methodology and Standards}
-\begin{itemize}
-  \item K. Schwaber and J. Sutherland, \textit{The Scrum Guide}, 2020.
-        \url{https://scrumguides.org}
-  \item R. T. Fielding, \textit{Architectural Styles and the Design of
-        Network-based Software Architectures}, PhD dissertation,
-        University of California, Irvine, 2000 (REST).
-  \item Mozilla Developer Network --- HTTP, REST and web platform
-        reference. \url{https://developer.mozilla.org}
-\end{itemize}
+% ── Methodology and standards ──
+\bibitem{scrumguide} K. Schwaber and J. Sutherland, \textit{The Scrum
+  Guide}, 2020. \url{https://scrumguides.org}
+\bibitem{agilemanifesto} K. Beck et al., \textit{Manifesto for Agile
+  Software Development}, 2001. \url{https://agilemanifesto.org}
+\bibitem{fielding} R. T. Fielding, \textit{Architectural Styles and the
+  Design of Network-based Software Architectures}, PhD dissertation,
+  University of California, Irvine, 2000 (REST).
+\bibitem{mdn} Mozilla Developer Network --- HTTP, REST and web platform
+  reference. \url{https://developer.mozilla.org}
 
-\subsection*{Frameworks and Libraries}
-\begin{itemize}
-  \item NestJS Official Documentation --- \url{https://docs.nestjs.com}
-  \item React Official Documentation --- \url{https://react.dev}
-  \item Vite Documentation --- \url{https://vite.dev}
-  \item Prisma ORM Documentation --- \url{https://www.prisma.io/docs}
-  \item TanStack Query Documentation --- \url{https://tanstack.com/query}
-  \item Zustand Documentation --- \url{https://zustand.docs.pmnd.rs}
-  \item Better-Auth Documentation --- \url{https://www.better-auth.com/docs}
-  \item Tailwind CSS Documentation --- \url{https://tailwindcss.com/docs}
-  \item Craft.js Documentation --- \url{https://craft.js.org}
-  \item Jest Documentation --- \url{https://jestjs.io/docs}
-  \item Vitest Documentation --- \url{https://vitest.dev}
-  \item Testing Library Documentation --- \url{https://testing-library.com/docs}
-\end{itemize}
+% ── Frameworks and libraries ──
+\bibitem{nestjs} NestJS Official Documentation --- \url{https://docs.nestjs.com}
+\bibitem{react} React Official Documentation --- \url{https://react.dev}
+\bibitem{vite} Vite Documentation --- \url{https://vite.dev}
+\bibitem{prisma} Prisma ORM Documentation --- \url{https://www.prisma.io/docs}
+\bibitem{tanstack} TanStack Query Documentation --- \url{https://tanstack.com/query}
+\bibitem{zustand} Zustand Documentation --- \url{https://zustand.docs.pmnd.rs}
+\bibitem{betterauth} Better-Auth Documentation --- \url{https://www.better-auth.com/docs}
+\bibitem{tailwind} Tailwind CSS Documentation --- \url{https://tailwindcss.com/docs}
+\bibitem{craftjs} Craft.js Documentation --- \url{https://craft.js.org}
+\bibitem{jest} Jest Documentation --- \url{https://jestjs.io/docs}
+\bibitem{vitest} Vitest Documentation --- \url{https://vitest.dev}
+\bibitem{rtl} Testing Library Documentation --- \url{https://testing-library.com/docs}
 
-\subsection*{Infrastructure, DevOps and AI}
-\begin{itemize}
-  \item MariaDB Documentation --- \url{https://mariadb.com/kb/en}
-  \item Docker Documentation --- \url{https://docs.docker.com}
-  \item Terraform Documentation --- \url{https://developer.hashicorp.com/terraform}
-  \item N8N Documentation --- \url{https://docs.n8n.io}
-  \item GitHub Actions Documentation --- \url{https://docs.github.com/en/actions}
-  \item DigitalOcean Developer Docs --- \url{https://docs.digitalocean.com}
-  \item Groq API Documentation --- \url{https://console.groq.com/docs}
-  \item Google Gemini API Documentation --- \url{https://ai.google.dev/gemini-api/docs}
-\end{itemize}
+% ── Infrastructure, DevOps and AI ──
+\bibitem{mariadb} MariaDB Documentation --- \url{https://mariadb.com/kb/en}
+\bibitem{docker} Docker Documentation --- \url{https://docs.docker.com}
+\bibitem{caddy} Caddy Server Documentation --- \url{https://caddyserver.com/docs}
+\bibitem{terraform} Terraform Documentation --- \url{https://developer.hashicorp.com/terraform}
+\bibitem{n8n} n8n Documentation --- \url{https://docs.n8n.io}
+\bibitem{gha} GitHub Actions Documentation --- \url{https://docs.github.com/en/actions}
+\bibitem{digitalocean} DigitalOcean Developer Docs --- \url{https://docs.digitalocean.com}
+\bibitem{groq} Groq API Documentation --- \url{https://console.groq.com/docs}
+\bibitem{gemini} Google Gemini API Documentation --- \url{https://ai.google.dev/gemini-api/docs}
+\end{thebibliography}
 
 % ============================================================
 %  APPENDICES
@@ -4015,7 +4069,7 @@ GET & \texttt{/settings} \quad PUT \texttt{/settings/name} \quad POST \texttt{/s
 \end{longtable}
 \normalsize
 
-\chapter{N8N Workflow JSON Exports}
+\chapter{n8n Workflow JSON Exports}
 \label{app:n8n-workflows}
 
 The three workflows are committed under \texttt{n8n-workflows/} and can

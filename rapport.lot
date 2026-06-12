@@ -4,6 +4,7 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {2.1}{\ignorespaces Non-functional requirements}}{31}{table.caption.9}%
 \contentsline {table}{\numberline {2.2}{\ignorespaces MoSCoW priority and complexity legend}}{41}{table.caption.17}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Product backlog --- user stories with MoSCoW priority and complexity}}{42}{table.2.3}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{59}{table.caption.30}%
 \addvspace {10\p@ }
@@ -16,7 +17,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{125}{table.B.1}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{126}{table.B.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
