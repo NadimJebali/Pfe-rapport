@@ -304,7 +304,7 @@ assistant for administrators, and AI-driven storefront redesign, all
 orchestrated as n8n workflows behind webhooks. The system is built as
 a TypeScript monorepo --- a NestJS REST API backed by Prisma and
 MariaDB, and a React single-page application --- and is engineered to
-professional standards, with an automated test suite of 141 tests and
+professional standards, with an automated test suite of 192 tests and
 a complete CI/CD pipeline that containerises the services with Docker,
 provisions infrastructure with Terraform, and deploys to a live
 DigitalOcean environment on every push. The result is a deployed,
@@ -1970,6 +1970,20 @@ sales are always store-wide, only one is active at a time, and the
 fields are read on every product query. A separate join would have
 added a query without buying any expressive power.
 
+\paragraph{Payment fields on Order.}
+Because checkout is confirmed asynchronously by Stripe, the
+\texttt{Order} entity carries its own payment state rather than
+overloading the fulfilment \texttt{status}. A \texttt{PaymentStatus}
+enum (\texttt{UNPAID}, \texttt{PAID}, \texttt{FAILED}) records where
+the charge stands, \texttt{stripePaymentIntentId} links the order back
+to the Stripe \texttt{PaymentIntent} that covers it, and
+\texttt{paidAt} stamps the moment payment succeeded. A single intent
+can cover several orders of a multi-store cart, so that column is a
+\emph{non-unique} index rather than a unique key. An order is created
+\texttt{UNPAID} and only a verified Stripe webhook --- never the
+client --- moves it to \texttt{PAID}, as detailed in
+Section~\ref{sec:backend-payments}.
+
 \section{API Design}
 
 \subsection{REST API Design Principles}
@@ -2316,7 +2330,7 @@ behavioural model that the next chapter actually implements.
   frontend implementation decisions, and the AI integration via n8n.
   It then illustrates the resulting platform through interface
   screenshots organised by role, and closes with the automated test
-  suite --- 141 tests across backend and frontend --- that validates
+  suite --- 192 tests across backend and frontend --- that validates
   the implementation on every CI build.
 \end{chapterintro}
 
@@ -2471,6 +2485,9 @@ were presented as the module-cluster diagram in Chapter~3.
   \item \textbf{ChatModule} and \textbf{N8nModule} --- the bridge to
         the n8n automation layer: the database chat assistant and the
         AI verification/redesign webhooks.
+  \item \textbf{PaymentModule} --- Stripe checkout, webhook-confirmed
+        order payment, and the scheduled stale-checkout reconciliation
+        sweep that keeps reserved stock and payment state consistent.
   \item \textbf{PrismaModule} --- a global module exporting the
         single \texttt{PrismaService} instance injected everywhere
         else.
@@ -2561,6 +2578,116 @@ is logged but never propagated to the caller, so a downed SMTP server
 degrades gracefully (the order is still created) rather than failing
 the user's request. This is precisely the behaviour pinned by the
 \texttt{order.service} tests in Section~\ref{sec:tests}.
+
+\subsection{Payment Processing (Stripe)}
+\label{sec:backend-payments}
+
+Checkout is handled by a dedicated \texttt{PaymentModule} built around
+two collaborators: a thin \texttt{StripeService} that owns the single
+Stripe client (created lazily, so the application still boots without
+payment keys in development), and a \texttt{PaymentService} that
+orchestrates the flow. The design follows one rule end-to-end: the
+amount charged is always derived from the orders the server just
+priced, never from any figure the client sends.
+
+A checkout proceeds in three steps:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Reserve and price.}
+        \texttt{OrderService.createPendingForCart} runs inside a single
+        transaction, decrements stock atomically, and creates one
+        \texttt{UNPAID} order per store, returning the server-computed
+        grand total.
+  \item \textbf{Open a PaymentIntent.} \texttt{PaymentService} opens a
+        single Stripe \texttt{PaymentIntent} for that total. Because a
+        Stripe account cannot settle in Tunisian dinar, the TND total
+        is converted to US-dollar minor units through a configurable
+        \texttt{TND\_TO\_USD\_RATE} (the helper
+        \texttt{tndToStripeUsdMinor}); the interface keeps displaying
+        TND while the charge is in USD. The order identifiers are
+        written into the intent metadata, an \texttt{idempotencyKey}
+        derived from them prevents a duplicate charge on retry, and the
+        intent id is stamped back onto the orders. If the intent cannot
+        be opened, the stock reserved a moment earlier is released so it
+        is never stranded on a dead order.
+  \item \textbf{Confirm by webhook.} The client confirms the intent
+        with Stripe directly; the orders stay \texttt{UNPAID} until
+        Stripe calls back. The \texttt{POST /payments/webhook} endpoint
+        is unauthenticated by design --- trust comes from verifying the
+        Stripe signature against the \emph{raw} request body (the
+        \texttt{main.ts} bootstrap enables \texttt{rawBody} for exactly
+        this), not from a session. On a verified
+        \texttt{payment\_intent.succeeded} it marks the orders
+        \texttt{PAID} and \texttt{CONFIRMED}; a failure or cancellation
+        releases the reserved stock instead.
+\end{itemize}
+
+Both state transitions (\texttt{markPaid} and
+\texttt{markFailedAndRestock}) are scoped to orders that are still
+\texttt{UNPAID}, which makes them idempotent: Stripe may redeliver the
+same event and the second delivery is a harmless no-op. The conversion
+helper and the full webhook decision table are pinned by the
+\texttt{payment.service} and \texttt{stripe-amount} unit tests of
+Section~\ref{sec:tests}.
+
+\subsection{Rate Limiting}
+
+To blunt brute-force and abuse, the API applies a global rate limit
+through \texttt{@nestjs/throttler}. \texttt{ThrottlerModule} is
+configured in \texttt{AppModule} with a default budget of
+\textbf{100 requests per 60-second window} per client, and a
+\texttt{ThrottlerGuard} is registered as a global \texttt{APP\_GUARD}
+so the limit covers every route without per-controller wiring. Two
+routes deliberately diverge from the default:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \textbf{Checkout} (\texttt{POST /payments/checkout}) is
+        tightened to \textbf{10 requests per minute} with
+        \texttt{@Throttle}, because each call reserves stock and opens a
+        Stripe intent --- operations far more expensive than a read.
+  \item \textbf{The Stripe webhook} opts out entirely with
+        \texttt{@SkipThrottle}: its call rate is dictated by Stripe, not
+        by a client, and throttling it could drop legitimate
+        payment-confirmation events.
+\end{itemize}
+
+\subsection{Stale-Checkout Reconciliation}
+
+Confirming orders by webhook introduces two failure modes that a naive
+flow would leave unresolved: a customer who abandons checkout leaves an
+\texttt{UNPAID} order holding reserved stock indefinitely, and a webhook
+lost in transit leaves a genuinely paid order stuck as \texttt{UNPAID}.
+A scheduled reconciliation sweep closes both gaps and makes the system
+self-healing.
+
+A small \texttt{PaymentCleanupService} runs every ten minutes via the
+\texttt{@Cron} scheduler of \texttt{@nestjs/schedule} (enabled with
+\texttt{ScheduleModule.forRoot()}) and delegates to
+\texttt{PaymentService.reconcileStaleCheckouts}. That method collects
+every order still \texttt{UNPAID} past a configurable staleness window
+(\texttt{CHECKOUT\_STALE\_MINUTES}, default~30), groups them by their
+\texttt{PaymentIntent}, retrieves each intent from Stripe, and acts on
+its real status:
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{succeeded} --- the success webhook was lost; the orders
+        are marked \texttt{PAID}, recovering the missed event.
+  \item \texttt{requires\_payment\_method} or \texttt{canceled} --- the
+        intent is dead; the orders are cancelled and their stock
+        released, and a not-yet-cancelled intent is cancelled on Stripe
+        as best-effort cleanup.
+  \item \texttt{processing}, \texttt{requires\_action} or
+        \texttt{requires\_confirmation} --- the payment is still in
+        flight and is left untouched for a later sweep.
+\end{itemize}
+
+Orders that never received an intent are simply restocked. Each intent
+is reconciled inside its own \texttt{try}/\texttt{catch}, so a single
+Stripe error cannot abort the whole sweep; and because the sweep reuses
+the same idempotent \texttt{markPaid} / \texttt{markFailedAndRestock}
+transitions as the live webhook, the two can race without corrupting
+order state. This behaviour is covered by the
+\texttt{reconcileStaleCheckouts} unit tests of Section~\ref{sec:tests}.
 
 \section{Frontend (React + Vite)}
 
@@ -3121,21 +3248,21 @@ illustrates how the existing tests distribute across these layers.
   \begin{minipage}{0.85\textwidth}
   \centering
   \texttt{\begin{tabular}{c}
-    \textbf{Integration (38 tests)} \\
+    \textbf{Integration (40 tests)} \\
     \footnotesize Nest app + ValidationPipe + supertest \\
     \footnotesize ProductController, StoreController, OrderController \\[4pt]
     \hline\\[-6pt]
-    \textbf{Service unit tests (68 tests)} \\
+    \textbf{Service unit tests (104 tests)} \\
     \footnotesize Real service code, mocked Prisma \\
-    \footnotesize Product, Store, Order, SellerApplication, \\
+    \footnotesize Product, Store, Order, Payment, SellerApplication, \\
     \footnotesize Notification, Analytics, Home \\[4pt]
     \hline\\[-6pt]
-    \textbf{Pure-logic + frontend (35 tests)} \\
+    \textbf{Pure-logic + frontend (48 tests)} \\
     \footnotesize No I/O, no framework wiring \\
-    \footnotesize \texttt{findViolation}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
+    \footnotesize \texttt{findViolation}, \texttt{tndToStripeUsdMinor}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
   \end{tabular}}
   \end{minipage}
-  \caption{Test pyramid — 141 tests total across backend (Jest) and frontend (Vitest)}
+  \caption{Test pyramid — 192 tests total across backend (Jest) and frontend (Vitest)}
   \label{fig:test-pyramid}
 \end{figure}
 
@@ -3160,16 +3287,21 @@ business rules each suite validates.
 \rowcolor{cheebolightgray}
 \textbf{Suite} & \textbf{Tests} & \textbf{Behaviour under test} \\
 \hline
-\texttt{limits} & 10 & Premium customization gating: free-palette colours allowed, premium-only fields rejected, equal values pass (existing premium customizations preserved on plan downgrade). \\
+\texttt{limits} & 11 & Premium customization gating: free-palette colours allowed, premium-only fields rejected, equal values pass (existing premium customizations preserved on plan downgrade). \\
 \hline
 \texttt{product.service} & 12 & Sale price computation in \texttt{applySalePrices()}: 2-decimal rounding, \texttt{salePrice = null} when sale inactive, expired \texttt{saleEndsAt} ignored, per-store discount across mixed-store result sets, store-ID deduplication. Ownership enforcement: a non-owner seller is rejected with 403 on update/delete, while the owning seller and an admin are allowed. \\
 \hline
-\texttt{store.service} & 11 & Slug generation (base, \texttt{-2} on collision, multi-probe, empty-string fallback, \texttt{excludeId} on rename); store creation conflict; sale update ownership and admin override. \\
+\texttt{store.service} & 9 & Slug generation (base, \texttt{-2} on collision, multi-probe, empty-string fallback, \texttt{excludeId} on rename); store creation conflict; sale update ownership and admin override. \\
 \hline
-\texttt{order.service} & 10 & Status-change email: fires only on real status change, not when DTO omits \texttt{status} or new status equals existing; \texttt{'Customer'} fallback for nameless users. Authorization: an order is visible only to an admin, the customer who placed it, or the owning store; managing (update/delete) is restricted to the admin or the store owner, and a non-owner is rejected with 403. \\
+\texttt{order.service} & 26 & Status-change email (fires only on a real status change; \texttt{'Customer'} fallback for nameless users) and view/manage authorization (non-owners rejected with 403). Server-authoritative checkout: every line priced and the total computed server-side, a single store enforced per order, and stock decremented atomically. Multi-store \texttt{createPendingForCart} splits a cart into one \texttt{UNPAID} order per store. Idempotent \texttt{markPaid} / \texttt{markFailedAndRestock} transitions (scoped to still-\texttt{UNPAID} orders, restocking on failure), plus the reconciliation helpers \texttt{setPaymentIntent} and \texttt{findStaleUnpaid}. \\
+\hline
+\texttt{payment.service} & 19 & Checkout charges the server-computed total only --- never a client figure --- converted TND$\to$USD with an idempotency key, releasing reserved stock if the intent cannot be opened. Webhook handling verifies the Stripe signature against the raw body and maps \texttt{succeeded}$\to$paid and \texttt{payment\_failed}/\texttt{canceled}$\to$restock, idempotently. Stale-checkout reconciliation resolves each intent by status: \texttt{succeeded} recovers a lost webhook, a dead intent restocks (and is cancelled), in-flight intents are skipped, and orphaned orders are restocked --- each intent isolated in its own try/catch. \\
+\hline
+\texttt{payment-cleanup.
+service} & 2 & The \texttt{@Cron} entry point delegates the ten-minute sweep to \texttt{reconcileStaleCheckouts} and swallows errors so a single failed run never stops the timer from firing. \\
 \hline
 \texttt{seller-application.
-service} & 8 & Application state machine: duplicate-submission conflict, \texttt{APPROVED} promotes user to \texttt{SELLER}, \texttt{REJECTED} / \texttt{MORE\_INFO\_REQUESTED} leave the role alone, per-status notification message correctness. \\
+service} & 9 & Application state machine: duplicate-submission conflict, \texttt{APPROVED} promotes user to \texttt{SELLER}, \texttt{REJECTED} / \texttt{MORE\_INFO\_REQUESTED} leave the role alone, per-status notification message correctness. \\
 \hline
 \end{tabular}
 \caption{Backend unit test suites — domain services (write paths)}
@@ -3194,6 +3326,8 @@ service} & 8 & Application state machine: duplicate-submission conflict, \texttt
 \texttt{home.service} & 9 & Featured fallback (latest products / latest \texttt{ACTIVE} stores), non-\texttt{ACTIVE} stores filtered from curated list, \texttt{MAX\_PRODUCTS} / \texttt{MAX\_STORES} caps, transactional deletes-then-inserts. \\
 \hline
 \texttt{api-key.guard} & 5 & n8n webhook authentication: matching key passes, mismatched/missing rejected, server with no configured secret rejects all (fail-closed). \\
+\hline
+\texttt{stripe-amount} & 11 & Currency conversion in \texttt{tndToStripeUsdMinor}: TND$\to$USD minor units at the configured rate, rounding to whole cents, and rejection of non-finite or negative amounts and of a non-positive rate. \\
 \hline
 \end{tabular}
 \caption{Backend unit test suites — read paths, cross-cutting concerns and guards}
@@ -3231,7 +3365,7 @@ are driven through \texttt{supertest}.
 \hline
 \texttt{store.controller} & 14 & Creation validation (empty body, malformed URL); \texttt{isAdmin} flag flips between \texttt{SELLER} and \texttt{ADMIN}; \texttt{UpdateSaleDto} bounds enforced (1--90\%, 60-char label); \texttt{ForbiddenException} surfaces as 403. \\
 \hline
-\texttt{order.controller} & 12 & Missing address fields rejected; non-numeric \texttt{totalAmount} rejected; \texttt{/my} requires auth; 403 on unauthenticated \texttt{GET}/\texttt{PATCH /order/:id}; dashboard scoping by role; route parameter parsed to \texttt{number}. \\
+\texttt{order.controller} & 14 & Missing address fields rejected; non-numeric \texttt{totalAmount} rejected; \texttt{/my} requires auth; 403 on unauthenticated \texttt{GET}/\texttt{PATCH /order/:id}; dashboard scoping by role; route parameter parsed to \texttt{number}. \\
 \hline
 \end{tabular}
 \caption{Backend controller integration tests}
@@ -3245,11 +3379,12 @@ exercised there.
 
 \subsection{Frontend Tests (Vitest)}
 
-The frontend test suite focuses on two surfaces with the highest
+The frontend test suite focuses on the surfaces with the highest
 business value per line of test code: the Zustand cart store, which
-holds the customer's purchase intent, and the \texttt{ProductCard}
+holds the customer's purchase intent; the \texttt{ProductCard}
 component, which renders sale prices and stock state across every
-listing in the application.
+listing; and the checkout page, which posts the order and mounts the
+Stripe payment step.
 
 \begin{table}[H]
 \centering
@@ -3265,6 +3400,8 @@ listing in the application.
 \texttt{cart.store} & 9 & \texttt{addItem} default and explicit quantity; merge on re-add; \emph{stock cap on merge and update}; \texttt{updateQuantity(0)} removes the line; \texttt{clearCart}; multiple stores coexist in a single cart. \\
 \hline
 \texttt{ProductCard} & 11 & Name and price rendered; no sale badge when \texttt{salePrice} is \texttt{null} or equals \texttt{displayPrice}; discount percentage correctly rounded (19.99 $\to$ 15.99 displays "-20\%"); dual-price layout when on sale; Out-of-Stock overlay; OOS hides the sale badge; default and custom \texttt{href}. \\
+\hline
+\texttt{CheckoutPage} & 1 & Maps the cart to \texttt{\{productId, quantity\}} pairs, posts a single checkout request, and swaps the shipping form for the Stripe payment step once a client secret is returned. \\
 \hline
 \end{tabular}
 \caption{Frontend test suites (Vitest + React Testing Library)}
@@ -3299,16 +3436,17 @@ would do the most damage, at a fraction of the engineering cost.
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item Cheebo ships 141 tests (121 backend, 20 frontend) running in
-        under five seconds and gating every CI build.
+  \item Cheebo ships 192 tests (171 backend, 21 frontend) running in
+        a few seconds and gating every CI build.
   \item Backend tests use a three-tier pyramid: pure logic
-        (\texttt{findViolation}, \texttt{ApiKeyGuard}), service-level
+        (\texttt{findViolation}, \texttt{tndToStripeUsdMinor},
+        \texttt{ApiKeyGuard}), service-level
         unit tests with a mocked \texttt{PrismaService}, and
         controller-level integration tests with the real Nest
         pipeline.
   \item Frontend tests use Vitest + React Testing Library to cover
-        the Zustand cart store and \texttt{ProductCard} sale-price
-        rendering.
+        the Zustand cart store, \texttt{ProductCard} sale-price
+        rendering, and the Stripe checkout step.
   \item Test execution is wired into GitHub Actions: a failing test
         blocks the Docker image push and deployment, providing a
         hard regression gate without manual review.
@@ -3796,7 +3934,7 @@ the project apart from a textbook CRUD application:
   \item \textbf{AI integration} --- product and store verification,
         a database chat assistant, and AI storefront redesign, all
         implemented as versioned n8n workflows behind webhooks.
-  \item \textbf{A real test suite} --- 141 automated tests across
+  \item \textbf{A real test suite} --- 192 automated tests across
         backend and frontend, gating every CI build.
   \item \textbf{A full DevOps pipeline} --- containerised services,
         infrastructure as code with Terraform, and a GitHub Actions

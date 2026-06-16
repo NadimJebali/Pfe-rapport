@@ -6,18 +6,18 @@
 \contentsline {table}{\numberline {2.2}{\ignorespaces MoSCoW priority and complexity legend}}{41}{table.caption.17}%
 \contentsline {table}{\numberline {2.3}{\ignorespaces Product backlog --- user stories with MoSCoW priority and complexity}}{42}{table.2.3}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{59}{table.caption.30}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Main REST API endpoints, grouped by module}}{59}{table.caption.31}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Development toolchain used throughout the project}}{68}{table.caption.36}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Testing stack used in Cheebo}}{96}{table.caption.61}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — domain services (write paths)}}{98}{table.caption.63}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{99}{table.caption.64}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Backend controller integration tests}}{100}{table.caption.65}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{101}{table.caption.66}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Development toolchain used throughout the project}}{68}{table.caption.37}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Testing stack used in Cheebo}}{98}{table.caption.62}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — domain services (write paths)}}{100}{table.caption.64}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{101}{table.caption.65}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Backend controller integration tests}}{102}{table.caption.66}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{103}{table.caption.67}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{126}{table.B.1}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{128}{table.B.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
