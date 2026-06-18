@@ -2517,8 +2517,8 @@ private route) means a newly added endpoint is secure by default.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[5cm]{Code snippet — AuthGuard + @Roles() decorator}
-  \caption{Role-based access control implementation}
+  \imagePlaceholder[5cm]{Code snippet — global AuthGuard (APP\_GUARD), @Public() and an admin route with @Roles()}
+  \caption{Deny-by-default access control implementation}
   \label{fig:rbac}
 \end{figure}
 
@@ -3781,7 +3781,7 @@ Section~\ref{sec:tests}.
 
 \begin{figure}[H]
   \centering
-  \imagePlaceholder[7cm]{CI/CD pipeline diagram (build $\rightarrow$ push $\rightarrow$ deploy)}
+  \imagePlaceholder[7cm]{CI/CD pipeline diagram (lint + build + test gates $\rightarrow$ image push $\rightarrow$ provision $\rightarrow$ deploy)}
   \caption{GitHub Actions CI/CD pipeline}
   \label{fig:cicd}
 \end{figure}

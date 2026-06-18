@@ -41,7 +41,8 @@ node "Docker host (DigitalOcean Droplet)" as Host {
 
   node "Docker bridge network" as Bridge {
 
-    component "frontend\n(Nginx + React static)\nimage: cheebo-frontend\nport: 80" as FE
+    component "caddy\n(TLS reverse proxy)\nimage: caddy:2-alpine\npublishes: 80, 443" as CADDY
+    component "frontend\n(Nginx unprivileged + React static)\nimage: cheebo-frontend\ninternal: 8080" as FE
     component "backend\n(NestJS API)\nimage: cheebo-backend\ninternal: 3000" as BE
     database "db\n(MariaDB 11)\ninternal: 3306" as DB
     component "n8n\n(Workflow engine)\nport: 5678" as N8N
@@ -56,9 +57,10 @@ node "Docker host (DigitalOcean Droplet)" as Host {
   }
 }
 
-Net --> FE  : :80 HTTP
-Net --> N8N : :5678 (webhooks)
+Net   --> CADDY : :443 HTTPS\n(:80 redirects)
+Net   --> N8N   : :5678 (webhooks)
 
+CADDY --> FE  : :8080 (TLS terminated)
 FE  --> BE  : reverse-proxy /api
 BE  --> DB  : Prisma over TCP
 BE  --> N8N : webhook calls

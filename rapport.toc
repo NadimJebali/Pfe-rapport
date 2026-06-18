@@ -143,7 +143,7 @@
 \contentsline {section}{\numberline {5.3}CI/CD Pipeline with GitHub Actions}{111}{section.5.3}%
 \contentsline {subsection}{\numberline {5.3.1}Workflow Overview}{111}{subsection.5.3.1}%
 \contentsline {subsection}{\numberline {5.3.2}Build Stage (Docker Build and Push to Docker Hub)}{112}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{112}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.3}Deployment Stage (SSH and Docker Compose)}{113}{subsection.5.3.3}%
 \contentsline {subsection}{\numberline {5.3.4}Automated n8n Provisioning}{113}{subsection.5.3.4}%
 \contentsline {subsection}{\numberline {5.3.5}Environment Secrets Management}{113}{subsection.5.3.5}%
 \contentsline {section}{\numberline {5.4}Production Environment}{114}{section.5.4}%

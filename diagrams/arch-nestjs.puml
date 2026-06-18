@@ -46,7 +46,6 @@ package "Catalogue" as Catalogue {
 
 package "Commerce" as Commerce {
   [OrderModule]      as Order
-  [OrderItemsModule] as OrderItems
 }
 
 package "Discovery & Analytics" as Discovery {
@@ -81,7 +80,6 @@ Product   --> SubCat
 SubCat    --> Cat
 
 ' Commerce
-Order     --> OrderItems
 Order     --> Product
 Order     --> Notif
 

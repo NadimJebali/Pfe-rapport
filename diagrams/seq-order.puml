@@ -26,8 +26,7 @@ actor       "Customer"            as C
 participant "React SPA"           as FE
 participant "Cart Store\n(Zustand)" as Z
 participant "NestJS API"          as BE
-participant "Order Module"        as OM
-participant "OrderItems Module"   as OIM
+participant "Order Service"       as OM
 database    "MariaDB"             as DB
 participant "Nodemailer"          as MAIL
 
@@ -40,9 +39,10 @@ note right of OM
   unitPrice = salePrice ?? displayPrice
   (store-wide sale applied here)
 end note
-OM -> DB : INSERT Order
-OM -> OIM : createMany(orderId, items)
-OIM -> DB : INSERT OrderItems
+group Single transaction
+  OM -> DB : INSERT Order
+  OM -> DB : INSERT OrderItems (createMany)
+end
 OM -> DB : SELECT for confirmation
 OM --> BE : Order { id, total, items }
 BE -> MAIL : sendOrderConfirmation(user, order)

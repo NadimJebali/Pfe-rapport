@@ -21,7 +21,7 @@
 \contentsline {figure}{\numberline {3.9}{\ignorespaces UML class diagram of the main domain entities}}{65}{figure.caption.36}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Cheebo monorepo structure}}{69}{figure.caption.38}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Role-based access control implementation}}{71}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Deny-by-default access control implementation}}{71}{figure.caption.39}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Admin dashboard}}{76}{figure.caption.40}%
 \contentsline {figure}{\numberline {4.4}{\ignorespaces Store and product management interface}}{77}{figure.caption.41}%
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Landing page}}{80}{figure.caption.42}%
