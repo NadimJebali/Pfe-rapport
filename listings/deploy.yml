@@ -9,6 +9,8 @@ name: Build, Push & Deploy
 #   DB_PASSWORD                 — MariaDB root password
 #   BETTER_AUTH_SECRET          — Strong random string for auth
 #   ADMIN_PASSWORD              — Initial admin account password
+#   STRIPE_SECRET_KEY          — Stripe secret API key (sk_test_… / sk_live_…)
+#   STRIPE_WEBHOOK_SECRET      — Stripe webhook signing secret (whsec_…)
 #   SMTP_PASS                   — SMTP app password
 #   N8N_WEBHOOK_SECRET          — Secret key for n8n webhook header auth
 #   N8N_ENCRYPTION_KEY           — n8n data encryption key (generate with: openssl rand -hex 32)
@@ -28,6 +30,7 @@ name: Build, Push & Deploy
 #   SMTP_HOST / SMTP_USER / SMTP_PORT / SMTP_SECURE / SMTP_FROM
 #   FREE_TIER_MAX_PRODUCTS / PREMIUM_TEMPLATES / PREMIUM_PRICE_TND / PREMIUM_DURATION_DAYS
 #   MAX_FEATURED_PRODUCTS / MAX_FEATURED_STORES
+#   STRIPE_PUBLISHABLE_KEY      — Stripe publishable key (pk_test_… / pk_live_…), baked into the frontend bundle
 #   DOMAIN_NAME                 — your domain (e.g. nadimjebali.engineer) — DNS managed via DigitalOcean
 
 on:
@@ -38,7 +41,7 @@ on:
 
 jobs:
   test-backend:
-    name: Backend Tests (Jest)
+    name: Backend Checks (lint, build, Jest)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -55,7 +58,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Match the runtime Node version used by the Docker image.
+          node-version: 20
           cache: pnpm
           cache-dependency-path: backend/pnpm-lock.yaml
 
@@ -65,6 +69,12 @@ jobs:
       - name: Generate Prisma client
         run: pnpm exec prisma generate
 
+      - name: Lint
+        run: pnpm run lint:ci
+
+      - name: Build
+        run: pnpm run build
+
       - name: Run tests
         id: test
         run: pnpm test
@@ -73,7 +83,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Backend Tests (Jest)"
+            echo "## Backend Checks (lint, build, Jest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -82,7 +92,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   test-frontend:
-    name: Frontend Tests (Vitest)
+    name: Frontend Checks (lint, build, Vitest)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -99,12 +109,19 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Match the runtime Node version used by the Docker image.
+          node-version: 20
           cache: pnpm
           cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Build (typecheck + bundle)
+        run: pnpm run build
 
       - name: Run tests
         id: test
@@ -114,7 +131,7 @@ jobs:
         if: always()
         run: |
           {
-            echo "## Frontend Tests (Vitest)"
+            echo "## Frontend Checks (lint, build, Vitest)"
             echo ""
             echo "| Field | Value |"
             echo "| --- | --- |"
@@ -148,6 +165,15 @@ jobs:
         env:
           TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
           TF_VAR_ssh_key_fingerprint: ${{ vars.DO_SSH_KEY_FINGERPRINT }}
+          # All required TF variables must be set or `terraform import` aborts
+          # with "No value for required variable" before importing — which left
+          # the existing VPC out of state, so apply then tried to recreate it
+          # and DigitalOcean rejected it with 422 (already exists). Mirror the
+          # apply step's variables here.
+          TF_VAR_droplet_name: ${{ vars.DROPLET_NAME || 'cheebo' }}
+          TF_VAR_region: ${{ vars.DO_REGION || 'fra1' }}
+          TF_VAR_droplet_size: ${{ vars.DROPLET_SIZE || 's-2vcpu-2gb' }}
+          TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
           DO_TOKEN: ${{ secrets.DO_TOKEN }}
           DROPLET_NAME: ${{ vars.DROPLET_NAME || 'cheebo' }}
           AWS_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY }}
@@ -291,7 +317,6 @@ jobs:
   deploy:
     name: Deploy to DigitalOcean
     runs-on: ubuntu-latest
-    if: github.event.inputs.destroy != 'destroy'
     needs: [provision, build-backend, build-frontend]
     steps:
       - name: Checkout
@@ -344,6 +369,9 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          VITE_STRIPE_PUBLISHABLE_KEY: ${{ vars.STRIPE_PUBLISHABLE_KEY }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           N8N_WEBHOOK_SECRET: ${{ secrets.N8N_WEBHOOK_SECRET }}
           N8N_ENCRYPTION_KEY: ${{ secrets.N8N_ENCRYPTION_KEY }}
@@ -353,7 +381,7 @@ jobs:
           host: ${{ needs.provision.outputs.droplet_ip }}
           username: root
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
-          envs: DOMAIN_NAME,DB_NAME,PORT,ADMIN_NAME,ADMIN_EMAIL,MAX_UPLOAD_FILE_SIZE_MB,ALLOWED_UPLOAD_MIME_TYPES,SESSION_EXPIRES_IN,SESSION_UPDATE_AGE,MIN_PASSWORD_LENGTH,EMAIL_VERIFICATION_EXPIRES_IN,SWAGGER_PATH,SMTP_HOST,SMTP_USER,SMTP_PORT,SMTP_SECURE,SMTP_FROM,FREE_TIER_MAX_PRODUCTS,FREE_TIER_MAX_STORES,PREMIUM_TEMPLATES,PREMIUM_PRICE_TND,PREMIUM_DURATION_DAYS,MAX_FEATURED_PRODUCTS,MAX_FEATURED_STORES,DB_PASSWORD,BETTER_AUTH_SECRET,ADMIN_PASSWORD,SMTP_PASS,N8N_WEBHOOK_SECRET,N8N_ENCRYPTION_KEY,GEMINI_API_KEY,GROQ_API_KEY,IMAGE_TAG,DB_APP_USER,DB_APP_PASSWORD
+          envs: DOMAIN_NAME,DB_NAME,PORT,ADMIN_NAME,ADMIN_EMAIL,MAX_UPLOAD_FILE_SIZE_MB,ALLOWED_UPLOAD_MIME_TYPES,SESSION_EXPIRES_IN,SESSION_UPDATE_AGE,MIN_PASSWORD_LENGTH,EMAIL_VERIFICATION_EXPIRES_IN,SWAGGER_PATH,SMTP_HOST,SMTP_USER,SMTP_PORT,SMTP_SECURE,SMTP_FROM,FREE_TIER_MAX_PRODUCTS,FREE_TIER_MAX_STORES,PREMIUM_TEMPLATES,PREMIUM_PRICE_TND,PREMIUM_DURATION_DAYS,MAX_FEATURED_PRODUCTS,MAX_FEATURED_STORES,DB_PASSWORD,BETTER_AUTH_SECRET,ADMIN_PASSWORD,SMTP_PASS,N8N_WEBHOOK_SECRET,N8N_ENCRYPTION_KEY,GEMINI_API_KEY,GROQ_API_KEY,IMAGE_TAG,DB_APP_USER,DB_APP_PASSWORD,STRIPE_SECRET_KEY,STRIPE_WEBHOOK_SECRET,VITE_STRIPE_PUBLISHABLE_KEY
           script: |
             # ── Wait for cloud-init to finish (avoids apt lock on new droplets) ──
             cloud-init status --wait 2>/dev/null || true
@@ -386,6 +414,9 @@ jobs:
             DB_NAME=$DB_NAME
             PORT=$PORT
             BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
+            STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
+            STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET
+            VITE_STRIPE_PUBLISHABLE_KEY=$VITE_STRIPE_PUBLISHABLE_KEY
             APP_URL=https://$DOMAIN_NAME
             ADMIN_NAME=$ADMIN_NAME
             ADMIN_EMAIL=$ADMIN_EMAIL

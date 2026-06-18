@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  16 JUN 2026 15:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.19)  18 JUN 2026 17:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -889,13 +889,13 @@ trat-ing production-
  []
 
 [19] [20]
-<images/scrum-framework.png, id=995, 1193.45876pt x 664.4825pt>
+<images/scrum-framework.png, id=996, 1193.45876pt x 664.4825pt>
 File: images/scrum-framework.png Graphic file (type png)
 <use images/scrum-framework.png>
 Package pdftex.def Info: images/scrum-framework.png  used on input line 738.
 (pdftex.def)             Requested size: 374.86775pt x 208.71487pt.
  [21 <./images/scrum-framework.png>] [22]
-<images/github.png, id=1006, 562.1pt x 562.1pt>
+<images/github.png, id=1007, 562.1pt x 562.1pt>
 File: images/github.png Graphic file (type png)
 <use images/github.png>
 Package pdftex.def Info: images/github.png  used on input line 850.
@@ -907,7 +907,7 @@ Underfull \hbox (badness 1616) in paragraph at lines 850--850
 \T1/lmr/m/n/10.95 and col-lab-o-ra-tive soft-ware de-vel-op-ment
  []
 
-<images/notion.png, id=1008, 513.92pt x 513.92pt>
+<images/notion.png, id=1009, 513.92pt x 513.92pt>
 File: images/notion.png Graphic file (type png)
 <use images/notion.png>
 Package pdftex.def Info: images/notion.png  used on input line 856.
@@ -917,7 +917,7 @@ Underfull \hbox (badness 4266) in paragraph at lines 856--856
 \T1/lmr/m/n/10.95 bin-ing notes, databases, and kan-ban
  []
 
-<images/vscode.png, id=1011, 3854.4pt x 3854.4pt>
+<images/vscode.png, id=1012, 3854.4pt x 3854.4pt>
 File: images/vscode.png Graphic file (type png)
 <use images/vscode.png>
 Package pdftex.def Info: images/vscode.png  used on input line 863.
@@ -927,29 +927,29 @@ Underfull \hbox (badness 2229) in paragraph at lines 863--863
 \T1/lmr/m/n/10.95 ex-tended with plu-g-ins for Type-Script,
  []
 
-<images/docker.png, id=1013, 120.45pt x 120.45pt>
+<images/docker.png, id=1014, 120.45pt x 120.45pt>
 File: images/docker.png Graphic file (type png)
 <use images/docker.png>
 Package pdftex.def Info: images/docker.png  used on input line 870.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
-<images/terraform.png, id=1015, 120.45pt x 120.45pt>
+<images/terraform.png, id=1016, 120.45pt x 120.45pt>
 File: images/terraform.png Graphic file (type png)
 <use images/terraform.png>
 Package pdftex.def Info: images/terraform.png  used on input line 877.
 (pdftex.def)             Requested size: 34.14296pt x 34.14296pt.
-<images/n8n.png, id=1017, 200.75pt x 200.75pt>
+<images/n8n.png, id=1018, 200.75pt x 200.75pt>
 File: images/n8n.png Graphic file (type png)
 <use images/n8n.png>
 Package pdftex.def Info: images/n8n.png  used on input line 883.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
 [23 <./images/github.png> <./images/notion.png> <./images/vscode.png> <./images
 /docker.png>]
-<images/postman.png, id=1029, 200.75pt x 200.75pt>
+<images/postman.png, id=1030, 200.75pt x 200.75pt>
 File: images/postman.png Graphic file (type png)
 <use images/postman.png>
 Package pdftex.def Info: images/postman.png  used on input line 890.
 (pdftex.def)             Requested size: 34.14235pt x 34.14235pt.
-<images/pnpm.png, id=1031, 160.6pt x 160.6pt>
+<images/pnpm.png, id=1032, 160.6pt x 160.6pt>
 File: images/pnpm.png Graphic file (type png)
 <use images/pnpm.png>
 Package pdftex.def Info: images/pnpm.png  used on input line 896.
@@ -1011,25 +1011,25 @@ Overfull \hbox (33.6511pt too wide) in paragraph at lines 1033--1035
  []
 
 [28] [29] [30] [31]
-<diagrams/uc-global.png, id=1114, 630.355pt x 2486.28876pt>
+<diagrams/uc-global.png, id=1115, 630.355pt x 2486.28876pt>
 File: diagrams/uc-global.png Graphic file (type png)
 <use diagrams/uc-global.png>
 Package pdftex.def Info: diagrams/uc-global.png  used on input line 1206.
 (pdftex.def)             Requested size: 163.91728pt x 646.55914pt.
  [32] [33 <./diagrams/uc-global.png (PNG copy)>]
-<diagrams/uc-customer.png, id=1124, 349.305pt x 732.7375pt>
+<diagrams/uc-customer.png, id=1125, 349.305pt x 732.7375pt>
 File: diagrams/uc-customer.png Graphic file (type png)
 <use diagrams/uc-customer.png>
 Package pdftex.def Info: diagrams/uc-customer.png  used on input line 1221.
 (pdftex.def)             Requested size: 261.33318pt x 548.16994pt.
  [34 <./diagrams/uc-customer.png (PNG copy)>]
-<diagrams/uc-seller.png, id=1130, 517.935pt x 1122.1925pt>
+<diagrams/uc-seller.png, id=1131, 517.935pt x 1122.1925pt>
 File: diagrams/uc-seller.png Graphic file (type png)
 <use diagrams/uc-seller.png>
 Package pdftex.def Info: diagrams/uc-seller.png  used on input line 1235.
 (pdftex.def)             Requested size: 253.00006pt x 548.16994pt.
  [35 <./diagrams/uc-seller.png (PNG copy)>]
-<diagrams/uc-admin.png, id=1136, 505.89pt x 800.9925pt>
+<diagrams/uc-admin.png, id=1137, 505.89pt x 800.9925pt>
 File: diagrams/uc-admin.png Graphic file (type png)
 <use diagrams/uc-admin.png>
 Package pdftex.def Info: diagrams/uc-admin.png  used on input line 1249.
@@ -1042,13 +1042,13 @@ a-tion cre-ates a \T1/lmtt/m/n/12 User \T1/lmr/m/n/12 row with \T1/lmtt/m/n/12
 emailVerified=false
  []
 
-<diagrams/seq-auth.png, id=1143, 953.5625pt x 970.62625pt>
+<diagrams/seq-auth.png, id=1144, 953.5625pt x 970.62625pt>
 File: diagrams/seq-auth.png Graphic file (type png)
 <use diagrams/seq-auth.png>
 Package pdftex.def Info: diagrams/seq-auth.png  used on input line 1274.
 (pdftex.def)             Requested size: 441.01773pt x 448.92242pt.
 [37]
-<diagrams/seq-order.png, id=1149, 1023.825pt x 691.58376pt>
+<diagrams/seq-order.png, id=1150, 1023.825pt x 691.58376pt>
 File: diagrams/seq-order.png Graphic file (type png)
 <use diagrams/seq-order.png>
 Package pdftex.def Info: diagrams/seq-order.png  used on input line 1291.
@@ -1059,7 +1059,7 @@ Overfull \hbox (8.24524pt too wide) in paragraph at lines 1298--1313
 d-i-cated \T1/lmtt/m/n/12 submit-verification
  []
 
-<diagrams/seq-verify.png, id=1155, 1370.11874pt x 1302.8675pt>
+<diagrams/seq-verify.png, id=1156, 1370.11874pt x 1302.8675pt>
 File: diagrams/seq-verify.png Graphic file (type png)
 <use diagrams/seq-verify.png>
 Package pdftex.def Info: diagrams/seq-verify.png  used on input line 1316.
@@ -1094,7 +1094,7 @@ Chapter 3.
 [47
 
 ]
-<diagrams/arch-3tier.png, id=1205, 612.2875pt x 753.81625pt>
+<diagrams/arch-3tier.png, id=1206, 612.2875pt x 753.81625pt>
 File: diagrams/arch-3tier.png Graphic file (type png)
 <use diagrams/arch-3tier.png>
 Package pdftex.def Info: diagrams/arch-3tier.png  used on input line 1638.
@@ -1120,7 +1120,7 @@ mtt/m/n/12 StoreStatusLogModule\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 ProductModule\T
  []
 
 [49]
-<diagrams/arch-nestjs.png, id=1227, 924.45375pt x 1395.2125pt>
+<diagrams/arch-nestjs.png, id=1228, 924.45375pt x 1395.2125pt>
 File: diagrams/arch-nestjs.png Graphic file (type png)
 <use diagrams/arch-nestjs.png>
 Package pdftex.def Info: diagrams/arch-nestjs.png  used on input line 1736.
@@ -1141,7 +1141,7 @@ lmr/m/n/12 , \T1/lmtt/m/n/12 admin.store\T1/lmr/m/n/12 ,
  []
 
 [52]
-<diagrams/arch-docker.png, id=1249, 793.96625pt x 727.71875pt>
+<diagrams/arch-docker.png, id=1250, 793.96625pt x 727.71875pt>
 File: diagrams/arch-docker.png Graphic file (type png)
 <use diagrams/arch-docker.png>
 Package pdftex.def Info: diagrams/arch-docker.png  used on input line 1845.
@@ -1152,7 +1152,7 @@ Overfull \hbox (95.72229pt too wide) in paragraph at lines 1845--1846
  []
 
 [53]
-<diagrams/er-diagram.png, id=1255, 1389.19pt x 1112.155pt>
+<diagrams/er-diagram.png, id=1256, 1389.19pt x 1112.155pt>
 File: diagrams/er-diagram.png Graphic file (type png)
 <use diagrams/er-diagram.png>
 Package pdftex.def Info: diagrams/er-diagram.png  used on input line 1869.
@@ -1201,13 +1201,13 @@ end-point de-clares a \T1/lmtt/m/n/12 class-validator
  []
 
 
-Overfull \hbox (41.40369pt too wide) in paragraph at lines 2017--2022
-[]\T1/lmr/bx/n/12 Role-based ac-cess con-trol. \T1/lmr/m/n/12 Pro-tected routes
- are dec-o-rated with \T1/lmtt/m/n/12 @UseGuards(AuthGuard,
+Overfull \hbox (27.78635pt too wide) in paragraph at lines 2017--2026
+\T1/lmtt/m/n/12 @Public() \T1/lmr/m/n/12 (cat-a-logue brows-ing, store pages). 
+Role-restricted routes add the \T1/lmtt/m/n/12 @Roles(...)
  []
 
 [57]
-Underfull \hbox (badness 1024) in paragraph at lines 2099--2099
+Underfull \hbox (badness 1024) in paragraph at lines 2103--2103
 []|\T1/lmr/m/n/12 Register a new user, send ver-i-fi-ca-tion
  []
 
@@ -1216,100 +1216,94 @@ Overfull \vbox (280.85255pt too high) has occurred while \output is active []
 
 
 [59]
-<images/n8n-verify.png, id=1309, 1596.96625pt x 546.04pt>
+<images/n8n-verify.png, id=1310, 1596.96625pt x 546.04pt>
 File: images/n8n-verify.png Graphic file (type png)
 <use images/n8n-verify.png>
-Package pdftex.def Info: images/n8n-verify.png  used on input line 2163.
+Package pdftex.def Info: images/n8n-verify.png  used on input line 2167.
 (pdftex.def)             Requested size: 441.01773pt x 150.79051pt.
  [60]
-<images/n8n-chat.png, id=1317, 979.66pt x 524.96124pt>
+<images/n8n-chat.png, id=1318, 979.66pt x 524.96124pt>
 File: images/n8n-chat.png Graphic file (type png)
 <use images/n8n-chat.png>
-Package pdftex.def Info: images/n8n-chat.png  used on input line 2177.
+Package pdftex.def Info: images/n8n-chat.png  used on input line 2181.
 (pdftex.def)             Requested size: 441.01773pt x 236.31848pt.
  [61 <./images/n8n-verify.png> <./images/n8n-chat.png>]
-<images/n8n-redesign.png, id=1325, 1251.67625pt x 487.8225pt>
+<images/n8n-redesign.png, id=1326, 1251.67625pt x 487.8225pt>
 File: images/n8n-redesign.png Graphic file (type png)
 <use images/n8n-redesign.png>
-Package pdftex.def Info: images/n8n-redesign.png  used on input line 2209.
+Package pdftex.def Info: images/n8n-redesign.png  used on input line 2213.
 (pdftex.def)             Requested size: 441.01773pt x 171.87929pt.
-<diagrams/seq-ai-redesign.png, id=1327, 1400.23125pt x 816.04875pt>
+<diagrams/seq-ai-redesign.png, id=1328, 1400.23125pt x 816.04875pt>
 File: diagrams/seq-ai-redesign.png Graphic file (type png)
 <use diagrams/seq-ai-redesign.png>
-Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 2220.
+Package pdftex.def Info: diagrams/seq-ai-redesign.png  used on input line 2224.
 
 (pdftex.def)             Requested size: 441.01773pt x 257.01936pt.
  [62 <./images/n8n-redesign.png>]
-Overfull \hbox (1.18256pt too wide) in paragraph at lines 2250--2257
+Overfull \hbox (1.18256pt too wide) in paragraph at lines 2254--2261
 []\T1/lmr/bx/n/12 Order/OrderItems ag-gre-ga-tion. \T1/lmtt/m/n/12 Order \T1/lm
 r/m/n/12 ag-gre-gates \T1/lmtt/m/n/12 OrderItems \T1/lmr/m/n/12 (open di-a-mond
 ):
  []
 
 
-Overfull \hbox (36.30083pt too wide) in paragraph at lines 2259--2267
+Overfull \hbox (36.30083pt too wide) in paragraph at lines 2263--2271
 \T1/lmtt/m/n/12 Store.suspend(reason) \T1/lmr/m/n/12 maps to \T1/lmtt/m/n/12 St
 oreService.suspend()\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 Product.computeSalePrice()
 
  []
 
 [63 <./diagrams/seq-ai-redesign.png (PNG copy)>]
-<diagrams/class-diagram.png, id=1340, 837.1275pt x 1139.25626pt>
+<diagrams/class-diagram.png, id=1341, 837.1275pt x 1139.25626pt>
 File: diagrams/class-diagram.png Graphic file (type png)
 <use diagrams/class-diagram.png>
-Package pdftex.def Info: diagrams/class-diagram.png  used on input line 2278.
+Package pdftex.def Info: diagrams/class-diagram.png  used on input line 2282.
 (pdftex.def)             Requested size: 423.45499pt x 576.28726pt.
  [64]
-Overfull \hbox (55.22481pt too wide) in paragraph at lines 2297--2300
+Overfull \hbox (55.22481pt too wide) in paragraph at lines 2301--2304
 []\T1/lmr/m/n/10.95 The REST API fol-lows resource-oriented de-sign, val-i-date
 s ev-ery pay-load with \T1/lmtt/m/n/10.95 class-validator
  []
 
 Package mdframed Info: Box was splittet wrong
  starting loop to iterate the splitting point
-(mdframed)              on input line 2304.
+(mdframed)              on input line 2308.
 [65 <./diagrams/class-diagram.png (PNG copy)>] [66]
 Chapter 4.
 [67
 
 ]
-Overfull \hbox (6.77444pt too wide) in paragraph at lines 2393--2396
+Overfull \hbox (6.77444pt too wide) in paragraph at lines 2397--2400
 []\T1/lmr/bx/n/12 Prisma \T1/lmr/m/n/12 --- syn-tax high-light-ing and schema f
 or-mat-ting for \T1/lmtt/m/n/12 backend/prisma/schema/\T1/lmr/m/n/12 ,
  []
 
 [68]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2423.
+ mdframed uses option nobreak mdframed on input line 2427.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2423.
- [69]
-Overfull \hbox (0.94969pt too wide) in paragraph at lines 2498--2503
-\T1/lmr/m/n/12 Every pro-tected route is se-cured through a com-bi-na-tion of \
-T1/lmtt/m/n/12 AuthGuard \T1/lmr/m/n/12 and the \T1/lmtt/m/n/12 @Roles()
- []
-
-[70]
+ mdframed uses option nobreak mdframed on input line 2427.
+ [69] [70]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2506.
+ mdframed uses option nobreak mdframed on input line 2520.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2506.
-
-Overfull \hbox (31.56364pt too wide) in paragraph at lines 2540--2545
+ mdframed uses option nobreak mdframed on input line 2520.
+ [71]
+Overfull \hbox (31.56364pt too wide) in paragraph at lines 2554--2559
 \T1/lmtt/m/n/12 jpeg\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 png\T1/lmr/m/n/12 , \T1/lm
 tt/m/n/12 webp\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 gif\T1/lmr/m/n/12 ) are ac-cepte
 d; any-thing else is re-jected with a \T1/lmtt/m/n/12 BadRequestException\T1/lm
 r/m/n/12 . 
  []
 
-[71] [72]
-Overfull \hbox (42.84326pt too wide) in paragraph at lines 2635--2642
+[72]
+Overfull \hbox (42.84326pt too wide) in paragraph at lines 2649--2656
 \T1/lmr/m/n/12 To blunt brute-force and abuse, the API ap-plies a global rate l
 imit through \T1/lmtt/m/n/12 @nestjs/throttler\T1/lmr/m/n/12 .
  []
 
 [73] [74]
-Overfull \hbox (6.56966pt too wide) in paragraph at lines 2737--2748
+Overfull \hbox (6.56966pt too wide) in paragraph at lines 2751--2762
 \T1/lmr/m/n/12 cus-tom hook in \T1/lmtt/m/n/12 src/hooks/ \T1/lmr/m/n/12 (\T1/l
 mtt/m/n/12 useProducts\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 useStorePage\T1/lmr/m/n/
 12 , \T1/lmtt/m/n/12 useMyOrders\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 useFeatured\T1
@@ -1317,35 +1311,35 @@ mtt/m/n/12 useProducts\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 useStorePage\T1/lmr/m/n/
  []
 
 
-Overfull \hbox (18.4712pt too wide) in paragraph at lines 2737--2748
+Overfull \hbox (18.4712pt too wide) in paragraph at lines 2751--2762
 \T1/lmtt/m/n/12 useAdminDashboard\T1/lmr/m/n/12 , \T1/lmtt/m/n/12 useNotificati
 ons\T1/lmr/m/n/12 , and oth-ers) that wraps \T1/lmtt/m/n/12 useQuery\T1/lmr/m/n
 /12 /\T1/lmtt/m/n/12 useMutation\T1/lmr/m/n/12 .
  []
 
-Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2770.
-Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2770.
 [75]
 Package mdframed Info: mdframed inside float 
  mdframed uses option nobreak mdframed on input line 2784.
 Package mdframed Info: mdframed inside a box 
  mdframed uses option nobreak mdframed on input line 2784.
+Package mdframed Info: mdframed inside float 
+ mdframed uses option nobreak mdframed on input line 2798.
+Package mdframed Info: mdframed inside a box 
+ mdframed uses option nobreak mdframed on input line 2798.
  [76] [77]
-Overfull \hbox (6.72908pt too wide) in paragraph at lines 2872--2877
+Overfull \hbox (6.72908pt too wide) in paragraph at lines 2886--2891
 []\T1/lmr/bx/n/12 AI Agent \T1/lmr/m/n/12 --- an AI Agent node con-nected to th
 e Groq \T1/lmtt/m/n/12 llama-3.3-70b-versatile
  []
 
 [78]
-Overfull \hbox (16.69261pt too wide) in paragraph at lines 2884--2890
+Overfull \hbox (16.69261pt too wide) in paragraph at lines 2898--2904
 \T1/lmr/m/n/12 merges it with the store de-faults and per-sists it through the 
 ex-ist-ing \T1/lmtt/m/n/12 updateCustomization
  []
 
 
-Overfull \hbox (53.2579pt too wide) in paragraph at lines 2906--2910
+Overfull \hbox (53.2579pt too wide) in paragraph at lines 2920--2924
 []\T1/lmr/bx/n/12 Storefront re-design \T1/lmr/m/n/12 (\T1/lmr/bx/n/12 cheebo-s
 tore-redesign\T1/lmr/m/n/12 ) uses Groq's [[]] \T1/lmtt/m/n/12 llama-3.3-70b-ve
 rsatile\T1/lmr/m/n/12 .
@@ -1353,109 +1347,109 @@ rsatile\T1/lmr/m/n/12 .
 
 [79]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2953.
+ mdframed uses option nobreak mdframed on input line 2967.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2953.
+ mdframed uses option nobreak mdframed on input line 2967.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2964.
+ mdframed uses option nobreak mdframed on input line 2978.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2964.
+ mdframed uses option nobreak mdframed on input line 2978.
  [80]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2976.
+ mdframed uses option nobreak mdframed on input line 2990.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2976.
+ mdframed uses option nobreak mdframed on input line 2990.
  [81]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2987.
+ mdframed uses option nobreak mdframed on input line 3001.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2987.
+ mdframed uses option nobreak mdframed on input line 3001.
  [82]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 2998.
+ mdframed uses option nobreak mdframed on input line 3012.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 2998.
+ mdframed uses option nobreak mdframed on input line 3012.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3009.
+ mdframed uses option nobreak mdframed on input line 3023.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3009.
+ mdframed uses option nobreak mdframed on input line 3023.
  [83]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3022.
+ mdframed uses option nobreak mdframed on input line 3036.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3022.
+ mdframed uses option nobreak mdframed on input line 3036.
  [84]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3034.
+ mdframed uses option nobreak mdframed on input line 3048.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3034.
+ mdframed uses option nobreak mdframed on input line 3048.
  [85]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3045.
+ mdframed uses option nobreak mdframed on input line 3059.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3045.
+ mdframed uses option nobreak mdframed on input line 3059.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3056.
+ mdframed uses option nobreak mdframed on input line 3070.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3056.
+ mdframed uses option nobreak mdframed on input line 3070.
  [86]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3067.
+ mdframed uses option nobreak mdframed on input line 3081.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3067.
+ mdframed uses option nobreak mdframed on input line 3081.
  [87]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3078.
+ mdframed uses option nobreak mdframed on input line 3092.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3078.
+ mdframed uses option nobreak mdframed on input line 3092.
  [88]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3091.
+ mdframed uses option nobreak mdframed on input line 3105.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3091.
+ mdframed uses option nobreak mdframed on input line 3105.
  [89]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3102.
+ mdframed uses option nobreak mdframed on input line 3116.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3102.
+ mdframed uses option nobreak mdframed on input line 3116.
  [90]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3114.
+ mdframed uses option nobreak mdframed on input line 3128.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3114.
+ mdframed uses option nobreak mdframed on input line 3128.
  [91]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3125.
+ mdframed uses option nobreak mdframed on input line 3139.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3125.
+ mdframed uses option nobreak mdframed on input line 3139.
  [92]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3136.
+ mdframed uses option nobreak mdframed on input line 3150.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3136.
+ mdframed uses option nobreak mdframed on input line 3150.
  [93]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3147.
+ mdframed uses option nobreak mdframed on input line 3161.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3147.
+ mdframed uses option nobreak mdframed on input line 3161.
 
 [94]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3158.
+ mdframed uses option nobreak mdframed on input line 3172.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3158.
+ mdframed uses option nobreak mdframed on input line 3172.
  [95]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3173.
+ mdframed uses option nobreak mdframed on input line 3187.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3173.
+ mdframed uses option nobreak mdframed on input line 3187.
  [96] [97]
-Overfull \hbox (9.88116pt too wide) in paragraph at lines 3263--3264
+Overfull \hbox (62.38101pt too wide) in paragraph at lines 3277--3278
  [][] 
  []
 
 [98]
-Overfull \hbox (1.1054pt too wide) in paragraph at lines 3304--3304
+Overfull \hbox (1.1054pt too wide) in paragraph at lines 3318--3318
 []|\T1/lmtt/m/n/10.95 seller-application. 
  []
 
@@ -1464,131 +1458,137 @@ Overfull \vbox (543.72054pt too high) has occurred while \output is active []
 
 
 [100]
-Overfull \hbox (6.85413pt too wide) in paragraph at lines 3322--3322
+Overfull \hbox (6.85413pt too wide) in paragraph at lines 3336--3336
 []|\T1/lmtt/m/n/10.95 notification.service|  
  []
 
 [101] [102]
-Overfull \hbox (24.38306pt too wide) in paragraph at lines 3413--3423
-\T1/lmtt/m/n/12 test-frontend \T1/lmr/m/n/12 (\T1/lmtt/m/n/12 pnpm test \T1/lmr
-/m/n/12 = Vitest) --- and the ex-ist-ing \T1/lmtt/m/n/12 build-backend\T1/lmr/m
-/n/12 /\T1/lmtt/m/n/12 build-frontend
+Overfull \hbox (22.21959pt too wide) in paragraph at lines 3415--3425
+\T1/lmr/m/n/12 sion$\OMS/lmsy/m/n/12 !$\T1/lmr/m/n/12 store sync, and the premi
+um-unlock rule) ex-er-cised through a \T1/lmtt/m/n/12 QueryClientProvider
+ []
+
+
+Overfull \hbox (6.85413pt too wide) in paragraph at lines 3439--3439
+\T1/lmtt/m/n/10.95 customization.editor 
  []
 
 [103]
-Overfull \hbox (36.01656pt too wide) in paragraph at lines 3441--3447
+Overfull \vbox (223.04683pt too high) has occurred while \output is active []
+
+
+[104]
+Overfull \hbox (30.26782pt too wide) in paragraph at lines 3490--3497
 []\T1/lmr/m/n/10.95 Backend tests use a three-tier pyra-mid: pure logic (\T1/lm
-tt/m/n/10.95 findViolation\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 tndToStripeUsd
-Minor\T1/lmr/m/n/10.95 ,
+tt/m/n/10.95 validate-env\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 tndToStripeUsdM
+inor\T1/lmr/m/n/10.95 ,
  []
 
 
-Overfull \hbox (2.86308pt too wide) in paragraph at lines 3441--3447
+Overfull \hbox (2.86308pt too wide) in paragraph at lines 3490--3497
 \T1/lmtt/m/n/10.95 ApiKeyGuard\T1/lmr/m/n/10.95 ), service-level unit tests wit
 h a mocked \T1/lmtt/m/n/10.95 PrismaService\T1/lmr/m/n/10.95 , and controller-
  []
 
-[104]
+[105] [106]
 Chapter 5.
+[107
 
-Overfull \hbox (20.622pt too wide) in paragraph at lines 3506--3519
-\T1/lmtt/m/n/12 build \T1/lmr/m/n/12 to emit the static Vite bun-dle, and the p
-ro-duc-tion stage serves it from \T1/lmtt/m/n/12 nginx:alpine\T1/lmr/m/n/12 .
- []
-
-[105
-
-] [106]
+] [108]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3601.
+ mdframed uses option nobreak mdframed on input line 3667.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3601.
- [107]
-Overfull \hbox (10.15645pt too wide) in paragraph at lines 3663--3668
+ mdframed uses option nobreak mdframed on input line 3667.
+ [109]
+Overfull \hbox (10.15645pt too wide) in paragraph at lines 3729--3734
 []\T1/lmr/m/n/12 Both records ref-er-ence \T1/lmtt/m/n/12 digitalocean_droplet.
 cheebo.ipv4_address \T1/lmr/m/n/12 di-rectly. This
  []
 
-
-Overfull \hbox (21.851pt too wide) in paragraph at lines 3669--3673
+[110]
+Overfull \hbox (21.851pt too wide) in paragraph at lines 3735--3739
 []\T1/lmr/m/n/12 The do-main's name-servers are del-e-gated to Dig-i-talO-cean 
 (\T1/lmtt/m/n/12 ns1--ns3.digitalocean.com\T1/lmr/m/n/12 )
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3685.
+ mdframed uses option nobreak mdframed on input line 3751.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3685.
-[108]
+ mdframed uses option nobreak mdframed on input line 3751.
+[111]
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3714.
+ mdframed uses option nobreak mdframed on input line 3784.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3714.
- [109]
-Overfull \hbox (43.9467pt too wide) in paragraph at lines 3738--3743
+ mdframed uses option nobreak mdframed on input line 3784.
+
+Overfull \hbox (43.9467pt too wide) in paragraph at lines 3808--3813
 \T1/lmr/m/n/12 The \T1/lmtt/m/n/12 deploy \T1/lmr/m/n/12 job runs last, gated o
 n \T1/lmtt/m/n/12 needs: [provision, build-backend, build-frontend]
  []
 
-
-Overfull \hbox (44.26016pt too wide) in paragraph at lines 3745--3750
+[112]
+Overfull \hbox (44.26016pt too wide) in paragraph at lines 3815--3820
 []\T1/lmr/bx/n/12 Copy \T1/lmr/m/n/12 the \T1/lmtt/m/n/12 docker-compose.yml\T1
 /lmr/m/n/12 , the \T1/lmtt/m/n/12 Caddyfile\T1/lmr/m/n/12 , and the version-con
 trolled \T1/lmtt/m/n/12 n8n-workflows/
  []
 
-[110] [111]
-Overfull \hbox (31.32735pt too wide) in paragraph at lines 3824--3830
+[113]
+Overfull \hbox (31.32735pt too wide) in paragraph at lines 3894--3900
 []\T1/lmr/m/n/12 The ap-pli-ca-tion is ac-cessed ex-clu-sively through the do-m
 ain name \T1/lmtt/m/n/12 nadimjebali.engineer\T1/lmr/m/n/12 .
  []
 
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 3842.
+ mdframed uses option nobreak mdframed on input line 3912.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 3842.
-[112] [113] [114] [115
+ mdframed uses option nobreak mdframed on input line 3912.
+[114]
+Package mdframed Info: Box was splittet wrong
+ starting loop to iterate the splitting point
+(mdframed)              on input line 3956.
+ [115] [116] [117
 
-] [116] [117] [118
+] [118] [119] [120
 
-] [119]
+] [121]
 Appendix A.
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 4094.
-(./listings/schema.prisma [120
+nput line 4164.
+(./listings/schema.prisma [122
 
-] [121] [122] [123] [124]) [125]
+] [123] [124] [125] [126]) [127]
 Appendix B.
 
-Overfull \hbox (26.19498pt too wide) in paragraph at lines 4147--4148
+Overfull \hbox (26.19498pt too wide) in paragraph at lines 4217--4218
 []|\T1/lmtt/m/n/10.95 /product/by-category/:categoryId/subcategory/:subcategory
 Id|  
  []
 
-ignored error: Infinite glue shrinkage found in box being split [126
+ignored error: Infinite glue shrinkage found in box being split [128
 
 ]
-ignored error: Infinite glue shrinkage found in box being split [127] [128]
+ignored error: Infinite glue shrinkage found in box being split [129] [130]
 Appendix C.
-(./listings/Products_Stores verification.json [129
+(./listings/Products_Stores verification.json [131
 
-] [130] [131])
-(./listings/Cheebo DB Chat.json [132] [133] [134])
-(./listings/cheebo-store-redesign.json [135] [136] [137]) [138]
+] [132] [133])
+(./listings/Cheebo DB Chat.json [134] [135] [136])
+(./listings/cheebo-store-redesign.json [137] [138] [139]) [140]
 Appendix D.
-(./listings/backend.Dockerfile) (./listings/frontend.Dockerfile [139
+(./listings/backend.Dockerfile) [141
 
-]) [140]
+] (./listings/frontend.Dockerfile) [142]
 Appendix E.
-(./listings/docker-compose.yml [141
+(./listings/docker-compose.yml [143
 
-] [142]) (./listings/Caddyfile [143])
-[144]
+] [144] [145]) (./listings/Caddyfile)
+[146]
 Appendix F.
-(./listings/deploy.yml [145
+(./listings/deploy.yml [147
 
-] [146] [147] [148] [149] [150] [151] [152])
-[153] (./rapport.aux)
+] [148] [149] [150] [151] [152] [153] [154])
+[155] (./rapport.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1597,9 +1597,9 @@ Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: EABC8A626159B3DA910EBE5CCA59FD48;27722.
  ) 
 Here is how much of TeX's memory you used:
- 19815 strings out of 467533
- 321797 string characters out of 5422138
- 1765838 words of memory out of 5000000
+ 19896 strings out of 467533
+ 323113 string characters out of 5422138
+ 1765862 words of memory out of 5000000
  46314 multiletter control sequences out of 15000+600000
  701904 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1612,10 +1612,10 @@ e/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/l
 m/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/tex
 mf/fonts/type1/public/lm/lmtt12.pfb></usr/share/texmf/fonts/type1/public/lm/lmt
 t8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on rapport.pdf (154 pages, 2646351 bytes).
+Output written on rapport.pdf (156 pages, 2664650 bytes).
 PDF statistics:
- 3978 PDF objects out of 4296 (max. 8388607)
- 3720 compressed objects within 38 object streams
- 2095 named destinations out of 2487 (max. 500000)
+ 4086 PDF objects out of 4296 (max. 8388607)
+ 3825 compressed objects within 39 object streams
+ 2176 named destinations out of 2487 (max. 500000)
  1344 words of extra memory for PDF output out of 10000 (max. 10000000)
 

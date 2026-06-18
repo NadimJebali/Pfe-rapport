@@ -1,4 +1,4 @@
-# Global options -- ACME account email for Let's Encrypt certificate notices.
+# Global options — ACME account email for Let's Encrypt certificate notices.
 {
 	email {$ACME_EMAIL}
 }
@@ -15,5 +15,24 @@ www.{$DOMAIN_NAME} {
 # SPA and forwards /api and the SSE stream to the backend.
 {$DOMAIN_NAME} {
 	encode gzip
-	reverse_proxy frontend:80
+
+	# Security response headers. Conservative baseline that does not break the
+	# SPA, the /api proxy, the SSE stream, or Stripe checkout (no CSP — a strict
+	# policy would need per-asset auditing first).
+	header {
+		# HSTS — force HTTPS for a year, including subdomains (www is HTTPS).
+		# No `preload` so we keep the option to roll back.
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		# Stop MIME sniffing.
+		X-Content-Type-Options "nosniff"
+		# We embed Stripe's iframe (outbound); this only restricts who may frame
+		# us, so SAMEORIGIN is safe.
+		X-Frame-Options "SAMEORIGIN"
+		# Send origin only on cross-origin navigations.
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# Don't advertise the server software.
+		-Server
+	}
+
+	reverse_proxy frontend:8080
 }

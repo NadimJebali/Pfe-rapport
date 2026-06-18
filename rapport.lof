@@ -44,12 +44,12 @@
 \contentsline {figure}{\numberline {4.22}{\ignorespaces Categories panel}}{95}{figure.caption.59}%
 \contentsline {figure}{\numberline {4.23}{\ignorespaces Featured content curation panel}}{96}{figure.caption.60}%
 \contentsline {figure}{\numberline {4.24}{\ignorespaces AI chat assistant}}{97}{figure.caption.61}%
-\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 192 tests total across backend (Jest) and frontend (Vitest)}}{99}{figure.caption.63}%
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Test pyramid — 445 tests total across backend (Jest, 337) and frontend (Vitest, 108)}}{99}{figure.caption.63}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{107}{figure.caption.68}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{109}{figure.caption.69}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{110}{figure.caption.70}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{112}{figure.caption.71}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Docker Compose network architecture}}{109}{figure.caption.68}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Terraform resources}}{111}{figure.caption.69}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces GitHub Actions CI/CD pipeline}}{112}{figure.caption.70}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Production architecture}}{115}{figure.caption.71}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

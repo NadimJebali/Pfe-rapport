@@ -13,11 +13,11 @@
 \contentsline {table}{\numberline {4.3}{\ignorespaces Backend unit test suites — domain services (write paths)}}{100}{table.caption.64}%
 \contentsline {table}{\numberline {4.4}{\ignorespaces Backend unit test suites — read paths, cross-cutting concerns and guards}}{101}{table.caption.65}%
 \contentsline {table}{\numberline {4.5}{\ignorespaces Backend controller integration tests}}{102}{table.caption.66}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library)}}{103}{table.caption.67}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Frontend test suites (Vitest + React Testing Library) --- 108 tests}}{104}{table.caption.67}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{128}{table.B.1}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Cheebo REST API endpoint reference}}{130}{table.B.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

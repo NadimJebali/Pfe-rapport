@@ -41,6 +41,9 @@ services:
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_URL: ${APP_URL}
       FRONTEND_URL: ${APP_URL}
+      # Stripe payments (required in production — the backend fail-fasts without them)
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
       # Admin (auto-created on first startup)
       ADMIN_NAME: ${ADMIN_NAME}
       ADMIN_EMAIL: ${ADMIN_EMAIL}
@@ -91,6 +94,8 @@ services:
       VITE_API_URL: ${APP_URL}
       VITE_PREMIUM_PRICE_TND: ${PREMIUM_PRICE_TND}
       VITE_PREMIUM_DURATION_DAYS: ${PREMIUM_DURATION_DAYS}
+      # Stripe publishable key (safe to expose; substituted into the JS bundle at runtime)
+      VITE_STRIPE_PUBLISHABLE_KEY: ${VITE_STRIPE_PUBLISHABLE_KEY}
     # No host port: the frontend is reached only through the Caddy proxy.
 
   caddy:

@@ -304,7 +304,7 @@ assistant for administrators, and AI-driven storefront redesign, all
 orchestrated as n8n workflows behind webhooks. The system is built as
 a TypeScript monorepo --- a NestJS REST API backed by Prisma and
 MariaDB, and a React single-page application --- and is engineered to
-professional standards, with an automated test suite of 192 tests and
+professional standards, with an automated test suite of 445 tests and
 a complete CI/CD pipeline that containerises the services with Docker,
 provisions infrastructure with Terraform, and deploys to a live
 DigitalOcean environment on every push. The result is a deployed,
@@ -2014,11 +2014,15 @@ principles guided every route declaration:
         \texttt{forbidNonWhitelisted: true}, so any extra field
         in the payload is rejected at the framework layer
         before the controller handler executes.
-  \item \textbf{Role-based access control.} Protected routes
-        are decorated with \texttt{@UseGuards(AuthGuard,
-        RolesGuard)} and the \texttt{@Roles(\ldots)} decorator
-        listing the allowed roles. Anonymous endpoints (catalogue
-        browsing, store page) carry \texttt{@Public()}.
+  \item \textbf{Deny-by-default access control.} A single
+        \texttt{AuthGuard} is registered globally (as
+        \texttt{APP\_GUARD}), so every route requires a valid
+        session unless it is explicitly marked \texttt{@Public()}
+        (catalogue browsing, store pages). Role-restricted routes
+        add the \texttt{@Roles(\ldots)} decorator; the guard
+        returns \texttt{401} for an unauthenticated caller and
+        \texttt{403} for an authenticated caller who lacks the
+        required role.
   \item \textbf{Cursor- and page-based pagination.} List
         endpoints accept \texttt{page} and \texttt{limit} query
         parameters and always return a uniform
@@ -2330,7 +2334,7 @@ behavioural model that the next chapter actually implements.
   frontend implementation decisions, and the AI integration via n8n.
   It then illustrates the resulting platform through interface
   screenshots organised by role, and closes with the automated test
-  suite --- 192 tests across backend and frontend --- that validates
+  suite --- 445 tests across backend and frontend --- that validates
   the implementation on every CI build.
 \end{chapterintro}
 
@@ -2495,11 +2499,21 @@ were presented as the module-cluster diagram in Chapter~3.
 
 \subsection{Authentication Guards and Role-Based Access Control}
 
-Every protected route is secured through a combination of
-\texttt{AuthGuard} and the \texttt{@Roles()} decorator.
-Figure~\ref{fig:rbac} shows a representative controller method
-annotated with both guards, illustrating how the framework enforces
-role-based access at the route level before the handler executes.
+Access control follows a \emph{deny-by-default} model. A single
+\texttt{AuthGuard} is registered globally as an \texttt{APP\_GUARD}
+provider, so every route requires a valid session unless it is
+explicitly opted out with the \texttt{@Public()} decorator (the
+catalogue and store-page reads that anonymous visitors need). The
+guard short-circuits on \texttt{@Public()}, then validates the session
+and --- when a handler declares \texttt{@Roles(\ldots)} --- checks the
+caller's role, raising \texttt{401 Unauthorized} for a missing or
+invalid session and \texttt{403 Forbidden} for an authenticated caller
+who lacks the required role. Figure~\ref{fig:rbac} shows a
+representative admin-only controller method annotated with
+\texttt{@Roles()}, illustrating how the framework enforces role-based
+access at the route level before the handler executes. Marking the
+public surface explicitly (rather than remembering to guard each new
+private route) means a newly added endpoint is secure by default.
 
 \begin{figure}[H]
   \centering
@@ -3248,21 +3262,21 @@ illustrates how the existing tests distribute across these layers.
   \begin{minipage}{0.85\textwidth}
   \centering
   \texttt{\begin{tabular}{c}
-    \textbf{Integration (40 tests)} \\
-    \footnotesize Nest app + ValidationPipe + supertest \\
-    \footnotesize ProductController, StoreController, OrderController \\[4pt]
+    \textbf{Integration (83 tests)} \\
+    \footnotesize Nest app + ValidationPipe + supertest + global guard \\
+    \footnotesize controllers across the modules; deny-by-default guard wiring \\[4pt]
     \hline\\[-6pt]
-    \textbf{Service unit tests (104 tests)} \\
+    \textbf{Service unit tests (219 tests)} \\
     \footnotesize Real service code, mocked Prisma \\
-    \footnotesize Product, Store, Order, Payment, SellerApplication, \\
-    \footnotesize Notification, Analytics, Home \\[4pt]
+    \footnotesize catalogue taxonomy, Product, Store, Order, Payment, User, \\
+    \footnotesize Settings, Notification, Analytics, Home, Chat \\[4pt]
     \hline\\[-6pt]
-    \textbf{Pure-logic + frontend (48 tests)} \\
+    \textbf{Pure-logic + frontend (143 tests)} \\
     \footnotesize No I/O, no framework wiring \\
-    \footnotesize \texttt{findViolation}, \texttt{tndToStripeUsdMinor}, \texttt{ApiKeyGuard}, CartStore, ProductCard \\
+    \footnotesize \texttt{validate-env}, \texttt{tndToStripeUsdMinor}, \texttt{ApiKeyGuard}; Zustand stores, hooks, components \\
   \end{tabular}}
   \end{minipage}
-  \caption{Test pyramid — 192 tests total across backend (Jest) and frontend (Vitest)}
+  \caption{Test pyramid — 445 tests total across backend (Jest, 337) and frontend (Vitest, 108)}
   \label{fig:test-pyramid}
 \end{figure}
 
@@ -3338,6 +3352,17 @@ These tests target the parts of the codebase where a regression would
 be most expensive: money math (sale prices, order totals),
 authorisation (ownership checks, role gating), state machines (seller
 application status, store status), and validation boundaries.
+Tables~\ref{tab:backend-units-domain} and~\ref{tab:backend-units-readside}
+list the highest-value suites; the backend suite has since grown to
+\textbf{337 tests} across 38 \texttt{*.spec.ts} files. Beyond the
+money and authorisation core, characterisation specs now cover the
+previously thin layers --- the catalogue-taxonomy services (category,
+sub-category, product-tag, product-image), \texttt{user},
+\texttt{settings} and \texttt{chat}, the read-side query and
+recommendation paths of \texttt{store.service} and
+\texttt{product.service}, and the security-relevant
+\texttt{validate-env} / \texttt{database-url} utilities --- so the
+parts of the codebase exercised in production are not left unverified.
 
 \subsection{Backend Integration Tests}
 
@@ -3348,7 +3373,15 @@ the same options used in production (\texttt{whitelist},
 validation is exercised end-to-end. The service the controller
 depends on is replaced with a Jest mock, and the \texttt{AuthGuard}
 and \texttt{ApiKeyGuard} are stubbed at the module level. Requests
-are driven through \texttt{supertest}.
+are driven through \texttt{supertest}. Table~\ref{tab:backend-integration}
+shows three representative suites; the integration tier now spans
+\textbf{83 tests} across the controllers, each asserting the
+authorization \emph{decision} (allowed versus blocked, and whether the
+service was invoked) through a shared \texttt{@Public}/\texttt{@Roles}-aware
+test guard. A separate full-application smoke test boots the whole
+\texttt{AppModule} with the real guard wiring to confirm the
+production status codes (\texttt{401} for no session, \texttt{403} for
+a role mismatch).
 
 \begin{table}[H]
 \centering
@@ -3379,12 +3412,16 @@ exercised there.
 
 \subsection{Frontend Tests (Vitest)}
 
-The frontend test suite focuses on the surfaces with the highest
-business value per line of test code: the Zustand cart store, which
-holds the customer's purchase intent; the \texttt{ProductCard}
-component, which renders sale prices and stock state across every
-listing; and the checkout page, which posts the order and mounts the
-Stripe payment step.
+The frontend test suite covers the surfaces with the highest business
+value per line of test code and has grown to \textbf{108 tests} across
+18 files: the Zustand stores (cart, auth, category, admin, and the
+undo/redo customization editor) that hold client state; the data and
+premium hooks (product/store queries, infinite-scroll pagination, the
+session\,$\rightarrow$\,store sync, and the premium-unlock rule)
+exercised through a \texttt{QueryClientProvider} harness with mocked
+API modules; the presentational components (\texttt{ProductCard},
+\texttt{StoreCard}, \texttt{NotificationBell}) and the checkout page;
+and the pure customization and error-handling libraries.
 
 \begin{table}[H]
 \centering
@@ -3399,27 +3436,39 @@ Stripe payment step.
 \hline
 \texttt{cart.store} & 9 & \texttt{addItem} default and explicit quantity; merge on re-add; \emph{stock cap on merge and update}; \texttt{updateQuantity(0)} removes the line; \texttt{clearCart}; multiple stores coexist in a single cart. \\
 \hline
+\texttt{auth} / \texttt{category} / \texttt{admin} / \texttt{customization.editor} stores & 31 & Session set/clear and \texttt{isAuthenticated}; lazy category load with already-loaded guard and error swallow; admin tab switching; the customization editor's undo/redo stacks (with no-op guards), \texttt{setSection}/\texttt{replaceAll}/\texttt{applyPreset}, dirty-check, and 50-entry history cap. \\
+\hline
+premium + data hooks & 23 & \texttt{useCustomizationUnlocked} (unlock via session \emph{or} the premium-status API); \texttt{useIsPremium}; \texttt{useProducts} routing across the multi-select vs.\ legacy single-select paths; \texttt{useStores} search-vs-list branch and \texttt{getNextPageParam} pagination; \texttt{useAuthStoreSync}; \texttt{usePlatformSettings} fallbacks. \\
+\hline
 \texttt{ProductCard} & 11 & Name and price rendered; no sale badge when \texttt{salePrice} is \texttt{null} or equals \texttt{displayPrice}; discount percentage correctly rounded (19.99 $\to$ 15.99 displays "-20\%"); dual-price layout when on sale; Out-of-Stock overlay; OOS hides the sale badge; default and custom \texttt{href}. \\
+\hline
+\texttt{StoreCard} + \texttt{NotificationBell} & 24 & Sale-active rule (enabled, positive discount, not expired), image-URL resolution and banner fallback chain, custom/default sale label; the unread-badge cap (hidden at 0, exact count, "99+"), loading/empty/list states, and mark-read-only-when-unread. \\
 \hline
 \texttt{CheckoutPage} & 1 & Maps the cart to \texttt{\{productId, quantity\}} pairs, posts a single checkout request, and swaps the shipping form for the Stripe payment step once a client secret is returned. \\
 \hline
+\texttt{getApiError} + customization \texttt{limits}/\texttt{hydrate} & 9 & Error-message extraction; premium-palette gating; DEFAULT fill, version pinning, partial-section merge and removed-field strip when hydrating persisted customizations. \\
+\hline
 \end{tabular}
-\caption{Frontend test suites (Vitest + React Testing Library)}
+\caption{Frontend test suites (Vitest + React Testing Library) --- 108 tests}
 \label{tab:frontend-tests}
 \end{table}
 
 \subsection{Continuous Integration}
 
-All tests run as gating jobs in the GitHub Actions workflow before
-the Docker images are built. The pipeline includes two new jobs ---
-\texttt{test-backend} (\texttt{pnpm test} = Jest) and
-\texttt{test-frontend} (\texttt{pnpm test} = Vitest) --- and the
-existing \texttt{build-backend}/\texttt{build-frontend} jobs declare
-\texttt{needs: test-backend} and \texttt{needs: test-frontend}
-respectively. A failing test therefore prevents any Docker image
-from being pushed to Docker Hub, and by extension prevents
-deployment to the DigitalOcean droplet. The mechanics of this gate
-are detailed in Section~\ref{sec:cicd}.
+All checks run as gating jobs in the GitHub Actions workflow before
+the Docker images are built. Each gate job runs \emph{lint, build, and
+tests} --- \texttt{test-backend} (ESLint + \texttt{nest build} + Jest)
+and \texttt{test-frontend} (ESLint + \texttt{tsc} + \texttt{vite build}
++ Vitest) --- and the \texttt{build-backend}/\texttt{build-frontend}
+jobs declare \texttt{needs: test-backend} and
+\texttt{needs: test-frontend} respectively. A failing lint rule, type
+error, or test therefore prevents any Docker image from being pushed
+to Docker Hub, and by extension prevents deployment to the
+DigitalOcean droplet. Building in CI catches the class of type error
+that the test transform skips (a \texttt{tsc}-only failure), and the
+lint gate is scoped to hand-written code (the generated Prisma client
+is excluded). The mechanics of this gate are detailed in
+Section~\ref{sec:cicd}.
 
 \subsection{What is Not Covered}
 
@@ -3436,20 +3485,23 @@ would do the most damage, at a fraction of the engineering cost.
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item Cheebo ships 192 tests (171 backend, 21 frontend) running in
+  \item Cheebo ships 445 tests (337 backend, 108 frontend) running in
         a few seconds and gating every CI build.
   \item Backend tests use a three-tier pyramid: pure logic
-        (\texttt{findViolation}, \texttt{tndToStripeUsdMinor},
+        (\texttt{validate-env}, \texttt{tndToStripeUsdMinor},
         \texttt{ApiKeyGuard}), service-level
         unit tests with a mocked \texttt{PrismaService}, and
         controller-level integration tests with the real Nest
-        pipeline.
+        pipeline, including a full-application smoke test of the
+        deny-by-default guard wiring.
   \item Frontend tests use Vitest + React Testing Library to cover
-        the Zustand cart store, \texttt{ProductCard} sale-price
-        rendering, and the Stripe checkout step.
-  \item Test execution is wired into GitHub Actions: a failing test
-        blocks the Docker image push and deployment, providing a
-        hard regression gate without manual review.
+        the Zustand stores, the data and premium hooks (via a
+        \texttt{QueryClientProvider} harness), the card and
+        notification components, and the Stripe checkout step.
+  \item Each CI gate runs lint, build, and tests: a failing lint
+        rule, type error, or test blocks the Docker image push and
+        deployment, providing a hard regression gate without manual
+        review.
 \end{itemize}
 \end{keytakeaways}
 
@@ -3493,20 +3545,29 @@ Appendix~\ref{app:dockerfiles}.
 
 The \textbf{backend} image uses a two-stage
 \texttt{node:20-alpine} build. The \emph{builder}
-stage enables \texttt{pnpm} through Corepack, installs dependencies
-from the frozen lockfile, runs \texttt{prisma generate}, and compiles
-the TypeScript to \texttt{dist/}. The \emph{production} stage copies
+stage enables \texttt{pnpm} through Corepack --- pinned to a fixed
+version, since the floating \texttt{latest} tag moved to a release that
+requires a newer Node and broke the build --- installs dependencies
+from the frozen lockfile, runs \texttt{prisma generate}, compiles
+the TypeScript to \texttt{dist/}, and then prunes dev dependencies
+with \texttt{pnpm prune --prod}. The \emph{production} stage copies
 only the compiled output, the generated Prisma client, the
-\texttt{node\_modules}, and the schema --- not the source tree. The
-container's start command first runs \texttt{prisma migrate deploy}
+\emph{production} \texttt{node\_modules}, and the schema --- not the
+source tree. (The Prisma CLI is treated as a production dependency
+because \texttt{migrate deploy} runs at start-up.) The container runs
+as the image's unprivileged \texttt{node} user rather than
+\texttt{root}, with only the uploads directory made writable. Its
+start command first runs \texttt{prisma migrate deploy}
 (applying any pending migrations against the live database) and then
 launches the compiled server, so a fresh deployment self-migrates with
 no manual step.
 
 The \textbf{frontend} image is also two-stage: a
 \texttt{node:20-alpine} builder runs \texttt{pnpm run build} to emit
-the static Vite bundle, and the production stage serves it from
-\texttt{nginx:alpine}. Because the API URL is only known at deploy
+the static Vite bundle, and the production stage serves it from the
+unprivileged \texttt{nginxinc/nginx-unprivileged} image, which runs as
+a non-root user (uid~101) and listens on port~8080 (Caddy proxies to
+it there). Because the API URL is only known at deploy
 time (it depends on the domain), the build bakes in a placeholder
 token and an \texttt{entrypoint.sh} script rewrites it to the real
 \texttt{VITE\_API\_URL} on container start --- a single image that can
@@ -3570,7 +3631,12 @@ The configuration is a short, env-driven \texttt{Caddyfile}
 \texttt{www} subdomain issues a permanent redirect to the apex so
 that the platform has a single canonical HTTPS origin, and the apex
 block reverse-proxies the decrypted traffic to the internal Nginx
-frontend on \texttt{frontend:80}. Keeping one canonical origin matters
+frontend on \texttt{frontend:8080}. The apex block also sets a baseline
+of security response headers --- HSTS (\texttt{Strict-Transport-Security}
+with a one-year max-age), \texttt{X-Content-Type-Options: nosniff},
+\texttt{X-Frame-Options}, and \texttt{Referrer-Policy} --- and strips
+the \texttt{Server} banner, so every browser response carries them with
+no change to application code. Keeping one canonical origin matters
 beyond aesthetics: it must match the backend's \texttt{BETTER\_AUTH\_URL}
 and \texttt{trustedOrigins} so that session cookies --- now issued with
 the \texttt{Secure} attribute because the origin is \texttt{https} ---
@@ -3696,14 +3762,18 @@ The CI/CD pipeline is defined as a single GitHub
 Actions~\cite{gha} workflow
 file that runs on every push to the \texttt{main} branch.
 Figure~\ref{fig:cicd} presents the topology:
-two test jobs --- \textit{test-backend} (Jest) and
-\textit{test-frontend} (Vitest) --- run in parallel and gate the
+two check jobs --- \textit{test-backend} (ESLint, \texttt{nest build},
+Jest) and \textit{test-frontend} (ESLint, \texttt{tsc},
+\texttt{vite build}, Vitest) --- run in parallel and gate the
 corresponding image-build jobs, \textit{build-backend} and
 \textit{build-frontend}, via the \texttt{needs:} dependency.
-A failing test therefore short-circuits the entire pipeline before
-any Docker image is pushed to Docker Hub. The
-\textit{provision} job (Terraform) runs in parallel and applies the
-infrastructure plan against DigitalOcean. The \textit{deploy} job
+A failing lint rule, type error, or test therefore short-circuits the
+entire pipeline before any Docker image is pushed to Docker Hub. The
+\textit{provision} job (Terraform) runs in parallel; before applying,
+it imports any pre-existing DigitalOcean resources (the VPC, droplet,
+and DNS domain) into the Terraform state, so \texttt{apply} reconciles
+them in place rather than failing on a name collision when the account
+already holds them. The \textit{deploy} job
 runs last and SSH-deploys the composed stack to the droplet once
 the two builds and the provisioning step all complete. The full
 test catalogue gating this pipeline is presented in
@@ -3934,7 +4004,7 @@ the project apart from a textbook CRUD application:
   \item \textbf{AI integration} --- product and store verification,
         a database chat assistant, and AI storefront redesign, all
         implemented as versioned n8n workflows behind webhooks.
-  \item \textbf{A real test suite} --- 192 automated tests across
+  \item \textbf{A real test suite} --- 445 automated tests across
         backend and frontend, gating every CI build.
   \item \textbf{A full DevOps pipeline} --- containerised services,
         infrastructure as code with Terraform, and a GitHub Actions
