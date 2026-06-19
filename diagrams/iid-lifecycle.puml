@@ -1,0 +1,42 @@
+@startuml iid-lifecycle
+!pragma layout smetana
+
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 12
+skinparam backgroundColor #FFFFFF
+skinparam roundCorner 10
+
+skinparam rectangle {
+  BorderThickness 2
+  FontStyle bold
+  FontColor #1E293B
+}
+
+actor "Supervisor\n(stakeholder)" as SUP #FFFFFF
+
+rectangle "Prioritised Product Backlog\n(MoSCoW user stories)" as BL #FEF3C7
+
+rectangle "Increment build cycle" as CYCLE #DBEAFE {
+  rectangle "Plan slice" as PLAN #FFFFFF
+  rectangle "Implement" as IMPL #FFFFFF
+  rectangle "Test" as TEST #FFFFFF
+  PLAN --> IMPL
+  IMPL --> TEST
+  TEST --> PLAN : next increment
+}
+
+rectangle "Growing product" as PROD #DCFCE7 {
+  rectangle "M1\nFoundations" as M1 #FFFFFF
+  rectangle "M2\nCore marketplace" as M2 #FFFFFF
+  rectangle "M3\nIntelligence\n& delivery" as M3 #FFFFFF
+  M1 -> M2
+  M2 -> M3
+}
+
+BL   --> PLAN : pull next item\n(by priority)
+TEST --> PROD : working\nincrement
+SUP  ..> M1 : validate
+SUP  ..> M2 : validate
+SUP  ..> M3 : validate
+
+@enduml

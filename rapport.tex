@@ -686,130 +686,144 @@ Agility was born from the \textit{Agile Manifesto}
 (2001)~\cite{agilemanifesto}, which
 champions collaboration, adaptability, and the continuous delivery of
 value. Rather than planning the entire project upfront, work is
-organised into \textbf{short cycles called sprints} (one to four
-weeks), each producing a functional and tested increment. This
+organised into \textbf{short iterations}, each producing a functional
+and tested increment. This
 approach offers several concrete advantages:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item Requirements are refined continuously from client and
         stakeholder feedback.
-  \item Value is delivered from the first sprints; the product is
+  \item Value is delivered from the first iterations; the product is
         usable well before the end of the project.
   \item Risks are identified and addressed early.
   \item Daily communication fosters responsiveness and team alignment.
 \end{itemize}
 
-\subsection{Why Scrum?}
+\subsection{Chosen Approach: Iterative and Incremental Development}
 
-Among the agile methodologies available --- Scrum, Kanban, XP,
-SAFe --- \textbf{Scrum} was chosen to manage this project for the
-following reasons:
+The full team-oriented frameworks --- chief among them
+\textbf{Scrum}~\cite{scrumguide} --- were considered but deliberately
+\emph{not} adopted in their prescribed form. Scrum's value comes from
+its events (Sprint Planning, the Daily Scrum, the Sprint Review, and
+the Retrospective) and from three distinct accountabilities (Product
+Owner, Scrum Master, and a multi-person Development Team). This PFE was
+carried out by a \textbf{single developer}, with the company supervisor
+acting as the stakeholder; running daily stand-ups with oneself or
+formal sprint ceremonies for a team of one would have been process for
+its own sake rather than a source of value.
+
+Instead, the project followed an \textbf{Iterative and Incremental
+Development} (IID) lifecycle~\cite{iid}, which keeps the Agile
+principles that genuinely fit a solo context while dropping the
+team-coordination machinery that does not:
 
 \begin{itemize}[leftmargin=*,itemsep=4pt]
-  \item \textbf{Flexibility:} the requirements of Cheebo evolved
-        throughout the internship; Scrum allows supervisor feedback to
-        be integrated at each sprint.
-  \item \textbf{Visibility:} a prioritised backlog and bounded sprints
-        provide a clear view of progress at any point.
-  \item \textbf{Regular rhythm:} two-week sprints impose a structuring
-        cadence well-suited to the internship calendar.
-  \item \textbf{Frequent deliveries:} each sprint produces a
-        functional increment, facilitating demonstrations and
-        validations with the professional supervisor.
-  \item \textbf{Industry adoption:} Scrum is the most widely practised
-        agile framework, and its use in a PFE context prepares the
-        student for professional practice.
+  \item \textbf{Incremental delivery:} the system was grown in
+        successive working increments (authentication, then the
+        catalogue, then orders and payments, then deployment), each
+        adding tested, demonstrable functionality rather than a
+        big-bang release at the end.
+  \item \textbf{Adaptive requirements:} the scope evolved throughout the
+        internship; building in increments let new understanding and
+        supervisor feedback reshape later work without invalidating
+        what was already delivered.
+  \item \textbf{Milestone cadence:} work was organised around a small
+        number of feature \emph{milestones} rather than fixed-length,
+        time-boxed sprints --- a lighter rhythm better matched to a
+        single developer's flow.
+  \item \textbf{Validation at milestone boundaries:} the supervisor
+        reviewed and validated each milestone increment, providing the
+        stakeholder feedback loop that a Sprint Review would supply in a
+        team setting.
 \end{itemize}
 
-\subsection{The Scrum Framework}
+\subsection{The Iterative and Incremental Lifecycle}
 
-Scrum is an agile project management framework that helps teams
-organise and supervise their work through values, principles, and
-practices~\cite{scrumguide}. It encourages teams to learn from experience, self-organise
-while working on a problem, and reflect on their successes and
-failures to continuously improve.
+Iterative and incremental development builds a system as a series of
+increments. Each increment passes through the same short cycle ---
+\emph{plan a slice of functionality, implement it, test it, and
+validate it} --- and adds working capability on top of what already
+exists, so the product is functional and demonstrable long before the
+project ends. Successive increments are grouped into the project's
+three feature milestones.
 
-Figure~\ref{fig:scrum} illustrates the Scrum process: successive
-sprints feed functional increments into the product, validated at
-each iteration by the Product Owner.
+Figure~\ref{fig:iid} illustrates the lifecycle: each increment loops
+through the build cycle and feeds a working version into the growing
+product, with the supervisor validating the result at each milestone
+boundary before the next milestone begins.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.85\textwidth]{scrum-framework.png}
-  \caption[Scrum methodological framework]{Scrum methodological framework
-    (source: Dr Ian Mitchell, Wikimedia Commons, CC0~/~CC~BY-SA~4.0).}
-  \label{fig:scrum}
+  \includegraphics[width=0.9\textwidth]{iid-lifecycle.png}
+  \caption{Iterative and incremental lifecycle: increments grouped into
+    three milestones, each validated by the supervisor}
+  \label{fig:iid}
 \end{figure}
 
-\subsection{Scrum Roles}
+\subsection{Project Roles}
 
-Scrum defines three complementary roles:
-
-\begin{itemize}[leftmargin=*,itemsep=4pt]
-  \item \textbf{Product Owner:} represents the stakeholders and defines
-        the product vision. He prioritises the Product Backlog items
-        and validates each delivered increment. In this project, this
-        role was fulfilled by \textbf{Mr.\ Mohammed Aziz Chibani}
-        (NeuralBey), who approved the sprint backlog and conducted
-        sprint reviews.
-  \item \textbf{Scrum Master:} guarantees the application of the Scrum
-        framework, facilitates team work, and removes obstacles. Given
-        the single-developer nature of this PFE, this role was also
-        assumed by Mr.\ Chibani, who provided architectural guidance
-        and methodology coaching.
-  \item \textbf{Development Team:} responsible for the technical
-        realisation of features and the delivery of a potentially
-        deployable increment at the end of each sprint. Composed in
-        this project of the student, \textbf{Nadim Jebali}.
-\end{itemize}
-
-\subsection{Scrum Events}
-
-The Scrum framework organises work around five key events:
+Because the project was carried out by a single developer, it involved
+two roles rather than the three accountabilities of a team framework:
 
 \begin{itemize}[leftmargin=*,itemsep=4pt]
-  \item \textbf{Sprint:} a fixed-duration iteration (two weeks in this
-        project) during which the team produces a product increment.
-  \item \textbf{Sprint Planning:} an opening meeting in which the team
-        selects and plans the backlog items to realise during the
-        sprint.
-  \item \textbf{Daily Scrum:} a brief daily synchronisation of 15
-        minutes to coordinate work and surface blockers.
-  \item \textbf{Sprint Review:} a demonstration of the increment to
-        stakeholders at the end of the sprint to collect feedback and
-        validate progress.
-  \item \textbf{Sprint Retrospective:} a process improvement meeting
-        at the end of each sprint. Key improvements that emerged from
-        retrospectives in this project include the adoption of
-        \texttt{pnpm} for monorepo management, the migration from
-        manual deployments to GitHub Actions, and the introduction of
-        n8n for AI workflows.
+  \item \textbf{Supervisor / stakeholder:} \textbf{Mr.\ Mohammed Aziz
+        Chibani} (NeuralBey) owned the product vision, prioritised the
+        requirements, and reviewed and validated each milestone
+        increment, also providing architectural guidance throughout.
+  \item \textbf{Developer:} \textbf{Nadim Jebali} (the student) was
+        responsible for the entire technical realisation --- analysis,
+        design, implementation, testing, and deployment --- and for
+        maintaining the prioritised backlog.
 \end{itemize}
 
-\subsection{Scrum Artefacts}
+\subsection{Iteration Rhythm and Supervisor Validation}
 
-Three artefacts ensure transparency of the work:
+Rather than fixed-length sprints and the associated ceremonies, the
+project ran as a continuous flow of feature increments organised by
+the following rhythm:
+
+\begin{itemize}[leftmargin=*,itemsep=4pt]
+  \item \textbf{Increment selection:} the next increment was pulled
+        from the prioritised backlog according to MoSCoW priority and
+        dependencies, rather than committed to a time-boxed sprint.
+  \item \textbf{Build cycle:} each increment was implemented and tested
+        before the next was started, keeping the product in a working,
+        demonstrable state throughout.
+  \item \textbf{Milestone validation:} at each milestone boundary the
+        supervisor reviewed the accumulated increment and gave feedback
+        that fed into subsequent work --- the stakeholder loop that a
+        Sprint Review provides in a team setting.
+\end{itemize}
+
+The process also improved over its lifetime through ordinary
+reflection: \texttt{pnpm} was adopted for monorepo management, manual
+deployments were replaced by a GitHub Actions pipeline, and n8n was
+introduced for the AI workflows.
+
+\subsection{Work Artefacts and Milestones}
+
+Two artefacts ensured transparency of the work:
 
 \begin{itemize}[leftmargin=*,itemsep=4pt]
   \item \textbf{Product Backlog:} a prioritised list of all expected
         product functionalities, maintained as user stories with
         MoSCoW priorities and complexity estimates (see
         Chapter~\ref{chap:requirements}).
-  \item \textbf{Sprint Backlog:} a sub-set of the Product Backlog
-        selected for a given sprint, broken down into technical tasks.
-  \item \textbf{Increment:} a potentially deliverable version of the
-        product obtained at the end of each sprint. The full project
-        ran across approximately ten sprints, grouped into three
-        milestones:
+  \item \textbf{Increment:} a working, demonstrable version of the
+        product produced as each backlog item was completed and folded
+        into the running application.
 \end{itemize}
 
+Increments were grouped into three feature milestones spanning the
+six-month internship:
+
 \begin{itemize}[leftmargin=*,itemsep=4pt]
-  \item \textbf{Foundations (sprints 1--3):} repository setup,
+  \item \textbf{Foundations:} repository setup,
         authentication with Better-Auth, base data model, and the
         seller-application flow.
-  \item \textbf{Core marketplace (sprints 4--7):} stores, products,
+  \item \textbf{Core marketplace:} stores, products,
         orders, admin panels, and tag-based recommendations.
-  \item \textbf{Intelligence and delivery (sprints 8--10):} the AI
+  \item \textbf{Intelligence and delivery:} the AI
         verification pipeline, the in-app AI chat assistant,
         Dockerisation, Terraform provisioning, and the CI/CD
         pipeline.
@@ -851,7 +865,7 @@ workflow automation, and API testing.
 \hfill
 \toolcard{notion.png}{Notion}
   {An all-in-one productivity workspace combining notes, databases, and kanban boards.
-   It served as the project's backlog management tool, sprint board, and a living record
+   It served as the project's backlog management tool, task board, and a living record
    of user stories and acceptance criteria.}
   {notion.so}
 
@@ -906,9 +920,11 @@ workflow automation, and API testing.
         \emph{AI verification}, \emph{lightweight seller onboarding},
         \emph{first-class admin tooling}, and \emph{modern DevOps}
         (Docker, Terraform, GitHub Actions).
-  \item Development followed two-week Scrum sprints with NeuralBey
-        reviews, structured around three milestones: foundations,
-        core marketplace, and intelligence-and-delivery.
+  \item Development followed an iterative, incremental process ---
+        increments pulled from a prioritised backlog and validated by
+        NeuralBey at milestone boundaries --- structured around three
+        milestones: foundations, core marketplace, and
+        intelligence-and-delivery.
 \end{itemize}
 \end{keytakeaways}
 
@@ -922,10 +938,11 @@ marketplace. A study of existing platforms revealed four gaps ---
 absent AI moderation, heavyweight onboarding, weak admin tooling, and
 outdated technical foundations --- that Cheebo directly addresses.
 The proposed solution, its key differentiators, and its bounded scope
-were presented. Finally, the Scrum agile methodology was described
-in detail, including its roles, events, and artefacts, and the
-three-milestone sprint plan that organised the six-month development
-was outlined. The following chapter formalises the requirements
+were presented. Finally, the iterative and incremental methodology was
+described in detail --- its rationale for a single-developer PFE, its
+roles, its milestone-based rhythm, and its work artefacts --- and the
+three-milestone plan that organised the six-month development was
+outlined. The following chapter formalises the requirements
 derived from this context.
 
 % ============================================================
@@ -938,7 +955,7 @@ derived from this context.
   This chapter identifies the three system actors, formalises the
   functional and non-functional requirements of Cheebo, and illustrates
   them with UML use-case and sequence diagrams. The requirements were
-  consolidated during the first three sprints in collaboration with the
+  consolidated during the foundations milestone in collaboration with the
   professional supervisor and serve as the contract that the rest of
   the report builds upon.
 \end{chapterintro}
@@ -1347,12 +1364,11 @@ version-controlled alongside the application code under
 
 \section{Project Backlog}
 
-\subsection{Scrum Team}
+\subsection{Project Roles}
 
 \begin{itemize}[leftmargin=*,itemsep=4pt]
-  \item \textbf{Product Owner:} Mr.\ Mohammed Aziz Chibani (NeuralBey)
-  \item \textbf{Scrum Master:} Mr.\ Mohammed Aziz Chibani (NeuralBey)
-  \item \textbf{Development Team:} Nadim Jebali
+  \item \textbf{Supervisor / stakeholder:} Mr.\ Mohammed Aziz Chibani (NeuralBey)
+  \item \textbf{Developer:} Nadim Jebali
 \end{itemize}
 
 \subsection{MoSCoW Priority Legend}
@@ -4118,6 +4134,9 @@ Natural next steps, roughly in order of value:
   Guide}, 2020. \url{https://scrumguides.org}
 \bibitem{agilemanifesto} K. Beck et al., \textit{Manifesto for Agile
   Software Development}, 2001. \url{https://agilemanifesto.org}
+\bibitem{iid} C. Larman and V. R. Basili, ``Iterative and Incremental
+  Development: A Brief History,'' \textit{IEEE Computer}, vol.~36,
+  no.~6, pp.~47--56, 2003.
 \bibitem{fielding} R. T. Fielding, \textit{Architectural Styles and the
   Design of Network-based Software Architectures}, PhD dissertation,
   University of California, Irvine, 2000 (REST).

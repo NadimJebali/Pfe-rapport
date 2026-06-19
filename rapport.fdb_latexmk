@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1781800906.39189 "rapport.tex" "rapport.pdf" "rapport" 1781800908.48347 0
+["pdflatex"] 1781876470.1725 "rapport.tex" "rapport.pdf" "rapport" 1781876472.2277 0
   "/etc/texmf/web2c/texmf.cnf" 1778890407.78952 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
@@ -151,6 +151,7 @@
   "diagrams/arch-nestjs.png" 1781799135.92125 74603 8c93ca11bf002ef267b93cbbe4f91ac3 ""
   "diagrams/class-diagram.png" 1779657927.1906 124985 d89ae49193493fea05272599ac70b166 ""
   "diagrams/er-diagram.png" 1779657926.9549 164227 0245a190ddada3c8b75031f4681ad0a5 ""
+  "diagrams/iid-lifecycle.png" 1781876439.80668 28050 098654c0dd2ee0ee5658557d5342a6c0 ""
   "diagrams/seq-ai-redesign.png" 1780483748.93483 76881 e490a84567a584836c49b46dd955a014 ""
   "diagrams/seq-auth.png" 1779463925.12221 68272 a5b78d71132d9a21aea7940b2775d93d ""
   "diagrams/seq-order.png" 1781800870.91244 55659 19987ff707c90946b348c3f2456e39ad ""
@@ -170,7 +171,6 @@
   "images/notion.png" 1779399219.26567 11406 7c71d08772cfef1f2f63a73151ec72b6 ""
   "images/pnpm.png" 1779399270.7046 600 e847961ff08eeff30bf6ede1817fddfd ""
   "images/postman.png" 1779399444.39741 7945 19a6fb9f3d456bb9fcab2ed7f8e243cb ""
-  "images/scrum-framework.png" 1779273182.75372 239025 2354d6ce0703de395332fb22f4b79ff5 ""
   "images/terraform.png" 1779399332.08354 5690 f4497967c2942715b844f21172853e72 ""
   "images/vscode.png" 1779459209.7267 291827 482b22843eb1132156a19ea75b77b5bc ""
   "listings/Caddyfile" 1781798475.40012 1425 22f83b3740c2d5f38402635662e95522 ""
@@ -182,12 +182,12 @@
   "listings/docker-compose.yml" 1781798475.39871 5544 8283dd8d730b4e2701fe3600557389a9 ""
   "listings/frontend.Dockerfile" 1781798475.3973 1468 13da0d200faed2dc89a45ffec5dabd3c ""
   "listings/schema.prisma" 1779923330.5048 8348 f4f9be47fa75ac35c1224f64ce3d55e3 ""
-  "rapport.aux" 1781800908.38538 40499 793c915e148338e4f5b076868f760475 "pdflatex"
-  "rapport.lof" 1781800908.38838 5441 40ab3a00f84e8aa3b97e48332c300e18 "pdflatex"
-  "rapport.lot" 1781800908.38838 1762 c5c470c393e27aee4f74114e981a30ce "pdflatex"
-  "rapport.out" 1781800908.38831 27722 eabc8a626159b3da910ebe5cca59fd48 "pdflatex"
-  "rapport.tex" 1781799116.25568 208842 01859b44b31ae679deeed2dbecb5733b ""
-  "rapport.toc" 1781800908.38838 14409 e2ed6dd760e324840823e3aa70a2d9bb "pdflatex"
+  "rapport.aux" 1781876472.12878 40805 cda3c5cf5677bc74bb10cc31bb992806 "pdflatex"
+  "rapport.lof" 1781876472.13218 5522 ff9ad9f15cf6e6bef1baaacd0e351ca6 "pdflatex"
+  "rapport.lot" 1781876472.13218 1762 c5c470c393e27aee4f74114e981a30ce "pdflatex"
+  "rapport.out" 1781876472.13078 28320 37b422b7a786422a52d5d34e2b86f6f6 "pdflatex"
+  "rapport.tex" 1781876330.06397 209940 e3dd018b25812b55c044b266f726f640 ""
+  "rapport.toc" 1781876472.13218 14522 f8c233cf041ca178159d4b9652f2a833 "pdflatex"
   (generated)
   "rapport.aux"
   "rapport.lof"

@@ -283,10 +283,10 @@ INPUT /usr/share/texmf/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmtt12.tfm
-INPUT ./images/scrum-framework.png
-INPUT ./images/scrum-framework.png
-INPUT ./images/scrum-framework.png
-INPUT ./images/scrum-framework.png
+INPUT ./diagrams/iid-lifecycle.png
+INPUT ./diagrams/iid-lifecycle.png
+INPUT ./diagrams/iid-lifecycle.png
+INPUT ./diagrams/iid-lifecycle.png
 INPUT ./images/github.png
 INPUT ./images/github.png
 INPUT ./images/github.png

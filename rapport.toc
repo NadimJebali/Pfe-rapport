@@ -22,13 +22,13 @@
 \contentsline {subsection}{\numberline {1.4.3}Project Scope}{19}{subsection.1.4.3}%
 \contentsline {section}{\numberline {1.5}Work Methodology}{20}{section.1.5}%
 \contentsline {subsection}{\numberline {1.5.1}Classical vs Agile Approaches}{20}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Why Scrum?}{21}{subsection.1.5.2}%
-\contentsline {subsection}{\numberline {1.5.3}The Scrum Framework}{21}{subsection.1.5.3}%
-\contentsline {subsection}{\numberline {1.5.4}Scrum Roles}{22}{subsection.1.5.4}%
-\contentsline {subsection}{\numberline {1.5.5}Scrum Events}{22}{subsection.1.5.5}%
-\contentsline {subsection}{\numberline {1.5.6}Scrum Artefacts}{22}{subsection.1.5.6}%
-\contentsline {subsection}{\numberline {1.5.7}Tools Used}{23}{subsection.1.5.7}%
-\contentsline {section}{Chapter Conclusion}{24}{subsection.1.5.7}%
+\contentsline {subsection}{\numberline {1.5.2}Chosen Approach: Iterative and Incremental Development}{21}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}The Iterative and Incremental Lifecycle}{21}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {1.5.4}Project Roles}{22}{subsection.1.5.4}%
+\contentsline {subsection}{\numberline {1.5.5}Iteration Rhythm and Supervisor Validation}{23}{subsection.1.5.5}%
+\contentsline {subsection}{\numberline {1.5.6}Work Artefacts and Milestones}{23}{subsection.1.5.6}%
+\contentsline {subsection}{\numberline {1.5.7}Tools Used}{24}{subsection.1.5.7}%
+\contentsline {section}{Chapter Conclusion}{25}{subsection.1.5.7}%
 \contentsline {chapter}{\numberline {2}Requirements Analysis and Specification}{26}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Identification of Actors}{26}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Customer}{26}{subsection.2.1.1}%
@@ -54,7 +54,7 @@
 \contentsline {subsection}{\numberline {2.5.3}Product Verification (AI + Administrator)}{39}{subsection.2.5.3}%
 \contentsline {section}{\numberline {2.6}Modelling Language}{40}{section.2.6}%
 \contentsline {section}{\numberline {2.7}Project Backlog}{41}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Scrum Team}{41}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.1}Project Roles}{41}{subsection.2.7.1}%
 \contentsline {subsection}{\numberline {2.7.2}MoSCoW Priority Legend}{41}{subsection.2.7.2}%
 \contentsline {subsection}{\numberline {2.7.3}Product Backlog}{41}{subsection.2.7.3}%
 \contentsline {section}{Chapter Conclusion}{46}{table.2.3}%
